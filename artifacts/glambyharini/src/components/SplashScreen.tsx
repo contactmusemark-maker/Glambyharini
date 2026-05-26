@@ -46,26 +46,42 @@ const sparkles = [
   { x: '30%', y: '30%', delay: 1.1 },
 ];
 
+let _splashPlayed = false;
+
 export default function SplashScreen({ onDone }: { onDone: () => void }) {
-  const [phase, setPhase] = useState<'in' | 'hold' | 'out'>('in');
-  const [progress, setProgress] = useState(0);
+  const [phase, setPhase] = useState<'in' | 'hold' | 'out'>(() =>
+    _splashPlayed ? 'out' : 'in'
+  );
+  const [progress, setProgress] = useState(_splashPlayed ? 1 : 0);
 
   useEffect(() => {
-    // Animate progress bar
+    if (_splashPlayed) {
+      onDone();
+      return;
+    }
+    _splashPlayed = true;
+
     const start = Date.now();
     const duration = 2200;
+    let rafId: number;
     const tick = () => {
       const p = Math.min((Date.now() - start) / duration, 1);
       setProgress(p);
-      if (p < 1) requestAnimationFrame(tick);
+      if (p < 1) rafId = requestAnimationFrame(tick);
     };
-    requestAnimationFrame(tick);
+    rafId = requestAnimationFrame(tick);
 
     const t1 = setTimeout(() => setPhase('hold'), 400);
     const t2 = setTimeout(() => setPhase('out'), 2400);
     const t3 = setTimeout(onDone, 3000);
-    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
-  }, [onDone]);
+    return () => {
+      cancelAnimationFrame(rafId);
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <AnimatePresence>
