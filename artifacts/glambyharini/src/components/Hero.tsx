@@ -128,8 +128,8 @@ export default function Hero() {
             <div className="absolute bottom-10 right-10 md:right-14 w-[70%] h-[80%] rounded-full bg-accent/10 blur-2xl" />
 
             <motion.img
-              src="/assets/harini/harini_portrait.png"
-              alt="Harini Suresh — GlamByHarini"
+              src="/assets/hero_model.png"
+              alt="GlamByHarini — Makeup Artistry"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 1, ease: [0.16, 1, 0.3, 1] }}
