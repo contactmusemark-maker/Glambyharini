@@ -19,17 +19,12 @@ export default function About() {
             transition={{ duration: 0.8 }}
             className="relative"
           >
-            <div className="aspect-[4/5] overflow-hidden relative">
-              <img
-                src="/assets/about_harini.png"
-                alt="Harini Suresh — Artist Behind the Brush"
-                className="w-full h-full object-cover object-top"
-              />
-              <div className="absolute inset-0 bg-primary/10 mix-blend-overlay" />
-            </div>
-            {/* accent stripe */}
-            <div className="absolute -bottom-4 -left-4 w-24 h-2 bg-primary" />
-            <div className="absolute -top-4 -right-4 w-2 h-24 bg-accent" />
+            <img
+              src="/assets/about_harini.png"
+              alt="Harini Suresh — Artist Behind the Brush"
+              className="w-full h-auto object-contain"
+              style={{ filter: 'drop-shadow(0 20px 60px rgba(0,0,0,0.35))' }}
+            />
           </motion.div>
 
           {/* Text column */}
