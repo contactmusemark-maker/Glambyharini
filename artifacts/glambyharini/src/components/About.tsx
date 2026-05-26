@@ -21,7 +21,7 @@ export default function About() {
           >
             <div className="aspect-[4/5] overflow-hidden relative">
               <img
-                src="/assets/harini/harini_portrait.png"
+                src="/assets/about_harini.png"
                 alt="Harini Suresh — Artist Behind the Brush"
                 className="w-full h-full object-cover object-top"
               />
