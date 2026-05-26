@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "GlamByHarini"
+version = "1.0.0"
+id = "artifacts/glambyharini"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22111
+
+[services.development]
+run = "pnpm --filter @workspace/glambyharini run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/glambyharini", "run", "build" ]
+publicDir = "artifacts/glambyharini/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22111"
+BASE_PATH = "/"

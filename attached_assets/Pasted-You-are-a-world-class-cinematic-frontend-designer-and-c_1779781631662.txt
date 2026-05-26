@@ -1,0 +1,260 @@
+You are a world-class cinematic frontend designer and creative developer.
+
+GLAMBYHARINI
+
+Instagram:
+https://www.instagram.com/glam_byharini/
+
+IMPORTANT BRAND RULES:
+- KEEP my existing logo exactly as it is
+- Use my uploaded ZIP files:
+  - Harini artistry photos/videos
+  - Client gallery photos/videos
+  - About/profile assets
+  - Brand logo
+- Use ONLY my real assets wherever possible
+- Replace placeholder content with uploaded content
+- The website must strongly reflect the Instagram aesthetic and brand identity
+- If users click Instagram icons/buttons/gallery CTA, redirect to:
+  https://www.instagram.com/glam_byharini/
+
+CORE EXPERIENCE:
+Build a cinematic storytelling luxury website inspired by:
+- Apple.com transitions
+- iOS glassmorphism
+- Editorial fashion websites
+- Luxury beauty campaigns
+- Modern premium portfolio experiences
+
+The website should feel:
+- Artistic
+- Feminine
+- Luxury
+- Minimal
+- Emotional
+- Cinematic
+- Premium
+- High-fashion
+
+TYPOGRAPHY:
+- IBM Plex Mono for labels/UI/small text
+- Elegant serif font for headings
+- Modern sans-serif for body text
+
+ICONS:
+Use Lucide Icons throughout the website.
+
+TECH STACK & ANIMATION:
+Use:
+- Framer Motion
+- GSAP if needed
+- Lenis smooth scrolling
+- Modern performant animation techniques
+
+ANIMATION STYLE:
+- Smooth cinematic scrolling
+- Scroll storytelling
+- Blur-to-focus transitions
+- Text stagger reveals
+- Floating glassmorphism cards
+- Layered parallax
+- Ambient glowing gradients
+- Smooth image masking
+- Cinematic hover effects
+- Scale/fade transitions
+- Elegant motion everywhere
+- iOS-inspired microinteractions
+- Luxury smooth loading animations
+
+COLOR PALETTE:
+Primary:
+- #FFFDFB
+- #F5E6E8
+- #E8D8D0
+- #D4B8A7
+- #1A1A1A
+
+Accent:
+- Rose gold glow
+- Champagne gold
+- Soft ivory
+
+WEBSITE STRUCTURE:
+
+1. HERO SECTION
+- Fullscreen cinematic hero
+- Use best Harini artistry visuals/video
+- Large luxury typography
+- Animated intro storytelling
+- Ambient motion background
+- Floating glass UI cards
+- Elegant CTA buttons:
+  - Book Appointment
+  - Explore Gallery
+  - Instagram
+
+Instagram button should open:
+https://www.instagram.com/glam_byharini/
+
+2. CINEMATIC ABOUT SECTION
+Use uploaded about/profile assets.
+
+Create:
+- Storytelling layout
+- Emotional editorial presentation
+- Animated text reveals
+- Timeline/journey design
+- Artistic portrait presentation
+- Luxury split-screen layout
+
+3. SERVICES SECTION
+Create premium animated glassmorphism service cards.
+
+Services:
+- Bridal Makeup
+- HD Makeup
+- Hair Styling
+- Saree Draping
+- Nail Art
+- Facial & Skincare
+- Party Makeup
+- Photoshoot Makeup
+- Spa & Relaxation
+
+Requirements:
+- Lucide icons
+- Hover animations
+- Expand transitions
+- Smooth motion
+- Luxury spacing
+- Editorial UI
+
+4. ARTISTRY SHOWCASE
+Use uploaded Harini artistry content.
+
+Create:
+- Editorial gallery
+- Cinematic layouts
+- Large artistic imagery
+- Asymmetrical grids
+- Scroll storytelling
+- Premium visual presentation
+- Fashion campaign aesthetic
+
+5. CLIENT GALLERY
+VERY IMPORTANT:
+Use uploaded client photos/videos.
+
+Create:
+- Masonry gallery
+- Video previews
+- Lightbox popup
+- Smooth animations
+- Before/after feeling
+- Luxury hover effects
+- Category filters:
+  - Bridal
+  - Reception
+  - Fashion
+  - Party
+  - Hair Styling
+  - Nail Art
+
+Gallery should feel premium and interactive.
+
+6. VIDEO SHOWCASE SECTION
+Use uploaded client videos/artistry reels.
+
+Requirements:
+- Cinematic reel-style layout
+- Smooth autoplay previews
+- Hover interactions
+- Modern luxury UI
+- Instagram-inspired presentation
+
+7. TESTIMONIALS
+Create animated luxury testimonials section:
+- Glass cards
+- Floating transitions
+- Elegant typography
+- Smooth carousel
+- Premium spacing
+
+8. BOOKING SECTION
+Create iOS-inspired booking experience:
+- Glassmorphism form
+- Floating labels
+- Elegant focus states
+- Service selection
+- Date/time picker
+- Animated interactions
+- Luxury submit animation
+
+9. INSTAGRAM SECTION
+This section should strongly reflect the real Instagram brand.
+
+Requirements:
+- Instagram-style feed layout
+- Reels-inspired cards
+- Animated social grid
+- Live aesthetic feel
+- Instagram CTA button
+- Lucide Instagram icon
+- Smooth hover animations
+
+ALL Instagram links should redirect to:
+https://www.instagram.com/glam_byharini/
+
+10. FOOTER
+Luxury minimal footer:
+- Elegant spacing
+- Smooth hover interactions
+- Newsletter
+- Social links
+- Instagram integration
+- Brand signature feel
+
+UI/UX REQUIREMENTS:
+- Sticky floating navbar
+- Scroll progress indicator
+- Smooth mobile menu
+- Glassmorphism effects
+- Rounded corners
+- Ambient glow
+- Cinematic transitions
+- Premium responsive design
+- Luxury spacing rhythm
+- High-end mobile experience
+- Elegant loading sequence
+
+MEDIA REQUIREMENTS:
+- Optimize all uploaded images/videos
+- Lazy load media
+- Smooth playback
+- Responsive galleries
+- Proper aspect ratio handling
+- Use cinematic cropping where appropriate
+
+PERFORMANCE:
+- Production-ready
+- SEO optimized
+- Accessible
+- Fast loading
+- Clean reusable components
+- Modular architecture
+
+IMPORTANT:
+- Replace all old irrelevant content
+- Use uploaded ZIP assets throughout the website
+- Make the website feel like a luxury beauty brand portfolio
+- Ensure every section has motion and storytelling
+- Prioritize premium visuals and emotional presentation
+- Make it feel like an Apple-designed cinematic beauty experience
+
+FINAL OUTPUT:
+- Modify all required files
+- Build complete premium UI
+- Integrate uploaded media properly
+- Show updated files
+- Ensure everything works perfectly
+- Keep code clean and scalable
