@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 
 const services = [
   {
     title: 'Bridal Makeup',
     tag: 'Signature',
     price: '₹8,000',
-    image: '/assets/clients/000_client.jpg',
+    image: '/assets/services/bridal.jpeg',
     short: 'Timeless bridal beauty crafted for your most precious day.',
     details: [
       'Full HD or Airbrush finish',
@@ -21,7 +21,7 @@ const services = [
     title: 'HD Makeup',
     tag: 'Premium',
     price: '₹4,500',
-    image: '/assets/clients/004_client.jpg',
+    image: '/assets/services/hd_makeup.jpeg',
     short: 'Flawless high-definition coverage perfect for photography and video.',
     details: [
       'High-definition formula',
@@ -35,7 +35,7 @@ const services = [
     title: 'Hair Styling',
     tag: 'Classic',
     price: '₹2,500',
-    image: '/assets/clients/005_client.jpg',
+    image: '/assets/services/hair.jpeg',
     short: 'Elegant updos, braids, and modern styling for every occasion.',
     details: [
       'Bridal & reception updos',
@@ -49,7 +49,7 @@ const services = [
     title: 'Saree Draping',
     tag: 'Traditional',
     price: '₹1,500',
-    image: '/assets/clients/006_client.jpg',
+    image: '/assets/services/saree.jpeg',
     short: 'Traditional and contemporary saree draping expertise.',
     details: [
       'Bridal & reception draping',
@@ -63,7 +63,7 @@ const services = [
     title: 'Nail Art',
     tag: 'Luxury',
     price: '₹1,200',
-    image: '/assets/clients/007_client.jpg',
+    image: '/assets/services/nail.jpeg',
     short: 'Intricate nail art designs to complete your entire look.',
     details: [
       'Gel & acrylic options',
@@ -77,7 +77,7 @@ const services = [
     title: 'Facial & Skincare',
     tag: 'Glow',
     price: '₹2,000',
-    image: '/assets/clients/008_client.jpg',
+    image: '/assets/services/facial.jpeg',
     short: 'Rejuvenating facials for radiant, glowing skin before your event.',
     details: [
       'Pre-bridal facial packages',
@@ -91,7 +91,7 @@ const services = [
     title: 'Party Makeup',
     tag: 'Glamour',
     price: '₹3,000',
-    image: '/assets/clients/009_client.jpg',
+    image: '/assets/services/bridal.jpeg',
     short: 'Glamorous looks for parties, receptions and celebrations.',
     details: [
       'Cocktail & party looks',
@@ -105,7 +105,7 @@ const services = [
     title: 'Photoshoot Makeup',
     tag: 'Editorial',
     price: '₹5,000',
-    image: '/assets/clients/013_client.webp',
+    image: '/assets/services/photoshoot.jpeg',
     short: 'Editorial-quality looks crafted for professional photography.',
     details: [
       'Magazine-worthy finish',
@@ -119,7 +119,7 @@ const services = [
     title: 'Spa & Relaxation',
     tag: 'Wellness',
     price: '₹3,500',
-    image: '/assets/clients/015_client.webp',
+    image: '/assets/services/spa.jpeg',
     short: 'Luxurious spa treatments for total body and mind relaxation.',
     details: [
       'Full body de-stress',
@@ -139,7 +139,7 @@ function FlipCard({ service, index }: { service: (typeof services)[0]; index: nu
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.07 }}
+      transition={{ duration: 0.5, delay: index * 0.06 }}
       className="relative cursor-pointer"
       style={{ perspective: '1000px', height: '400px' }}
       onClick={() => setFlipped((f) => !f)}
@@ -151,7 +151,7 @@ function FlipCard({ service, index }: { service: (typeof services)[0]; index: nu
       >
         {/* FRONT */}
         <div
-          className="absolute inset-0 overflow-hidden bg-white shadow-lg group"
+          className="absolute inset-0 overflow-hidden bg-white shadow-md group"
           style={{ backfaceVisibility: 'hidden' }}
         >
           <div className="absolute inset-0">
@@ -165,17 +165,17 @@ function FlipCard({ service, index }: { service: (typeof services)[0]; index: nu
 
           <div className="absolute inset-0 flex flex-col justify-between p-5">
             <div className="flex justify-between items-start">
-              <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-white/60 bg-black/30 px-2 py-1 backdrop-blur-sm">
+              <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-white/70 bg-black/30 px-2 py-1 backdrop-blur-sm rounded-sm">
                 {service.tag}
               </span>
-              <span className="font-serif text-lg font-bold text-white">{service.price}</span>
+              <span className="font-serif text-lg font-bold text-white drop-shadow">{service.price}</span>
             </div>
             <div>
               <h3 className="text-xl font-serif text-white mb-2">{service.title}</h3>
               <p className="text-white/70 text-sm leading-relaxed">{service.short}</p>
-              <div className="mt-4 flex items-center gap-2 text-white/40">
+              <div className="mt-4 flex items-center gap-2 text-white/50">
                 <span className="font-mono text-[9px] tracking-widest uppercase">Tap for details</span>
-                <ChevronDown size={10} className="rotate-[-90deg]" />
+                <ChevronRight size={10} />
               </div>
             </div>
           </div>
@@ -183,7 +183,7 @@ function FlipCard({ service, index }: { service: (typeof services)[0]; index: nu
 
         {/* BACK */}
         <div
-          className="absolute inset-0 bg-foreground text-background flex flex-col p-6 shadow-lg"
+          className="absolute inset-0 bg-foreground text-background flex flex-col p-6 shadow-md"
           style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
         >
           <div className="flex justify-between items-start mb-4">
@@ -207,10 +207,8 @@ function FlipCard({ service, index }: { service: (typeof services)[0]; index: nu
             ))}
           </ul>
 
-          <div className="mt-6 pt-4 border-t border-background/10">
-            <p className="font-mono text-[9px] tracking-widest uppercase text-background/30 text-center">
-              Tap to flip back
-            </p>
+          <div className="mt-6 pt-4 border-t border-background/10 text-center">
+            <p className="font-mono text-[9px] tracking-widest uppercase text-background/30">Tap to flip back</p>
           </div>
         </div>
       </motion.div>

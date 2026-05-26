@@ -14,6 +14,7 @@ import Booking from "@/components/Booking";
 import InstagramSection from "@/components/InstagramSection";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,7 @@ function Home() {
         <InstagramSection />
       </main>
       <Footer />
+      <WhatsAppButton />
     </div>
   );
 }
