@@ -134,7 +134,11 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 1, ease: [0.16, 1, 0.3, 1] }}
               className="relative z-10 h-full w-auto object-contain object-bottom"
-              style={{ filter: 'drop-shadow(0 20px 60px rgba(0,0,0,0.12))' }}
+              style={{ mixBlendMode: 'multiply' }}
+            />
+            {/* Bottom gradient so image fades into section */}
+            <div className="absolute bottom-0 left-0 right-0 h-40 z-20 pointer-events-none"
+              style={{ background: 'linear-gradient(to top, #FAF7F4 0%, transparent 100%)' }}
             />
 
             {/* Floating stat card */}

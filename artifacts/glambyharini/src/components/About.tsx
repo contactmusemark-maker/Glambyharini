@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 export default function About() {
   return (
-    <section id="about" className="py-24 md:py-40 bg-foreground text-background relative overflow-hidden">
+    <section id="about" className="pt-24 md:pt-40 pb-0 bg-foreground text-background relative overflow-hidden">
       {/* decorative blurs */}
       <div className="absolute top-0 right-0 w-72 h-72 rounded-full bg-primary/20 blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-72 h-72 rounded-full bg-accent/10 blur-3xl pointer-events-none" />
@@ -19,12 +19,18 @@ export default function About() {
             transition={{ duration: 0.8 }}
             className="relative"
           >
-            <img
-              src="/assets/about_harini.png"
-              alt="Harini Suresh — Artist Behind the Brush"
-              className="w-full h-auto object-contain"
-              style={{ filter: 'drop-shadow(0 20px 60px rgba(0,0,0,0.35))' }}
-            />
+            <div className="relative">
+              <img
+                src="/assets/about_harini.png"
+                alt="Harini Suresh — Artist Behind the Brush"
+                className="w-full h-auto object-contain block"
+              />
+              {/* Fade bottom of image into section background */}
+              <div
+                className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none"
+                style={{ background: 'linear-gradient(to top, #1a1a1a 0%, transparent 100%)' }}
+              />
+            </div>
           </motion.div>
 
           {/* Text column */}

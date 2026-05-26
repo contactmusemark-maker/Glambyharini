@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Lenis from "lenis";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -15,6 +15,7 @@ import InstagramSection from "@/components/InstagramSection";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import SplashScreen from "@/components/SplashScreen";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +41,8 @@ function Home() {
 }
 
 function App() {
+  const [splashDone, setSplashDone] = useState(false);
+
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
@@ -52,20 +55,20 @@ function App() {
       touchMultiplier: 2,
       infinite: false,
     });
-    
+
     function raf(time: number) {
       lenis.raf(time);
       requestAnimationFrame(raf);
     }
-    
+
     requestAnimationFrame(raf);
-    
     return () => lenis.destroy();
   }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
+        <SplashScreen onDone={() => setSplashDone(true)} />
         <Home />
         <Toaster />
       </TooltipProvider>
