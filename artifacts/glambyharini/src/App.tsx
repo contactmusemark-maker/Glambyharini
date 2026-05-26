@@ -7,10 +7,15 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Services from "@/components/Services";
+import Pricing from "@/components/Pricing";
 import Gallery from "@/components/Gallery";
 import VideoShowcase from "@/components/VideoShowcase";
 import Testimonials from "@/components/Testimonials";
+import GiftVoucher from "@/components/GiftVoucher";
+import LoyaltyBadge from "@/components/LoyaltyBadge";
 import Booking from "@/components/Booking";
+import FAQ from "@/components/FAQ";
+import ServiceArea from "@/components/ServiceArea";
 import InstagramSection from "@/components/InstagramSection";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
@@ -28,10 +33,15 @@ function Home() {
         <Hero />
         <About />
         <Services />
+        <Pricing />
         <Gallery />
         <VideoShowcase />
         <Testimonials />
+        <GiftVoucher />
+        <LoyaltyBadge />
         <Booking />
+        <FAQ />
+        <ServiceArea />
         <InstagramSection />
       </main>
       <Footer />
