@@ -7,7 +7,6 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Services from "@/components/Services";
-import ArtistryShowcase from "@/components/ArtistryShowcase";
 import Gallery from "@/components/Gallery";
 import VideoShowcase from "@/components/VideoShowcase";
 import Testimonials from "@/components/Testimonials";
@@ -27,7 +26,6 @@ function Home() {
         <Hero />
         <About />
         <Services />
-        <ArtistryShowcase />
         <Gallery />
         <VideoShowcase />
         <Testimonials />
