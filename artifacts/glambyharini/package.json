@@ -76,6 +76,9 @@
   },
   "dependencies": {
     "@studio-freight/lenis": "^1.0.42",
-    "lenis": "^1.3.23"
+    "@types/leaflet": "^1.9.21",
+    "leaflet": "^1.9.4",
+    "lenis": "^1.3.23",
+    "react-leaflet": "^5.0.0"
   }
 }
