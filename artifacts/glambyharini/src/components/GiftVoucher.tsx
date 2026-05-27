@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Gift, Sparkles, Send, X } from 'lucide-react';
+import { Star, Zap, Users, Send, X, ArrowRight } from 'lucide-react';
 
 const amounts = ['₹2,999', '₹5,499', '₹9,999', '₹18,999'];
 
 export default function GiftVoucher() {
-  const [selected, setSelected] = useState('₹5,499');
   const [showModal, setShowModal] = useState(false);
+  const [selected, setSelected] = useState('₹5,499');
   const [recipientName, setRecipientName] = useState('');
   const [senderName, setSenderName] = useState('');
   const [message, setMessage] = useState('');
@@ -18,122 +18,183 @@ export default function GiftVoucher() {
   };
 
   return (
-    <section id="gift" className="py-24 md:py-32 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #1a0a0f 0%, #0d0d0d 50%, #1a0a14 100%)' }}>
+    <section id="gift" className="py-20 md:py-32 bg-background">
+      <div className="container mx-auto px-6">
 
-      {/* Ambient glow */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full bg-primary/10 blur-[120px]" />
-        <div className="absolute top-20 right-20 w-[200px] h-[200px] rounded-full bg-accent/8 blur-[80px]" />
-      </div>
-
-      {/* Sparkle dots */}
-      {[
-        { top: '15%', left: '8%' }, { top: '70%', left: '5%' },
-        { top: '20%', right: '10%' }, { top: '75%', right: '8%' },
-        { top: '45%', left: '50%' },
-      ].map((pos, i) => (
+        {/* Section label */}
         <motion.div
-          key={i}
-          className="absolute pointer-events-none"
-          style={pos}
-          animate={{ opacity: [0.2, 0.8, 0.2], scale: [0.8, 1.2, 0.8] }}
-          transition={{ duration: 2.5 + i * 0.4, repeat: Infinity }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-10"
         >
-          <Sparkles size={10} className="text-primary/40" />
+          <span className="font-mono text-xs tracking-[0.3em] uppercase text-primary">For Someone Special</span>
         </motion.div>
-      ))}
 
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="max-w-5xl mx-auto">
+        {/* ── Hero banner card ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="relative rounded-3xl overflow-hidden mb-6"
+          style={{
+            background: 'linear-gradient(120deg, hsl(351 60% 88%) 0%, hsl(39 80% 85%) 50%, hsl(351 50% 80%) 100%)',
+          }}
+        >
+          <div className="grid md:grid-cols-2 items-center min-h-[340px]">
 
-          {/* Header */}
+            {/* Left — 3D gift image */}
+            <div className="relative flex items-end justify-center pt-6 md:pt-0 h-64 md:h-full overflow-visible">
+              {/* Glow blob behind image */}
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div className="w-64 h-64 rounded-full bg-white/25 blur-3xl" />
+              </div>
+              <motion.img
+                src="/assets/gift_box.png"
+                alt="Gift a Glam Experience"
+                className="relative z-10 h-72 md:h-80 w-auto object-contain object-bottom"
+                style={{ mixBlendMode: 'multiply' }}
+                initial={{ y: 10, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                animate={{ y: [0, -8, 0] }}
+              />
+            </div>
+
+            {/* Right — text + CTA */}
+            <div className="px-8 md:px-10 py-10 md:py-0 relative z-10">
+              {/* Special offer badge */}
+              <motion.div
+                initial={{ scale: 0 }}
+                whileInView={{ scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3, type: 'spring', stiffness: 200 }}
+                className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-primary text-white text-[10px] font-mono tracking-[0.2em] uppercase mb-5 shadow-lg shadow-primary/30"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                Special Offer
+              </motion.div>
+
+              <h2 className="text-4xl md:text-5xl font-serif text-foreground leading-tight mb-4">
+                Gift a<br /><span className="italic">Glam Experience</span>
+              </h2>
+
+              <p className="text-foreground/60 text-base leading-relaxed mb-8 max-w-sm">
+                The most thoughtful gift for a bride-to-be, best friend, or anyone who deserves to feel extraordinary. Valid for any service.
+              </p>
+
+              <button
+                onClick={() => setShowModal(true)}
+                className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-foreground text-background text-sm font-mono tracking-wider hover:bg-foreground/85 transition-all duration-300 shadow-xl shadow-foreground/15 group"
+              >
+                Get Started
+                <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
+              </button>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* ── Three stat cards ── */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {/* Rating card */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="text-center mb-14"
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="rounded-2xl bg-white border border-foreground/6 shadow-sm p-6 flex items-start gap-4"
           >
-            <span className="font-mono text-xs tracking-[0.3em] uppercase text-primary mb-4 block">For Someone Special</span>
-            <h2 className="text-4xl md:text-5xl font-serif text-white mb-4">
-              Gift a <span className="italic text-primary/80">Glam Experience</span>
-            </h2>
-            <p className="text-white/40 max-w-md mx-auto text-sm">
-              The most thoughtful gift for a bride-to-be, best friend, or anyone who deserves to feel extraordinary.
-            </p>
+            <div className="w-11 h-11 rounded-full bg-primary/10 overflow-hidden flex items-center justify-center shrink-0">
+              <span className="text-lg">💄</span>
+            </div>
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                {[1,2,3,4,5].map(i => (
+                  <Star key={i} size={12} className={i <= 4 ? 'text-amber-400 fill-amber-400' : 'text-amber-400 fill-amber-400'} />
+                ))}
+                <span className="text-sm font-semibold text-foreground ml-1">4.9</span>
+              </div>
+              <p className="text-foreground/60 text-sm italic">"Absolutely transformed my look!"</p>
+              <p className="text-foreground/35 text-xs mt-1 font-mono">— Divya R., Bride</p>
+            </div>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          {/* Exclusive offers card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="rounded-2xl bg-white border border-foreground/6 shadow-sm p-6 flex items-start gap-4"
+          >
+            <div className="w-11 h-11 rounded-2xl bg-foreground flex items-center justify-center shrink-0">
+              <Zap size={18} className="text-background" fill="currentColor" />
+            </div>
+            <div>
+              <p className="font-semibold text-foreground text-sm mb-1">Exclusive Voucher Perks</p>
+              <p className="text-foreground/50 text-sm leading-relaxed">
+                Redeemable on any service. Valid 6 months. Delivered via WhatsApp instantly.
+              </p>
+            </div>
+          </motion.div>
 
-            {/* Voucher card visual */}
+          {/* Stat card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="rounded-2xl bg-white border border-foreground/6 shadow-sm p-6 flex items-center gap-4"
+          >
+            <Users size={22} className="text-primary shrink-0" />
+            <div>
+              <p className="text-4xl font-serif text-foreground leading-none mb-1">500+</p>
+              <p className="text-foreground/40 text-sm font-mono uppercase tracking-widest">Happy Clients</p>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* ── Modal ── */}
+      <AnimatePresence>
+        {showModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+            onClick={(e) => e.target === e.currentTarget && setShowModal(false)}
+          >
             <motion.div
-              initial={{ opacity: 0, x: -40, rotateY: -15 }}
-              whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-              style={{ perspective: 1000 }}
+              initial={{ scale: 0.92, y: 24 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.92, y: 24 }}
+              transition={{ type: 'spring', stiffness: 260, damping: 22 }}
+              className="bg-white rounded-3xl p-8 w-full max-w-md relative shadow-2xl"
             >
-              <div
-                className="relative rounded-3xl overflow-hidden p-8"
-                style={{
-                  background: 'linear-gradient(135deg, #2d1520 0%, #1a0d12 40%, #2d1a10 100%)',
-                  border: '1px solid rgba(201,169,160,0.2)',
-                  boxShadow: '0 30px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05)',
-                }}
+              <button
+                onClick={() => setShowModal(false)}
+                className="absolute top-5 right-5 text-foreground/25 hover:text-foreground transition-colors"
               >
-                {/* Top strip */}
-                <div className="flex justify-between items-start mb-8">
-                  <div>
-                    <div className="font-mono text-[9px] tracking-[0.4em] uppercase text-primary/50 mb-1">Gift Voucher</div>
-                    <div className="font-serif text-2xl text-white">GlamByHarini</div>
-                  </div>
-                  <div className="w-12 h-12 rounded-full border border-primary/30 flex items-center justify-center">
-                    <Gift size={20} className="text-primary" />
-                  </div>
-                </div>
+                <X size={20} />
+              </button>
 
-                {/* Amount display */}
-                <div className="mb-8">
-                  <div className="text-5xl font-serif text-white/10 absolute right-8 top-8 select-none pointer-events-none">✦</div>
-                  <div className="font-mono text-xs text-white/30 mb-2 uppercase tracking-widest">Voucher Value</div>
-                  <div className="text-5xl font-serif text-primary">{selected}</div>
-                </div>
+              <h3 className="font-serif text-2xl text-foreground mb-1">Personalise Your Gift</h3>
+              <p className="text-xs font-mono text-foreground/35 tracking-wider uppercase mb-6">Digital Gift Voucher</p>
 
-                {/* Decorative strip */}
-                <div className="h-px w-full mb-6" style={{ background: 'linear-gradient(to right, transparent, rgba(201,169,160,0.3), transparent)' }} />
-
-                <div className="flex justify-between items-end">
-                  <div>
-                    <div className="font-mono text-[9px] tracking-[0.3em] uppercase text-white/20 mb-1">Redeemable at</div>
-                    <div className="text-sm text-white/50">GlamByHarini Studio, Tamil Nadu</div>
-                  </div>
-                  <div className="font-mono text-xs text-primary/40">Glam · Beauty · Art</div>
-                </div>
-
-                {/* Corner ornament */}
-                <div className="absolute bottom-4 left-4 w-16 h-16 border-b border-l border-primary/10 rounded-bl-2xl pointer-events-none" />
-                <div className="absolute top-4 right-16 w-16 h-16 border-t border-r border-primary/10 rounded-tr-2xl pointer-events-none" />
-              </div>
-            </motion.div>
-
-            {/* Selector + CTA */}
-            <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <p className="text-white/50 text-sm mb-6">Select the voucher amount that matches her dream look:</p>
-
-              <div className="grid grid-cols-2 gap-3 mb-8">
+              {/* Amount selector */}
+              <div className="grid grid-cols-4 gap-2 mb-6">
                 {amounts.map((amt) => (
                   <button
                     key={amt}
                     onClick={() => setSelected(amt)}
-                    className={`py-3 rounded-xl font-mono text-sm tracking-wider transition-all duration-300 ${
+                    className={`py-2 rounded-xl font-mono text-xs tracking-wide transition-all duration-200 ${
                       selected === amt
-                        ? 'bg-primary text-white shadow-lg shadow-primary/30'
-                        : 'border border-white/10 text-white/40 hover:border-primary/40 hover:text-white/70'
+                        ? 'bg-primary text-white shadow-md shadow-primary/25'
+                        : 'border border-foreground/10 text-foreground/50 hover:border-primary/30 hover:text-primary'
                     }`}
                   >
                     {amt}
@@ -141,84 +202,43 @@ export default function GiftVoucher() {
                 ))}
               </div>
 
-              <div className="space-y-4 mb-8 text-sm text-white/40">
-                <div className="flex items-center gap-2"><span className="text-primary">✦</span> Valid for 6 months from purchase</div>
-                <div className="flex items-center gap-2"><span className="text-primary">✦</span> Redeemable on any service</div>
-                <div className="flex items-center gap-2"><span className="text-primary">✦</span> Digital voucher sent via WhatsApp</div>
-                <div className="flex items-center gap-2"><span className="text-primary">✦</span> Perfect for brides, birthdays & anniversaries</div>
-              </div>
-
-              <button
-                onClick={() => setShowModal(true)}
-                className="w-full py-4 rounded-2xl bg-primary text-white font-mono text-sm tracking-widest uppercase hover:bg-primary/90 transition-all duration-300 flex items-center justify-center gap-3 shadow-xl shadow-primary/20"
-              >
-                <Gift size={16} />
-                Gift {selected} Experience
-              </button>
-            </motion.div>
-          </div>
-        </div>
-      </div>
-
-      {/* Modal */}
-      <AnimatePresence>
-        {showModal && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
-            onClick={(e) => e.target === e.currentTarget && setShowModal(false)}
-          >
-            <motion.div
-              initial={{ scale: 0.9, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.9, y: 20 }}
-              className="bg-white rounded-3xl p-8 w-full max-w-md relative"
-            >
-              <button onClick={() => setShowModal(false)} className="absolute top-4 right-4 text-foreground/30 hover:text-foreground">
-                <X size={20} />
-              </button>
-              <h3 className="font-serif text-2xl text-foreground mb-1">Personalise Your Gift</h3>
-              <p className="text-xs font-mono text-foreground/40 tracking-wider uppercase mb-6">Voucher · {selected}</p>
-
-              <div className="space-y-4">
+              <div className="space-y-4 mb-6">
                 <div>
-                  <label className="text-xs font-mono uppercase tracking-widest text-foreground/40 mb-1.5 block">Gift For (Name)</label>
+                  <label className="text-[10px] font-mono uppercase tracking-widest text-foreground/35 mb-1.5 block">Gift For</label>
                   <input
                     value={recipientName}
                     onChange={(e) => setRecipientName(e.target.value)}
-                    placeholder="e.g. Priya"
-                    className="w-full border border-foreground/10 rounded-xl px-4 py-3 text-sm text-foreground bg-foreground/3 focus:outline-none focus:border-primary"
+                    placeholder="Recipient's name"
+                    className="w-full border border-foreground/10 rounded-xl px-4 py-3 text-sm text-foreground placeholder:text-foreground/25 focus:outline-none focus:border-primary transition-colors"
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-mono uppercase tracking-widest text-foreground/40 mb-1.5 block">From (Your Name)</label>
+                  <label className="text-[10px] font-mono uppercase tracking-widest text-foreground/35 mb-1.5 block">From</label>
                   <input
                     value={senderName}
                     onChange={(e) => setSenderName(e.target.value)}
-                    placeholder="e.g. Kavya"
-                    className="w-full border border-foreground/10 rounded-xl px-4 py-3 text-sm text-foreground bg-foreground/3 focus:outline-none focus:border-primary"
+                    placeholder="Your name"
+                    className="w-full border border-foreground/10 rounded-xl px-4 py-3 text-sm text-foreground placeholder:text-foreground/25 focus:outline-none focus:border-primary transition-colors"
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-mono uppercase tracking-widest text-foreground/40 mb-1.5 block">Personal Message</label>
+                  <label className="text-[10px] font-mono uppercase tracking-widest text-foreground/35 mb-1.5 block">Personal Message</label>
                   <textarea
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder="You deserve to glow, darling..."
                     rows={3}
-                    className="w-full border border-foreground/10 rounded-xl px-4 py-3 text-sm text-foreground bg-foreground/3 focus:outline-none focus:border-primary resize-none"
+                    className="w-full border border-foreground/10 rounded-xl px-4 py-3 text-sm text-foreground placeholder:text-foreground/25 focus:outline-none focus:border-primary transition-colors resize-none"
                   />
                 </div>
               </div>
 
               <button
                 onClick={handleSend}
-                className="w-full mt-6 py-3.5 bg-primary text-white rounded-xl font-mono text-sm tracking-widest uppercase flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors"
+                className="w-full py-3.5 bg-primary text-white rounded-xl font-mono text-sm tracking-widest uppercase flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20"
               >
                 <Send size={14} />
-                Send via WhatsApp
+                Send {selected} Voucher via WhatsApp
               </button>
             </motion.div>
           </motion.div>
