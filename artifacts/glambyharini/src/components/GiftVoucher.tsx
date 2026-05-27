@@ -29,7 +29,13 @@ export default function GiftVoucher() {
           transition={{ duration: 0.6 }}
           className="text-center mb-10"
         >
-          <span className="font-mono text-xs tracking-[0.3em] uppercase text-primary">For Someone Special</span>
+          <span className="font-mono text-xs tracking-[0.3em] uppercase text-primary mb-4 block">For Someone Special</span>
+          <h2 className="text-4xl md:text-5xl font-serif text-foreground mb-3">
+            The Perfect <span className="italic text-primary/80">Gift</span>
+          </h2>
+          <p className="text-foreground/45 text-sm max-w-md mx-auto">
+            Celebrate the women in your life with a luxury glam experience they will never forget.
+          </p>
         </motion.div>
 
         {/* ── Hero banner card ── */}
