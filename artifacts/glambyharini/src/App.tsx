@@ -11,8 +11,14 @@ import Pricing from "@/components/Pricing";
 import Gallery from "@/components/Gallery";
 import VideoShowcase from "@/components/VideoShowcase";
 import Testimonials from "@/components/Testimonials";
+import BeforeAfterSlider from "@/components/BeforeAfterSlider";
+import BridalQuiz from "@/components/BridalQuiz";
 import GiftVoucher from "@/components/GiftVoucher";
 import LoyaltyBadge from "@/components/LoyaltyBadge";
+import AvailabilityCalendar from "@/components/AvailabilityCalendar";
+import VideoReel from "@/components/VideoReel";
+import CollabPartners from "@/components/CollabPartners";
+import BlogTips from "@/components/BlogTips";
 import Booking from "@/components/Booking";
 import FAQ from "@/components/FAQ";
 import ServiceArea from "@/components/ServiceArea";
@@ -37,8 +43,14 @@ function Home() {
         <Gallery />
         <VideoShowcase />
         <Testimonials />
+        <BeforeAfterSlider />
+        <BridalQuiz />
         <GiftVoucher />
         <LoyaltyBadge />
+        <AvailabilityCalendar />
+        <VideoReel />
+        <CollabPartners />
+        <BlogTips />
         <Booking />
         <FAQ />
         <ServiceArea />
