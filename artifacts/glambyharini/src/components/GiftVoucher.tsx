@@ -38,57 +38,59 @@ export default function GiftVoucher() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="relative rounded-3xl overflow-hidden mb-6"
+          className="relative rounded-3xl mb-6"
           style={{
-            background: 'linear-gradient(120deg, hsl(351 60% 88%) 0%, hsl(39 80% 85%) 50%, hsl(351 50% 80%) 100%)',
+            background: 'linear-gradient(120deg, hsl(351 60% 88%) 0%, hsl(39 80% 85%) 55%, hsl(351 50% 80%) 100%)',
+            minHeight: '360px',
+            overflow: 'visible',
           }}
         >
-          <div className="grid md:grid-cols-2 items-center min-h-[340px]">
+          <div className="grid md:grid-cols-2 items-center" style={{ minHeight: '360px' }}>
 
-            {/* Left — 3D gift image */}
-            <div className="relative flex items-end justify-center pt-6 md:pt-0 h-64 md:h-full overflow-visible">
-              {/* Glow blob behind image */}
+            {/* Left — 3D gift image — overflows card top & bottom */}
+            <div className="relative flex items-center justify-center" style={{ height: '420px' }}>
+              {/* Glow blob */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-64 h-64 rounded-full bg-white/25 blur-3xl" />
+                <div className="w-80 h-80 rounded-full bg-white/30 blur-3xl" />
               </div>
               <motion.img
                 src="/assets/gift_box.png"
                 alt="Gift a Glam Experience"
-                className="relative z-10 h-72 md:h-80 w-auto object-contain object-bottom"
-                style={{ mixBlendMode: 'multiply' }}
-                initial={{ y: 10, opacity: 0 }}
+                className="relative z-10 w-auto object-contain"
+                style={{ mixBlendMode: 'multiply', height: '420px', maxWidth: 'none' }}
+                initial={{ y: 16, opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                animate={{ y: [0, -8, 0] }}
+                animate={{ y: [0, -10, 0] }}
               />
             </div>
 
             {/* Right — text + CTA */}
-            <div className="px-8 md:px-10 py-10 md:py-0 relative z-10">
+            <div className="px-8 md:px-12 py-12 md:py-16 relative z-10">
               {/* Special offer badge */}
               <motion.div
                 initial={{ scale: 0 }}
                 whileInView={{ scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.3, type: 'spring', stiffness: 200 }}
-                className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-primary text-white text-[10px] font-mono tracking-[0.2em] uppercase mb-5 shadow-lg shadow-primary/30"
+                className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-primary text-white text-[10px] font-mono tracking-[0.2em] uppercase mb-6 shadow-lg shadow-primary/30"
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                 Special Offer
               </motion.div>
 
-              <h2 className="text-4xl md:text-5xl font-serif text-foreground leading-tight mb-4">
+              <h2 className="text-5xl md:text-6xl font-serif text-foreground leading-[1.1] mb-5">
                 Gift a<br /><span className="italic">Glam Experience</span>
               </h2>
 
-              <p className="text-foreground/60 text-base leading-relaxed mb-8 max-w-sm">
+              <p className="text-foreground/55 text-base leading-relaxed mb-10 max-w-sm">
                 The most thoughtful gift for a bride-to-be, best friend, or anyone who deserves to feel extraordinary. Valid for any service.
               </p>
 
               <button
                 onClick={() => setShowModal(true)}
-                className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-foreground text-background text-sm font-mono tracking-wider hover:bg-foreground/85 transition-all duration-300 shadow-xl shadow-foreground/15 group"
+                className="inline-flex items-center gap-3 px-9 py-4 rounded-2xl bg-foreground text-background text-sm font-mono tracking-wider hover:bg-foreground/85 transition-all duration-300 shadow-xl shadow-foreground/15 group"
               >
                 Get Started
                 <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
