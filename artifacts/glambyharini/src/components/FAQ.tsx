@@ -41,75 +41,85 @@ export default function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="py-24 md:py-40 bg-background relative overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none"
-        style={{ backgroundImage: 'radial-gradient(circle at 10% 50%, hsl(351 35% 57% / 0.04) 0%, transparent 40%)' }} />
+    <section id="faq" className="py-24 md:py-36 bg-secondary/15 relative overflow-hidden">
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent pointer-events-none" />
+      <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-accent/25 to-transparent pointer-events-none" />
 
       <div className="container mx-auto px-6">
-        <div className="max-w-3xl mx-auto">
-
+        <div className="max-w-6xl mx-auto">
           {/* Header */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 22 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="mb-14"
+            className="text-center mb-12 md:mb-14"
           >
-            <span className="font-mono text-xs tracking-[0.3em] uppercase text-primary mb-4 block">Got Questions?</span>
-            <h2 className="text-4xl md:text-5xl font-serif text-foreground">
-              Frequently Asked <span className="italic text-primary/80">Questions</span>
+            <div className="inline-flex items-center gap-2 rounded-full bg-white/85 backdrop-blur px-4 py-1.5 border border-primary/15 shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-primary" />
+              <span className="font-mono text-[11px] tracking-widest uppercase text-foreground/55">FAQs</span>
+            </div>
+
+            <h2 className="mt-7 text-4xl md:text-6xl font-mono font-semibold text-foreground leading-tight">
+              Frequently asked questions
             </h2>
+            <p className="mt-3 text-sm md:text-base text-foreground/55 max-w-xl mx-auto">
+              Here are some common questions about our services to help you understand better.
+            </p>
           </motion.div>
 
-          {/* Accordion */}
-          <div className="space-y-3">
-            {faqs.map((faq, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-40px' }}
-                transition={{ duration: 0.5, delay: i * 0.05 }}
-                className={`rounded-2xl overflow-hidden border transition-all duration-300 ${
-                  open === i
-                    ? 'border-primary/20 shadow-lg shadow-primary/5'
-                    : 'border-foreground/6 hover:border-foreground/10'
-                }`}
-              >
-                <button
-                  onClick={() => setOpen(open === i ? null : i)}
-                  className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left bg-white hover:bg-foreground/1 transition-colors"
+          {/* Grid Accordion */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
+            {faqs.map((faq, i) => {
+              const isOpen = open === i;
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 18 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{ duration: 0.5, delay: i * 0.05 }}
+                  className={`rounded-2xl bg-white/90 backdrop-blur border transition-all duration-300 shadow-sm shadow-black/5 ${
+                    isOpen ? 'border-primary/25 shadow-primary/5' : 'border-foreground/8 hover:border-primary/20'
+                  }`}
                 >
-                  <span className={`text-base font-serif transition-colors ${open === i ? 'text-primary' : 'text-foreground'}`}>
-                    {faq.q}
-                  </span>
-                  <div className={`shrink-0 w-7 h-7 rounded-full flex items-center justify-center transition-all duration-300 ${
-                    open === i ? 'bg-primary text-white rotate-0' : 'bg-foreground/6 text-foreground/40'
-                  }`}>
-                    {open === i ? <Minus size={13} /> : <Plus size={13} />}
-                  </div>
-                </button>
+                  <button
+                    type="button"
+                    onClick={() => setOpen(isOpen ? null : i)}
+                    aria-expanded={isOpen}
+                    className="w-full flex items-start justify-between gap-5 px-6 py-5 text-left"
+                  >
+                    <span className="text-sm md:text-base font-mono text-foreground/85 leading-snug">
+                      {faq.q}
+                    </span>
+                    <span className={`mt-0.5 shrink-0 w-9 h-9 rounded-full flex items-center justify-center transition-colors ${
+                      isOpen ? 'bg-primary text-primary-foreground' : 'bg-foreground/7 text-foreground hover:bg-primary/10 hover:text-primary'
+                    }`}>
+                      {isOpen ? <Minus size={16} /> : <Plus size={16} />}
+                    </span>
+                  </button>
 
-                <AnimatePresence initial={false}>
-                  {open === i && (
-                    <motion.div
-                      key="content"
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                      className="overflow-hidden bg-white"
-                    >
-                      <div className="px-6 pb-6 pt-0">
-                        <div className="h-px w-full bg-foreground/5 mb-4" />
-                        <p className="text-foreground/60 text-sm leading-relaxed">{faq.a}</p>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            ))}
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        key="content"
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                        className="overflow-hidden"
+                      >
+                        <div className="px-6 pb-6 -mt-1">
+                          <p className="text-foreground/60 text-sm leading-relaxed font-mono">
+                            {faq.a}
+                          </p>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              );
+            })}
           </div>
 
           {/* Bottom CTA */}
@@ -117,15 +127,15 @@ export default function FAQ() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
+            transition={{ delay: 0.3 }}
             className="mt-12 text-center"
           >
-            <p className="text-foreground/40 text-sm mb-4">Still have a question?</p>
+            <p className="text-foreground/45 text-sm mb-4 font-mono">Still have a question?</p>
             <a
               href="https://wa.me/917305306497?text=Hi Harini! I have a question about your makeup services."
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-primary/20 text-primary text-sm font-mono tracking-wider hover:bg-primary hover:text-white transition-all duration-300"
+              className="inline-flex items-center justify-center gap-2 px-7 py-3 rounded-full bg-foreground text-background text-xs font-mono tracking-widest uppercase hover:bg-primary hover:text-primary-foreground transition-colors shadow-lg shadow-black/10"
             >
               Ask on WhatsApp →
             </a>

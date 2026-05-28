@@ -1,115 +1,191 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 const videos = [
   { src: '/assets/clients/003_client.mp4', title: 'Bridesmaid Glow', tag: 'Bridal' },
-  { src: '/assets/clients/010_client.mp4', title: 'Luxury Glam Look', tag: 'Bridal' },
+  { src: '/assets/clients/010_client.mp4', title: 'Luxury Glam', tag: 'Bridal' },
   { src: '/assets/clients/012_client.mp4', title: 'Before & After', tag: 'Transformation' },
-  { src: '/assets/clients/018_client.mp4', title: 'Minimal Bridesmaid', tag: 'Bridal' },
-  { src: '/assets/clients/019_client.mp4', title: 'Baby Shower Glow', tag: 'Occasion' },
+  { src: '/assets/clients/018_client.mp4', title: 'Soft Minimal', tag: 'Bridal' },
+  { src: '/assets/clients/019_client.mp4', title: 'Occasion Glow', tag: 'Occasion' },
 ];
 
-function VideoCard({ video, index }: { video: typeof videos[0]; index: number }) {
-  const ref = useRef<HTMLVideoElement>(null);
-  const [playing, setPlaying] = useState(false);
-  const [muted, setMuted] = useState(true);
+function VideoCard({
+  video,
+  index,
+  active,
+  onFocus,
+}: {
+  video: (typeof videos)[0];
+  index: number;
+  active: boolean;
+  onFocus: () => void;
+}) {
+  const videoRef = useRef<HTMLVideoElement>(null);
 
-  const toggle = () => {
-    if (!ref.current) return;
-    if (playing) {
-      ref.current.pause();
-      setPlaying(false);
+  useEffect(() => {
+    const element = videoRef.current;
+    if (!element) return;
+
+    element.muted = true;
+
+    if (active) {
+      const playPromise = element.play();
+      if (playPromise) {
+        playPromise.catch(() => {
+          element.controls = true;
+        });
+      }
     } else {
-      ref.current.play();
-      setPlaying(true);
+      element.pause();
     }
-  };
+  }, [active]);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
+    <motion.article
+      initial={{ opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-      className="relative group overflow-hidden bg-foreground/5 rounded-none"
+      viewport={{ once: true, margin: '-80px' }}
+      transition={{ duration: 0.65, delay: index * 0.06 }}
+      onMouseEnter={onFocus}
+      onFocus={onFocus}
+      className="snap-center shrink-0 basis-[82vw] sm:basis-[46vw] lg:basis-[30%]"
     >
-      <video
-        ref={ref}
-        src={video.src}
-        muted={muted}
-        loop
-        playsInline
-        className="w-full aspect-[9/16] object-cover transition-transform duration-700 group-hover:scale-105"
-        onEnded={() => setPlaying(false)}
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-
-      <div className="absolute bottom-0 left-0 right-0 p-4">
-        <span className="font-mono text-xs tracking-widest uppercase text-primary/80">{video.tag}</span>
-        <p className="text-white font-serif text-lg mt-1">{video.title}</p>
-      </div>
-
-      <div className="absolute inset-0 flex items-center justify-center">
-        <button
-          onClick={toggle}
-          className="w-14 h-14 rounded-full glass-panel text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-primary/30"
-        >
-          {playing ? <Pause size={22} /> : <Play size={22} className="ml-1" />}
-        </button>
-      </div>
-
-      <button
-        onClick={() => {
-          setMuted(!muted);
-          if (ref.current) ref.current.muted = !muted;
-        }}
-        className="absolute top-3 right-3 w-9 h-9 rounded-full glass-panel text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+      <div
+        className={`group relative overflow-hidden rounded-[28px] bg-[#161313] shadow-xl transition duration-500 ${
+          active
+            ? 'scale-[1.02] shadow-primary/20 ring-1 ring-primary/25'
+            : 'scale-95 opacity-75 hover:opacity-100'
+        }`}
       >
-        {muted ? <VolumeX size={14} /> : <Volume2 size={14} />}
-      </button>
-    </motion.div>
+        <div className="relative aspect-[9/16] min-h-[460px] overflow-hidden sm:min-h-[520px] lg:min-h-[560px]">
+          <video
+            ref={videoRef}
+            src={video.src}
+            muted
+            loop
+            playsInline
+            autoPlay
+            preload="metadata"
+            className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/10" />
+          <div className="absolute inset-x-0 bottom-0 p-6">
+            <div className="font-mono text-xs uppercase tracking-[0.28em] text-white/60">
+              {video.tag}
+            </div>
+            <h3 className="mt-2 font-serif text-3xl leading-tight text-white md:text-4xl">
+              {video.title}
+            </h3>
+          </div>
+        </div>
+      </div>
+    </motion.article>
   );
 }
 
 export default function VideoShowcase() {
-  return (
-    <section id="videos" className="py-24 md:py-40 bg-foreground/[0.03] relative">
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 pointer-events-none" />
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="text-center mb-16">
-          <motion.span
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="font-mono text-sm tracking-[0.2em] uppercase text-primary"
-          >
-            Reels
-          </motion.span>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="text-4xl md:text-6xl font-serif mt-3"
-          >
-            Stories in Motion
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
-            className="text-muted-foreground mt-4 max-w-md mx-auto"
-          >
-            Watch the transformations come alive — real looks, real moments, real artistry.
-          </motion.p>
-        </div>
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
-          {videos.map((video, i) => (
-            <VideoCard key={video.src} video={video} index={i} />
-          ))}
+  const updateActiveFromScroll = () => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+
+    const center = scroller.scrollLeft + scroller.clientWidth / 2;
+    const children = Array.from(scroller.children) as HTMLElement[];
+    const nearest = children.reduce(
+      (best, child, index) => {
+        const childCenter = child.offsetLeft + child.offsetWidth / 2;
+        const distance = Math.abs(center - childCenter);
+        return distance < best.distance ? { index, distance } : best;
+      },
+      { index: 0, distance: Number.POSITIVE_INFINITY }
+    );
+
+    setActiveIndex(nearest.index);
+  };
+
+  const scrollToIndex = (nextIndex: number) => {
+    const scroller = scrollerRef.current;
+    const target = scroller?.children[nextIndex] as HTMLElement | undefined;
+    if (!scroller || !target) return;
+
+    setActiveIndex(nextIndex);
+    target.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  };
+
+  return (
+    <section id="videos" className="relative overflow-hidden bg-[#f7f3ed] py-20 md:py-28">
+      <div className="mx-auto w-[90vw] max-w-7xl">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="mx-auto max-w-3xl text-center"
+        >
+          <span className="font-mono text-xs uppercase tracking-[0.32em] text-primary">
+            Reels
+          </span>
+          <h2 className="mt-4 font-serif text-4xl leading-tight text-foreground md:text-6xl">
+            Stories in Motion
+          </h2>
+          <p className="mt-4 text-base leading-7 text-foreground/55">
+            Cinematic glimpses of real glam moments, edited down to the essentials.
+          </p>
+        </motion.div>
+
+        <div className="mt-12 md:mt-14">
+          <div
+            ref={scrollerRef}
+            onScroll={updateActiveFromScroll}
+            className="-mx-4 flex snap-x snap-mandatory gap-8 overflow-x-auto scroll-smooth px-4 pb-8 [scrollbar-width:none] md:gap-10 [&::-webkit-scrollbar]:hidden"
+          >
+            {videos.map((video, index) => (
+              <VideoCard
+                key={video.src}
+                video={video}
+                index={index}
+                active={activeIndex === index}
+                onFocus={() => setActiveIndex(index)}
+              />
+            ))}
+          </div>
+
+          <div className="mt-4 flex items-center justify-center gap-5">
+            <button
+              type="button"
+              onClick={() => scrollToIndex(Math.max(0, activeIndex - 1))}
+              disabled={activeIndex === 0}
+              aria-label="Previous reel"
+              className="flex h-12 w-12 items-center justify-center rounded-full border border-foreground/10 bg-white text-foreground transition hover:border-primary hover:text-primary disabled:opacity-30"
+            >
+              <ArrowLeft size={18} />
+            </button>
+            <div className="flex gap-2">
+              {videos.map((video, index) => (
+                <button
+                  key={video.src}
+                  type="button"
+                  onClick={() => scrollToIndex(index)}
+                  aria-label={`Show ${video.title}`}
+                  className={`h-2 rounded-full transition-all ${
+                    activeIndex === index ? 'w-8 bg-primary' : 'w-2 bg-foreground/20'
+                  }`}
+                />
+              ))}
+            </div>
+            <button
+              type="button"
+              onClick={() => scrollToIndex(Math.min(videos.length - 1, activeIndex + 1))}
+              disabled={activeIndex === videos.length - 1}
+              aria-label="Next reel"
+              className="flex h-12 w-12 items-center justify-center rounded-full border border-foreground/10 bg-white text-foreground transition hover:border-primary hover:text-primary disabled:opacity-30"
+            >
+              <ArrowRight size={18} />
+            </button>
+          </div>
         </div>
       </div>
     </section>

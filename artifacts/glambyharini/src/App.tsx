@@ -17,8 +17,7 @@ import GiftVoucher from "@/components/GiftVoucher";
 import LoyaltyBadge from "@/components/LoyaltyBadge";
 import AvailabilityCalendar from "@/components/AvailabilityCalendar";
 import VideoReel from "@/components/VideoReel";
-import CollabPartners from "@/components/CollabPartners";
-import BlogTips from "@/components/BlogTips";
+import BlogsAndTips from "@/components/BlogsAndTips";
 import Booking from "@/components/Booking";
 import FAQ from "@/components/FAQ";
 import ServiceArea from "@/components/ServiceArea";
@@ -49,8 +48,7 @@ function Home() {
         <LoyaltyBadge />
         <AvailabilityCalendar />
         <VideoReel />
-        <CollabPartners />
-        <BlogTips />
+        <BlogsAndTips />
         <Booking />
         <FAQ />
         <ServiceArea />

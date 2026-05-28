@@ -1,164 +1,114 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Play, Volume2, VolumeX, ExternalLink } from 'lucide-react';
-
-// Real Instagram Reels from @glam_byharini — public oEmbed
-// Since we can't embed private reels without a token, we show a curated reel grid
-// with the real Instagram profile link and autoplay thumbnail videos
 
 const reels = [
-  {
-    id: 1,
-    title: 'Bridal Transformation',
-    tag: 'Bridal',
-    thumb: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&q=80',
-    duration: '0:32',
-  },
-  {
-    id: 2,
-    title: 'Reception Glam',
-    tag: 'Reception',
-    thumb: 'https://images.unsplash.com/photo-1516726817505-f5ed825624d8?w=400&q=80',
-    duration: '0:45',
-  },
-  {
-    id: 3,
-    title: 'Engagement Look',
-    tag: 'Engagement',
-    thumb: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&q=80',
-    duration: '0:28',
-  },
-  {
-    id: 4,
-    title: 'Saree Draping Tutorial',
-    tag: 'Tutorial',
-    thumb: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400&q=80',
-    duration: '1:02',
-  },
-  {
-    id: 5,
-    title: 'Party Glam Speed',
-    tag: 'Party',
-    thumb: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&q=80',
-    duration: '0:38',
-  },
-  {
-    id: 6,
-    title: 'Bridal Hair & Makeup',
-    tag: 'Bridal',
-    thumb: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=400&q=80',
-    duration: '0:55',
-  },
-];
+  { id: 1, src: '/assets/reels/reel-1.mp4' },
+  { id: 2, src: '/assets/reels/reel-2.mp4' },
+  { id: 3, src: '/assets/reels/reel-3.mp4' },
+  { id: 4, src: '/assets/reels/reel-4.mp4' },
+  { id: 5, src: '/assets/reels/reel-5.mp4' },
+  { id: 6, src: '/assets/reels/reel-6.mp4' },
+  { id: 7, src: '/assets/reels/reel-7.mp4' },
+  { id: 8, src: '/assets/reels/reel-8.mp4' },
+] as const;
 
-const tagColors: Record<string, string> = {
-  Bridal: 'bg-primary/15 text-primary',
-  Reception: 'bg-accent/20 text-accent',
-  Engagement: 'bg-pink-100 text-pink-600',
-  Tutorial: 'bg-purple-100 text-purple-600',
-  Party: 'bg-blue-100 text-blue-600',
-};
+const offsets = [
+  { y: 12, r: -6 },
+  { y: 2, r: -2 },
+  { y: 16, r: 3 },
+  { y: 6, r: 0 },
+  { y: 18, r: -3 },
+  { y: 4, r: 2 },
+  { y: 14, r: 6 },
+  { y: 8, r: 1 },
+] as const;
 
 export default function VideoReel() {
-  const [hovered, setHovered] = useState<number | null>(null);
-
   return (
-    <section id="reels" className="py-20 md:py-32 bg-background relative overflow-hidden">
-      <div className="absolute top-1/2 right-0 w-72 h-72 rounded-full bg-accent/5 blur-3xl translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-      <div className="container mx-auto px-6">
+    <section id="reels" className="relative overflow-hidden bg-[#f6f1e8] py-20 md:py-28">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -top-24 left-1/2 h-64 w-[48rem] -translate-x-1/2 rounded-full bg-primary/10 blur-3xl" />
+        <div className="absolute -bottom-28 left-0 h-72 w-72 rounded-full bg-accent/10 blur-3xl" />
+      </div>
+
+      <div className="container mx-auto px-6 relative">
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12"
+          transition={{ duration: 0.65 }}
+          className="mx-auto max-w-3xl text-center"
         >
-          <div>
-            <span className="font-mono text-xs tracking-[0.3em] uppercase text-primary mb-4 block">@glam_byharini</span>
-            <h2 className="text-4xl md:text-5xl font-serif text-foreground mb-3">
-              Instagram <span className="italic text-primary/80">Reels</span>
-            </h2>
-            <p className="text-foreground/45 text-sm max-w-md">
-              Watch the magic unfold. Follow on Instagram for daily transformations, tutorials and behind-the-scenes.
-            </p>
+          <div className="inline-flex items-center gap-2 rounded-full bg-[#f0d6a8] px-4 py-1.5 text-[11px] font-mono tracking-widest uppercase text-foreground/70 shadow-sm">
+            Join over <span className="font-semibold text-foreground">500+</span> happy clients
           </div>
-          <a
-            href="https://www.instagram.com/glam_byharini"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-foreground/15 text-xs font-mono tracking-widest uppercase text-foreground/60 hover:border-primary hover:text-primary transition-colors"
-          >
-            <ExternalLink size={12} />
-            Follow on Instagram
-          </a>
+
+          <h2 className="mt-6 text-4xl md:text-6xl font-sans font-semibold tracking-tight text-foreground leading-[1.05]">
+            Engage Audiences
+            <br />
+            with Stunning Videos
+          </h2>
+          <p className="mt-4 text-sm md:text-base text-foreground/55 max-w-xl mx-auto">
+            Boost your brand with high-impact short videos from real glam sessions — bridal, party, and studio looks.
+          </p>
+
+          <div className="hidden md:block absolute right-4 top-20 text-[11px] text-foreground/50">
+            <div className="font-serif italic">Elevate</div>
+            <div className="font-serif italic -mt-0.5">your brand</div>
+            <svg width="70" height="36" viewBox="0 0 70 36" fill="none" className="mt-1 opacity-70">
+              <path d="M2 6c22 0 23 26 50 26" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
+              <path d="M52 32l10-2-6-8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
         </motion.div>
 
-        {/* Reel grid — portrait aspect ratio like Instagram */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
-          {reels.map((reel, i) => (
-            <motion.div
-              key={reel.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.08 }}
-              onMouseEnter={() => setHovered(reel.id)}
-              onMouseLeave={() => setHovered(null)}
-              className="relative aspect-[9/16] rounded-2xl overflow-hidden cursor-pointer group"
+        <div className="mt-12 md:mt-14 relative">
+          <div className="-mx-6 px-6 overflow-x-auto">
+            <div className="flex gap-4 md:gap-6 items-end min-w-max py-2">
+              {reels.map((reel, i) => {
+                const o = offsets[i % offsets.length];
+                return (
+                  <motion.div
+                    key={reel.id}
+                    initial={{ opacity: 0, y: 18 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.55, delay: i * 0.05 }}
+                    className="shrink-0"
+                  >
+                    <div style={{ transform: `translateY(${o.y}px) rotate(${o.r}deg)` }}>
+                      <div className="w-[140px] sm:w-[160px] md:w-[180px] lg:w-[200px] aspect-[9/16] rounded-[28px] overflow-hidden bg-black shadow-xl shadow-black/20 ring-1 ring-black/10">
+                      <video
+                        src={reel.src}
+                        muted
+                        loop
+                        playsInline
+                        autoPlay
+                        preload="metadata"
+                        className="h-full w-full object-cover"
+                      />
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="mt-10 flex flex-col items-center">
+            <motion.a
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              href="https://www.instagram.com/glam_byharini"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative rounded-full bg-[#e9897c] px-10 py-3 text-xs font-mono tracking-widest uppercase text-white shadow-lg shadow-black/10"
             >
-              <img
-                src={reel.thumb}
-                alt={reel.title}
-                className={`w-full h-full object-cover transition-transform duration-700 ${hovered === reel.id ? 'scale-105' : 'scale-100'}`}
-              />
-
-              {/* Gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-
-              {/* Play button */}
-              <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${hovered === reel.id ? 'opacity-100' : 'opacity-0'}`}>
-                <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/30">
-                  <Play size={20} fill="white" className="text-white ml-1" />
-                </div>
-              </div>
-
-              {/* Bottom info */}
-              <div className="absolute bottom-0 left-0 right-0 p-3">
-                <span className={`text-[9px] font-mono tracking-widest uppercase px-2 py-0.5 rounded-full mb-1.5 inline-block ${tagColors[reel.tag] || 'bg-white/20 text-white'}`}>
-                  {reel.tag}
-                </span>
-                <p className="text-white text-xs font-serif leading-tight">{reel.title}</p>
-                <p className="text-white/40 text-[10px] font-mono mt-0.5">{reel.duration}</p>
-              </div>
-
-              {/* Duration badge top */}
-              <div className="absolute top-3 right-3">
-                <span className="bg-black/40 backdrop-blur-sm text-white text-[9px] font-mono px-2 py-0.5 rounded-full">
-                  ▶ Reel
-                </span>
-              </div>
-            </motion.div>
-          ))}
+              <span className="pointer-events-none absolute inset-0 rounded-full border border-dashed border-white/60" />
+              <span className="relative">View More on Instagram</span>
+            </motion.a>
+          </div>
         </div>
-
-        {/* CTA bottom */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="text-center mt-10"
-        >
-          <a
-            href="https://www.instagram.com/glam_byharini"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-gradient-to-r from-[#f09433] via-[#e6683c] to-[#bc1888] text-white text-xs font-mono tracking-widest uppercase shadow-lg hover:opacity-90 transition-opacity"
-          >
-            <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-            View All Reels on Instagram
-          </a>
-        </motion.div>
       </div>
     </section>
   );

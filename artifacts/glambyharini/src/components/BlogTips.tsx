@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Clock, ChevronRight, X } from 'lucide-react';
+import { ChevronRight, X } from 'lucide-react';
 
 const posts = [
   {
@@ -10,6 +10,7 @@ const posts = [
     title: '6-Week Bridal Skin Prep Guide',
     excerpt: 'Your skin is the canvas. Start this routine 6 weeks before your wedding for a naturally radiant, camera-ready glow.',
     read: '5 min',
+    image: '/assets/blogtips/hd-makeup-photo.jpeg',
     emoji: '✨',
     color: 'from-pink-50 to-rose-50',
     content: [
@@ -28,6 +29,7 @@ const posts = [
     title: 'Make Your Makeup Last All Day',
     excerpt: 'From primer to setting spray — the professional secrets to keeping your bridal or party look flawless from ceremony to reception.',
     read: '4 min',
+    image: '/assets/blogtips/photoshoot-makeup.jpeg',
     emoji: '💄',
     color: 'from-purple-50 to-violet-50',
     content: [
@@ -46,6 +48,7 @@ const posts = [
     title: 'South Indian Bridal Makeup Trends 2025',
     excerpt: 'From Kanjeevaram-inspired gold to modern minimalist brides — the looks dominating Tamil Nadu weddings this season.',
     read: '6 min',
+    image: '/assets/blogtips/beautiful-bridal-makeup-look.jpeg',
     emoji: '👑',
     color: 'from-amber-50 to-yellow-50',
     content: [
@@ -64,6 +67,7 @@ const posts = [
     title: 'The Bride\'s Self-Care Ritual',
     excerpt: 'Wedding planning is stressful. Here\'s a calming routine to keep you glowing, grounded and gorgeous in the weeks leading up to your day.',
     read: '3 min',
+    image: '/assets/blogtips/facial-skin-care.jpeg',
     emoji: '🌿',
     color: 'from-green-50 to-emerald-50',
     content: [
@@ -81,48 +85,270 @@ export default function BlogTips() {
   const [open, setOpen] = useState<typeof posts[0] | null>(null);
 
   return (
-    <section id="blog" className="py-20 md:py-32 bg-secondary/30 relative overflow-hidden">
-      <div className="absolute bottom-0 right-0 w-96 h-96 rounded-full bg-primary/5 blur-3xl translate-x-1/3 translate-y-1/3 pointer-events-none" />
+    <section id="blog" className="py-20 md:py-32 bg-[#fbf8f1] relative overflow-hidden">
+      <div className="absolute -top-24 left-1/2 w-[46rem] h-64 -translate-x-1/2 rounded-full bg-primary/10 blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 rounded-full bg-accent/10 blur-3xl translate-x-1/3 translate-y-1/3 pointer-events-none" />
       <div className="container mx-auto px-6">
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-12"
+          transition={{ duration: 0.65 }}
+          className="text-center"
         >
-          <span className="font-mono text-xs tracking-[0.3em] uppercase text-primary mb-4 block">Glam Tips</span>
-          <h2 className="text-4xl md:text-5xl font-serif text-foreground mb-3">
-            Beauty <span className="italic text-primary/80">Blog</span>
+          <div className="inline-flex items-center gap-2 rounded-full bg-white/70 backdrop-blur px-4 py-1.5 border border-foreground/10 shadow-sm">
+            <span className="w-2 h-2 rounded-full bg-primary" />
+            <span className="font-mono text-[11px] tracking-widest uppercase text-foreground/55">Beauty Blog</span>
+          </div>
+          <h2 className="mt-6 text-4xl md:text-5xl font-serif text-foreground">
+            Featured Tips &amp; <span className="italic text-primary/80">Guides</span>
           </h2>
-          <p className="text-foreground/45 text-sm max-w-md mx-auto">
-            Expert advice from Harini's makeup chair — skincare routines, bridal trends, and pro tips you can use today.
+          <p className="mt-3 text-sm md:text-base text-foreground/55 max-w-2xl mx-auto">
+            Bridal prep, long-wear makeup, wellness rituals, and real advice to help you look (and feel) your best.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl mx-auto">
-          {posts.map((post, i) => (
-            <motion.article
-              key={post.slug}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.08 }}
-              onClick={() => setOpen(post)}
-              className={`cursor-pointer rounded-2xl p-6 bg-gradient-to-br ${post.color} border border-foreground/6 hover:shadow-xl hover:shadow-foreground/8 transition-all duration-300 group`}
-            >
-              <div className="text-4xl mb-4">{post.emoji}</div>
-              <div className="flex items-center gap-2 mb-3">
-                <span className={`text-[9px] font-mono tracking-widest uppercase px-2 py-0.5 rounded-full ${post.tagColor}`}>{post.tag}</span>
-                <span className="text-[9px] font-mono text-foreground/30 flex items-center gap-1"><Clock size={9} />{post.read} read</span>
+        {/* Collage grid */}
+        <div className="mt-10 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 auto-rows-[190px] md:auto-rows-[210px] xl:auto-rows-[230px]">
+          {/* Featured (left) */}
+          <motion.button
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55 }}
+            onClick={() => setOpen(posts[2])}
+            className="relative md:col-span-2 xl:col-span-1 row-span-2 rounded-[28px] overflow-hidden border border-foreground/10 shadow-2xl shadow-black/10 text-left group"
+          >
+            <img src={posts[2].image} alt={posts[2].title} className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
+
+            <div className="absolute top-4 left-4">
+              <span className="inline-flex items-center gap-2 rounded-full bg-[#7d0f2a]/90 text-white px-3 py-1.5 text-[10px] font-mono tracking-widest uppercase shadow-sm">
+                <span className="w-5 h-5 rounded-full bg-white/15 flex items-center justify-center">★</span>
+                Featured
+              </span>
+            </div>
+
+            <div className="absolute bottom-5 left-5 right-5">
+              <h3 className="font-serif text-3xl md:text-4xl text-white leading-[1.05] drop-shadow">
+                {posts[2].title}
+              </h3>
+              <p className="mt-2 text-white/70 text-xs font-mono tracking-widest uppercase">
+                Bold · Timeless · You
+              </p>
+              <div className="mt-5 inline-flex items-center gap-2 rounded-full bg-[#7d0f2a]/80 text-white px-5 py-3 text-xs font-mono tracking-widest uppercase border border-white/15 shadow-lg shadow-black/20">
+                Explore Trends <ChevronRight size={14} />
               </div>
-              <h3 className="font-serif text-xl text-foreground mb-2 group-hover:text-primary/80 transition-colors">{post.title}</h3>
-              <p className="text-sm text-foreground/55 leading-relaxed mb-4">{post.excerpt}</p>
-              <div className="flex items-center gap-1 text-xs font-mono text-foreground/35 group-hover:text-primary transition-colors">
-                Read more <ChevronRight size={12} />
+            </div>
+          </motion.button>
+
+          {/* Quick & Adaptable (top middle) */}
+          <motion.button
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55, delay: 0.05 }}
+            onClick={() => setOpen(posts[1])}
+            className="relative rounded-[28px] overflow-hidden border border-foreground/10 shadow-xl shadow-black/10 text-left bg-white"
+          >
+            <img
+              src="/assets/blogtips/saree-draping.jpeg"
+              alt="Quick & Adaptable"
+              className="absolute inset-0 w-full h-full object-cover"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/0 via-black/0 to-black/0" />
+            <div className="absolute inset-x-4 bottom-4 rounded-3xl bg-white/90 backdrop-blur border border-foreground/10 p-5">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
+                  ✦
+                </div>
+                <div className="min-w-0">
+                  <div className="font-serif text-xl text-foreground leading-tight">Quick &amp; Adaptable</div>
+                  <p className="mt-2 text-sm text-foreground/55 line-clamp-2">
+                    From primer to setting spray — the professional way.
+                  </p>
+                  <div className="mt-3 inline-flex items-center gap-2 text-xs font-mono tracking-widest uppercase text-primary">
+                    Read more <ChevronRight size={14} />
+                  </div>
+                </div>
               </div>
-            </motion.article>
-          ))}
+            </div>
+          </motion.button>
+
+          {/* Bridal Prep (top right) */}
+          <motion.button
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55, delay: 0.1 }}
+            onClick={() => setOpen(posts[0])}
+            className="relative rounded-[28px] overflow-hidden border border-foreground/10 shadow-xl shadow-black/10 text-left group"
+          >
+            <img src={posts[0].image} alt={posts[0].title} className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/5 to-transparent" />
+            <div className="absolute inset-x-4 bottom-4 rounded-3xl bg-[#fff4f0]/90 backdrop-blur border border-foreground/10 p-5 flex items-center justify-between gap-4">
+              <div>
+                <div className="font-serif text-2xl text-foreground leading-tight">Bridal Prep</div>
+                <div className="mt-1 text-[11px] font-mono tracking-widest uppercase text-primary/80">
+                  {posts[0].read} read
+                </div>
+              </div>
+              <div className="w-12 h-12 rounded-full bg-[#7d0f2a] text-white flex items-center justify-center shadow-lg shadow-black/10">
+                <ChevronRight size={18} />
+              </div>
+            </div>
+          </motion.button>
+
+          {/* Rest assured (bottom left) */}
+          <motion.button
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55, delay: 0.15 }}
+            onClick={() => setOpen(posts[3])}
+            className="relative rounded-[28px] overflow-hidden border border-foreground/10 shadow-xl shadow-black/10 text-left bg-white p-6"
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div className="w-12 h-12 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
+                ✿
+              </div>
+              <img
+                src="/assets/blogtips/nail-art.jpeg"
+                alt="Rest assured"
+                className="w-12 h-12 rounded-2xl object-cover ring-1 ring-black/10 shrink-0"
+                loading="lazy"
+              />
+            </div>
+            <div className="mt-5">
+              <div className="font-serif text-2xl text-foreground leading-tight">Rest Assured,</div>
+              <div className="font-serif text-2xl text-foreground leading-tight">We&apos;ve Got You</div>
+              <p className="mt-4 text-sm text-foreground/55 leading-relaxed line-clamp-3">
+                No confusing routines — just simple steps that work for South Indian skin tones and long-wear makeup.
+              </p>
+              <div className="mt-4 inline-flex items-center gap-2 text-xs font-mono tracking-widest uppercase text-primary">
+                Get Started <ChevronRight size={14} />
+              </div>
+            </div>
+          </motion.button>
+
+          {/* Wedding Planning (image tile) */}
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55, delay: 0.2 }}
+            className="relative rounded-[28px] overflow-hidden border border-foreground/10 shadow-xl shadow-black/10"
+          >
+            <img
+              src="/assets/blogtips/photoshoot-makeup.jpeg"
+              alt="Wedding planning"
+              className="absolute inset-0 w-full h-full object-cover"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/15 via-transparent to-transparent" />
+          </motion.div>
+
+          {/* Makeup setup (image tile) */}
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55, delay: 0.25 }}
+            className="relative rounded-[28px] overflow-hidden border border-foreground/10 shadow-xl shadow-black/10"
+          >
+            <img
+              src="/assets/blogtips/hd-makeup-photo.jpeg"
+              alt="Makeup tools"
+              className="absolute inset-0 w-full h-full object-cover"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/15 via-transparent to-transparent" />
+          </motion.div>
+
+          {/* Wellness Ritual (bottom middle) */}
+          <motion.button
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55, delay: 0.3 }}
+            onClick={() => setOpen(posts[3])}
+            className="relative rounded-[28px] overflow-hidden border border-foreground/10 shadow-xl shadow-black/10 text-left bg-white"
+          >
+            <img src={posts[3].image} alt={posts[3].title} className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent" />
+            <div className="absolute inset-x-4 bottom-4 rounded-3xl bg-[#efeaff]/90 backdrop-blur border border-foreground/10 p-5">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-2xl bg-white/80 border border-foreground/10 flex items-center justify-center text-primary">
+                  ❀
+                </div>
+                <div className="min-w-0">
+                  <div className="font-serif text-xl text-foreground leading-tight">Wellness Ritual</div>
+                  <p className="mt-2 text-sm text-foreground/55 line-clamp-2">
+                    Wedding planning is stressful. Here&apos;s a calming guide to reset your mind.
+                  </p>
+                  <div className="mt-3 inline-flex items-center gap-2 text-xs font-mono tracking-widest uppercase text-primary">
+                    View guide <ChevronRight size={14} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.button>
+
+          {/* Make Your Makeup Last All Day (bottom right) */}
+          <motion.button
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55, delay: 0.35 }}
+            onClick={() => setOpen(posts[1])}
+            className="relative rounded-[28px] overflow-hidden border border-foreground/10 shadow-xl shadow-black/10 text-left group"
+          >
+            <img src="/assets/blogtips/beautiful-bridal-makeup-look.jpeg" alt={posts[1].title} className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
+            <div className="absolute inset-x-4 bottom-4 rounded-3xl bg-[#fff4f0]/90 backdrop-blur border border-foreground/10 p-5">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
+                  💄
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="font-serif text-xl text-foreground leading-tight">Make Your Makeup Last All Day</div>
+                  <div className="mt-1 text-[11px] font-mono tracking-widest uppercase text-primary/80">
+                    Tips &amp; tricks <ChevronRight className="inline" size={12} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.button>
+
+          {/* Why you'll love it here */}
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55, delay: 0.4 }}
+            className="md:col-span-2 xl:col-span-2 rounded-[28px] bg-white border border-foreground/10 shadow-xl shadow-black/5 px-6 py-7 flex flex-col justify-center"
+          >
+            <div className="text-center">
+              <div className="font-serif text-2xl md:text-3xl text-foreground">Why You&apos;ll Love It Here</div>
+              <div className="mt-2 h-px w-24 mx-auto bg-primary/30" />
+            </div>
+            <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-5">
+              {[
+                { title: 'Expert Guidance', desc: 'Professional tips from experienced artists' },
+                { title: 'Tailored for You', desc: 'Routines that suit your skin & style' },
+                { title: 'Wedding Ready', desc: 'Look your best for every event, stress-free' },
+                { title: 'Real & Relatable', desc: 'Practical advice that actually works' },
+              ].map((f) => (
+                <div key={f.title} className="text-center">
+                  <div className="mx-auto w-10 h-10 rounded-2xl bg-primary/10 border border-primary/20" />
+                  <div className="mt-3 text-sm font-serif text-foreground">{f.title}</div>
+                  <div className="mt-1 text-[11px] text-foreground/55 leading-relaxed">{f.desc}</div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </div>
 
@@ -142,28 +368,85 @@ export default function BlogTips() {
               exit={{ scale: 0.94, y: 20 }}
               transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
               onClick={e => e.stopPropagation()}
-              className={`w-full max-w-lg max-h-[80vh] overflow-y-auto rounded-3xl bg-gradient-to-br ${open.color} border border-foreground/8 shadow-2xl`}
+              className="w-full max-w-2xl max-h-[84vh] overflow-y-auto rounded-3xl bg-white border border-foreground/8 shadow-2xl"
             >
-              <div className="p-8">
-                <div className="flex items-start justify-between mb-6">
-                  <div>
-                    <span className={`text-[9px] font-mono tracking-widest uppercase px-2 py-0.5 rounded-full ${open.tagColor}`}>{open.tag}</span>
-                    <h3 className="font-serif text-2xl text-foreground mt-3">{open.title}</h3>
+              {/* Hero */}
+              <div className="relative h-56 md:h-64 overflow-hidden">
+                <img src={open.image} alt={open.title} className="absolute inset-0 w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                <div className="absolute top-4 left-4 right-4 flex items-start justify-between gap-3">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className={`text-[9px] font-mono tracking-widest uppercase px-2 py-1 rounded-full ${open.tagColor}`}>{open.tag}</span>
+                    <span className="text-[9px] font-mono tracking-widest uppercase px-2 py-1 rounded-full bg-white/15 text-white backdrop-blur">
+                      {open.read} read
+                    </span>
                   </div>
-                  <button onClick={() => setOpen(null)} className="w-8 h-8 rounded-full bg-foreground/8 flex items-center justify-center hover:bg-foreground/15 transition-colors shrink-0 mt-1">
+                  <button
+                    onClick={() => setOpen(null)}
+                    className="w-9 h-9 rounded-full bg-white/15 backdrop-blur flex items-center justify-center text-white hover:bg-white/25 transition-colors shrink-0"
+                    aria-label="Close"
+                  >
                     <X size={14} />
                   </button>
                 </div>
-                <p className="text-sm text-foreground/55 leading-relaxed mb-8 italic">{open.excerpt}</p>
-                <div className="flex flex-col gap-4">
-                  {open.content.map((item) => (
-                    <div key={item.week} className="flex gap-4">
-                      <div className="shrink-0 font-mono text-[10px] tracking-widest uppercase text-primary pt-1 w-16">{item.week}</div>
-                      <p className="text-sm text-foreground/65 leading-relaxed">{item.tip}</p>
+                <div className="absolute bottom-5 left-5 right-5">
+                  <h3 className="font-serif text-2xl md:text-3xl text-white leading-tight">
+                    {open.title}
+                  </h3>
+                </div>
+              </div>
+
+              <div className="p-6 md:p-8">
+                <p className="text-sm md:text-base text-foreground/60 leading-relaxed">
+                  {open.excerpt}
+                </p>
+
+                {/* Quick takeaways */}
+                <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-3">
+                  {open.content.slice(0, 3).map((item) => (
+                    <div key={item.week} className="rounded-2xl border border-foreground/10 bg-foreground/[0.03] p-4">
+                      <div className="text-[10px] font-mono tracking-widest uppercase text-primary/80">{item.week}</div>
+                      <p className="mt-2 text-sm text-foreground/65 leading-relaxed line-clamp-4">
+                        {item.tip}
+                      </p>
                     </div>
                   ))}
                 </div>
-                <div className="mt-8 pt-6 border-t border-foreground/8">
+
+                {/* Full details */}
+                <div className="mt-8">
+                  <div className="flex items-end justify-between gap-4 mb-4">
+                    <h4 className="font-serif text-lg text-foreground">Full Routine</h4>
+                    <span className="text-[10px] font-mono tracking-widest uppercase text-foreground/35">
+                      Tap to read
+                    </span>
+                  </div>
+
+                  <div className="flex flex-col gap-3">
+                    {open.content.map((item) => (
+                      <details key={item.week} className="group rounded-2xl border border-foreground/10 bg-white overflow-hidden">
+                        <summary className="cursor-pointer list-none select-none px-4 py-3 flex items-center gap-3">
+                          <span className="shrink-0 w-16 text-[10px] font-mono tracking-widest uppercase text-primary/80">
+                            {item.week}
+                          </span>
+                          <span className="text-sm text-foreground/70 leading-relaxed line-clamp-1 group-open:line-clamp-none">
+                            {item.tip}
+                          </span>
+                          <span className="ml-auto w-7 h-7 rounded-full bg-foreground text-background flex items-center justify-center group-open:rotate-90 transition-transform">
+                            <ChevronRight size={14} />
+                          </span>
+                        </summary>
+                        <div className="px-4 pb-4 -mt-1">
+                          <p className="text-sm text-foreground/65 leading-relaxed">
+                            {item.tip}
+                          </p>
+                        </div>
+                      </details>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-8 pt-6 border-t border-foreground/10">
                   <a
                     href="https://wa.me/917305306497?text=Hi Harini! I read your blog and have a question about skincare/makeup."
                     target="_blank"

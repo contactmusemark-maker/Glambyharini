@@ -1,195 +1,211 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Star } from 'lucide-react';
+import { ArrowDown, ArrowUpRight, Heart, Sparkles, Star } from 'lucide-react';
 
 const scrollTo = (id: string) => {
   const el = document.querySelector(id);
   if (el) el.scrollIntoView({ behavior: 'smooth' });
 };
 
+const collections = [
+  {
+    title: 'Bridal',
+    subtitle: 'Collection',
+    desc: 'Temple jewellery, saree draping, HD finish.',
+    image: '/assets/clients/000_client.jpg',
+    target: '#services',
+  },
+  {
+    title: 'Party',
+    subtitle: 'Collection',
+    desc: 'Soft glam, shimmer eyes, long-stay base.',
+    image: '/assets/clients/020_client.jpg',
+    target: '#gallery',
+  },
+  {
+    title: 'Editorial',
+    subtitle: 'Collection',
+    desc: 'Camera-ready looks for reels and shoots.',
+    image: '/assets/clients/013_client.webp',
+    target: '#blogs',
+  },
+];
+
 export default function Hero() {
   return (
-    <section id="hero" className="relative min-h-[100dvh] w-full bg-[#FAF7F4] overflow-hidden">
-      {/* Subtle dot grid */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-30"
-        style={{
-          backgroundImage: 'radial-gradient(circle, #c9a9a0 1px, transparent 1px)',
-          backgroundSize: '28px 28px',
-        }}
-      />
+    <section id="hero" className="relative w-full overflow-hidden bg-background pt-20 md:pt-24">
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent" />
 
-      {/* Decorative circle badge — desktop only */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.7 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 1, duration: 0.6 }}
-        className="hidden md:flex absolute top-20 right-[38%] w-24 h-24 rounded-full border border-primary/30 items-center justify-center z-20"
-      >
-        <div className="w-16 h-16 rounded-full bg-primary/10 flex flex-col items-center justify-center text-center p-1">
-          <Star size={10} className="text-primary mb-0.5" />
-          <p className="font-mono text-[7px] leading-tight text-primary/80 tracking-wider uppercase text-center">Certified<br />Artist</p>
-        </div>
-      </motion.div>
+      <div className="relative z-10">
+        <div className="mx-auto w-[90vw] max-w-7xl">
+          <div className="grid items-center gap-7 py-5 md:gap-8 md:py-8 lg:min-h-[calc(100dvh-7rem)] lg:grid-cols-[minmax(0,1fr)_minmax(360px,0.9fr)] lg:gap-10 xl:gap-12">
+            <div className="relative z-20 text-center lg:text-left">
+              <motion.div
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.55 }}
+                className="mx-auto mb-5 grid max-w-2xl gap-4 sm:grid-cols-[auto_1fr] sm:items-center md:mb-7 lg:mx-0 lg:mb-6"
+              >
+                <div className="text-sm leading-snug text-foreground/80 sm:text-left md:text-base">
+                  Hello gorgeous!
+                  <br />
+                  welcome to GlamByHarini
+                </div>
+                <div className="grid grid-cols-[8.5rem_1fr] items-center gap-3 text-left sm:flex sm:justify-start sm:gap-4">
+                  <div className="h-14 w-full overflow-hidden rounded-full border border-primary/20 bg-secondary/25 p-1 sm:w-24">
+                    <img
+                      src="/assets/Header_Logo_1779783577490.png"
+                      alt="GlamByHarini"
+                      className="h-full w-full object-contain"
+                    />
+                  </div>
+                  <p className="max-w-xs text-sm leading-6 text-foreground/65 md:text-base md:leading-snug">
+                    Bridal makeup artistry for effortless, photo-ready transformations.
+                  </p>
+                </div>
+              </motion.div>
 
-      <div className="relative z-10 container mx-auto px-6 md:px-12">
-        <div className="flex flex-col md:grid md:grid-cols-2 md:gap-0 w-full md:min-h-[100dvh] md:items-center">
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.15, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <h1 className="font-mono font-semibold leading-[0.92] tracking-normal text-[clamp(3.5rem,16vw,7.25rem)] text-foreground sm:text-[clamp(3.25rem,8.5vw,7.25rem)]">
+                  Fresh &amp;
+                  <br />
+                  <span className="text-foreground/38">Flawless</span>
+                </h1>
+              </motion.div>
 
-          {/* ── MOBILE: Image on top ── */}
-          <div className="block md:hidden w-full pt-24 pb-4">
-            <div className="relative w-full h-[55vw] max-h-[300px] flex items-end justify-center">
-              {/* Blob */}
-              <div className="absolute inset-0 flex items-end justify-center">
-                <div className="w-[80%] h-[90%] rounded-[40%_60%_60%_40%/40%_40%_60%_60%] bg-primary/15" />
-              </div>
-              <img
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.35, duration: 0.55 }}
+                className="mx-auto mt-6 flex max-w-2xl flex-col items-center gap-5 sm:flex-row sm:justify-center md:mt-7 lg:mx-0 lg:mt-6 lg:justify-start"
+              >
+                <p className="max-w-[20rem] text-center text-base leading-7 text-foreground/72 md:max-w-sm md:text-lg lg:text-left">
+                  Your gateway to bridal glow, reception glam, and contemporary beauty.
+                </p>
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => scrollTo('#booking')}
+                    className="rounded-full bg-foreground px-6 py-3.5 font-mono text-xs uppercase tracking-[0.18em] text-background transition-colors hover:bg-primary hover:text-primary-foreground md:px-7 md:py-4"
+                  >
+                    Book Your Look
+                  </button>
+                  <button
+                    onClick={() => scrollTo('#gallery')}
+                    className="flex h-[3.25rem] w-[3.25rem] items-center justify-center rounded-full bg-foreground text-background transition-colors hover:bg-primary hover:text-primary-foreground md:h-14 md:w-14"
+                    aria-label="Open gallery"
+                  >
+                    <ArrowUpRight size={21} />
+                  </button>
+                </div>
+              </motion.div>
+            </div>
+
+            <div className="relative mx-auto -mt-2 flex w-full max-w-[420px] items-end justify-center overflow-hidden pb-6 sm:max-w-[520px] sm:pb-12 lg:mt-0 lg:max-w-none">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.1, duration: 0.8 }}
+                className="absolute bottom-6 left-1/2 h-[min(82vw,420px)] w-[min(82vw,420px)] -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_50%_42%,hsl(var(--secondary))_0%,hsl(var(--secondary)/0.65)_42%,hsl(var(--primary)/0.16)_68%,transparent_72%)] blur-[1px] md:h-[500px] md:w-[500px] lg:bottom-8 lg:h-[clamp(430px,40vw,590px)] lg:w-[clamp(430px,40vw,590px)]"
+              />
+              <motion.img
                 src="/assets/hero_model.png"
-                alt="GlamByHarini — Makeup Artistry"
-                className="relative z-10 h-full w-auto object-contain object-bottom"
-                style={{ mixBlendMode: 'multiply' }}
+                alt="GlamByHarini makeup model"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.22, duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+                className="relative z-10 h-auto max-h-[360px] w-auto max-w-[82vw] object-contain object-bottom sm:max-h-[660px] sm:max-w-[86vw] md:max-h-[700px] lg:max-h-[min(74vh,760px)] lg:max-w-full"
+                style={{
+                  mixBlendMode: 'multiply',
+                  WebkitMaskImage:
+                    'linear-gradient(to bottom, black 0%, black 54%, rgba(0,0,0,0.7) 66%, rgba(0,0,0,0.22) 78%, transparent 92%)',
+                  maskImage:
+                    'linear-gradient(to bottom, black 0%, black 54%, rgba(0,0,0,0.7) 66%, rgba(0,0,0,0.22) 78%, transparent 92%)',
+                }}
               />
-              <div className="absolute bottom-0 left-0 right-0 h-20 z-20 pointer-events-none"
-                style={{ background: 'linear-gradient(to top, #FAF7F4 0%, transparent 100%)' }}
-              />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-48 bg-gradient-to-t from-background via-background/90 to-transparent" />
+              <div className="pointer-events-none absolute bottom-10 left-1/2 z-20 h-32 w-[86%] -translate-x-1/2 rounded-full bg-background/90 blur-3xl" />
+
+              <motion.div
+                initial={{ opacity: 0, x: 18 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.45, duration: 0.55 }}
+                className="absolute right-4 top-3 z-20 hidden text-right sm:block lg:right-8"
+              >
+                <div className="mb-3 flex items-center justify-end gap-1.5">
+                  {[Sparkles, Star, Heart].map((Icon, i) => (
+                    <span
+                      key={i}
+                      className="flex h-10 w-10 items-center justify-center rounded-full border border-foreground/8 bg-white text-primary shadow-sm"
+                    >
+                      <Icon size={16} />
+                    </span>
+                  ))}
+                </div>
+                <p className="font-mono text-xs tracking-widest uppercase text-foreground underline underline-offset-4">
+                  Loved by 500+ clients
+                </p>
+              </motion.div>
             </div>
           </div>
-
-          {/* ── LEFT — Content ── */}
-          <div className="flex flex-col justify-center pb-10 md:pb-0 md:py-24">
-
-            {/* Promo badge */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              className="inline-flex items-center gap-2 bg-white/80 border border-primary/20 rounded-full px-4 py-2 mb-6 w-fit shadow-sm"
-            >
-              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-              <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-primary/80">
-                Certified Makeup Artist · Tamil Nadu
-              </span>
-            </motion.div>
-
-            {/* Headline */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.35, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <h1 className="font-serif text-[clamp(2.2rem,6vw,5rem)] leading-[1.08] text-foreground mb-5">
-                Step into Your<br />
-                <span className="italic text-primary">Most Beautiful</span><br />
-                Self
-              </h1>
-            </motion.div>
-
-            {/* Description */}
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6, duration: 0.6 }}
-              className="text-muted-foreground leading-relaxed mb-8 max-w-sm text-base"
-            >
-              Luxury bridal & editorial makeup artistry by Harini Suresh — where every look is a masterpiece crafted just for you.
-            </motion.p>
-
-            {/* CTAs */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.75, duration: 0.5 }}
-              className="flex flex-wrap items-center gap-4"
-            >
-              <button
-                onClick={() => scrollTo('#booking')}
-                className="flex items-center gap-3 bg-foreground text-background px-7 py-3.5 font-mono text-xs tracking-[0.2em] uppercase hover:bg-primary transition-all duration-300 rounded-none shadow-lg"
-              >
-                Book Now
-                <ArrowRight size={14} />
-              </button>
-              <button
-                onClick={() => scrollTo('#gallery')}
-                className="font-mono text-xs tracking-[0.2em] uppercase text-foreground/40 hover:text-foreground transition-colors border-b border-foreground/20 hover:border-foreground pb-0.5"
-              >
-                View Gallery →
-              </button>
-            </motion.div>
-
-            {/* Stats row */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1, duration: 0.6 }}
-              className="flex items-center gap-6 mt-10 pt-8 border-t border-foreground/10"
-            >
-              {[
-                { val: '500+', label: 'Happy Clients' },
-                { val: '5+', label: 'Years Exp' },
-                { val: 'TBIEA', label: 'Certified' },
-              ].map((s) => (
-                <div key={s.label}>
-                  <div className="font-serif text-xl text-foreground">{s.val}</div>
-                  <div className="font-mono text-[9px] tracking-widest uppercase text-muted-foreground mt-0.5">{s.label}</div>
-                </div>
-              ))}
-            </motion.div>
-          </div>
-
-          {/* ── RIGHT — Photo (desktop only) ── */}
-          <div className="hidden md:flex relative items-end justify-center h-[90vh]">
-            {/* Blob */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.15, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute bottom-0 right-4 w-[85%] h-[95%] rounded-[40%_60%_60%_40%/40%_40%_60%_60%] bg-primary/15"
-            />
-            <div className="absolute bottom-10 right-14 w-[70%] h-[80%] rounded-full bg-accent/10 blur-2xl" />
-
-            <motion.img
-              src="/assets/hero_model.png"
-              alt="GlamByHarini — Makeup Artistry"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-              className="relative z-10 h-full w-auto object-contain object-bottom"
-              style={{ mixBlendMode: 'multiply' }}
-            />
-
-            {/* Bottom gradient */}
-            <div className="absolute bottom-0 left-0 right-0 h-40 z-20 pointer-events-none"
-              style={{ background: 'linear-gradient(to top, #FAF7F4 0%, transparent 100%)' }}
-            />
-
-            {/* Floating stat card — desktop only */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 1.2, duration: 0.5 }}
-              className="absolute bottom-16 left-0 glass-panel px-5 py-4 shadow-xl z-30"
-            >
-              <div className="font-serif text-2xl text-primary">500+</div>
-              <div className="font-mono text-[9px] tracking-widest uppercase text-muted-foreground">Transformations</div>
-            </motion.div>
-          </div>
-
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.55, duration: 0.65 }}
+          className="relative z-30 pb-8 md:pb-14"
+        >
+          <div className="mx-auto w-[90vw] max-w-7xl">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {collections.map((item) => (
+                <button
+                  key={item.title}
+                  type="button"
+                  onClick={() => scrollTo(item.target)}
+                  className="group grid min-h-[150px] grid-cols-[112px_1fr] items-center gap-4 rounded-[1.5rem] border border-foreground/8 bg-white p-4 text-left shadow-sm shadow-black/5 transition duration-300 hover:-translate-y-1 hover:border-primary/25 hover:shadow-xl hover:shadow-black/10 sm:min-h-[168px] md:grid-cols-[128px_1fr] md:gap-5 md:rounded-[1.75rem]"
+                >
+                  <div className="aspect-square overflow-hidden rounded-[1.15rem] bg-secondary/20 md:rounded-[1.35rem]">
+                    <img
+                      src={item.image}
+                      alt=""
+                      className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <h2 className="font-mono text-[clamp(1.35rem,2.2vw,2rem)] font-semibold leading-none text-foreground">
+                          {item.title}
+                        </h2>
+                        <p className="mt-1 text-[clamp(1rem,1.6vw,1.35rem)] leading-none text-foreground/40">
+                          {item.subtitle}
+                        </p>
+                      </div>
+                      <ArrowUpRight
+                        size={20}
+                        className="text-foreground/50 group-hover:text-primary transition-colors shrink-0"
+                      />
+                    </div>
+                    <p className="mt-4 text-sm leading-6 text-foreground/62">{item.desc}</p>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </motion.div>
       </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-20"
-      >
-        <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-foreground/25">Scroll</span>
-        <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ repeat: Infinity, duration: 1.6 }}
-          className="w-px h-8 bg-foreground/15"
-        />
-      </motion.div>
+      <div className="hidden lg:flex absolute right-4 top-1/2 -translate-y-1/2 z-30 flex-col items-center gap-2 text-foreground/45">
+        <span className="vertical-rl font-mono text-[10px] tracking-[0.25em] uppercase" style={{ writingMode: 'vertical-rl' }}>
+          Scroll Down
+        </span>
+        <ArrowDown size={16} />
+      </div>
     </section>
   );
 }

@@ -13,17 +13,19 @@ L.Icon.Default.mergeOptions({
 });
 
 const cities = [
-  { name: 'Chennai', lat: 13.0827, lng: 80.2707, primary: true, service: 'Home Studio + On-site', packages: 'All Packages', desc: 'Home base — studio & on-location available' },
-  { name: 'Coimbatore', lat: 11.0168, lng: 76.9558, primary: false, service: 'On-site Only', packages: 'Bridal & Party', desc: 'Available for weddings & events' },
-  { name: 'Madurai', lat: 9.9252, lng: 78.1198, primary: false, service: 'On-site Only', packages: 'Bridal & Party', desc: 'Available for weddings & events' },
-  { name: 'Trichy', lat: 10.7905, lng: 78.7047, primary: false, service: 'On-site Only', packages: 'All Packages', desc: 'Available for all bookings' },
-  { name: 'Salem', lat: 11.6643, lng: 78.1460, primary: false, service: 'On-site Only', packages: 'Party & Trial', desc: 'Available for events' },
-  { name: 'Vellore', lat: 12.9165, lng: 79.1325, primary: false, service: 'On-site Only', packages: 'All Packages', desc: 'Available for all bookings' },
-  { name: 'Tirunelveli', lat: 8.7139, lng: 77.7567, primary: false, service: 'On-site Only', packages: 'Bridal & Party', desc: 'Available for weddings & events' },
-  { name: 'Pondicherry', lat: 11.9416, lng: 79.8083, primary: false, service: 'On-site Only', packages: 'All Packages', desc: 'Available for all bookings' },
-  { name: 'Erode', lat: 11.3410, lng: 77.7172, primary: false, service: 'On-site Only', packages: 'Party & Trial', desc: 'Available for events' },
-  { name: 'Thanjavur', lat: 10.7870, lng: 79.1378, primary: false, service: 'On-site Only', packages: 'Bridal & Party', desc: 'Available for weddings & events' },
-];
+  { name: 'Chennai', lat: 13.0827, lng: 80.2707, primary: true,  image: '/assets/cities/chennai.jpeg',     service: 'Home Studio + On-site', packages: 'All Packages',   desc: 'Home base — studio & on-location available' },
+  { name: 'Coimbatore', lat: 11.0168, lng: 76.9558, primary: false, image: '/assets/cities/coimbatore.png', service: 'On-site Only',         packages: 'Bridal & Party',  desc: 'Available for weddings & events' },
+  { name: 'Madurai', lat: 9.9252, lng: 78.1198, primary: false,     image: '/assets/cities/madurai.png',    service: 'On-site Only',         packages: 'Bridal & Party',  desc: 'Available for weddings & events' },
+  { name: 'Trichy', lat: 10.7905, lng: 78.7047, primary: false,      image: '/assets/cities/trichy.png',     service: 'On-site Only',         packages: 'All Packages',    desc: 'Available for all bookings' },
+  { name: 'Salem', lat: 11.6643, lng: 78.1460, primary: false,       image: '/assets/cities/salem.png',      service: 'On-site Only',         packages: 'Party & Trial',   desc: 'Available for events' },
+  { name: 'Vellore', lat: 12.9165, lng: 79.1325, primary: false,     image: '/assets/cities/vellore.png',    service: 'On-site Only',         packages: 'All Packages',    desc: 'Available for all bookings' },
+  { name: 'Tirunelveli', lat: 8.7139, lng: 77.7567, primary: false,  image: '/assets/cities/tirunelveli.png',service: 'On-site Only',         packages: 'Bridal & Party',  desc: 'Available for weddings & events' },
+  { name: 'Pondicherry', lat: 11.9416, lng: 79.8083, primary: false, image: '/assets/cities/pondicherry.png',service: 'On-site Only',         packages: 'All Packages',    desc: 'Available for all bookings' },
+  { name: 'Erode', lat: 11.3410, lng: 77.7172, primary: false,       image: '/assets/cities/erode.png',      service: 'On-site Only',         packages: 'Party & Trial',   desc: 'Available for events' },
+  { name: 'Thanjavur', lat: 10.7870, lng: 79.1378, primary: false,   image: '/assets/cities/thanjavur.png',  service: 'On-site Only',         packages: 'Bridal & Party',  desc: 'Available for weddings & events' },
+] as const;
+
+type City = typeof cities[number];
 
 const services = ['All Services', 'Bridal', 'Party Glam', 'Trial Look', 'Engagement'];
 const budgets = ['All Budgets', 'Under ₹5,000', '₹5,000 – ₹10,000', 'Above ₹10,000'];
@@ -81,12 +83,52 @@ function StatNumber({ target, suffix, label }: { target: number; suffix: string;
   );
 }
 
-function makeIcon(primary: boolean, active: boolean) {
-  const size = primary ? 44 : 36;
-  const color = active ? '#c9a9a0' : (primary ? '#c9a9a0' : '#ffffff');
-  const border = active ? '#a07870' : (primary ? '#a07870' : 'rgba(0,0,0,0.2)');
-  const svg = `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg"><circle cx="${size/2}" cy="${size/2}" r="${size/2-2}" fill="${color}" stroke="${border}" stroke-width="2"/>${primary ? `<circle cx="${size/2}" cy="${size/2}" r="${size/2-8}" fill="white" opacity="0.4"/>` : ''}<text x="${size/2}" y="${size/2+5}" text-anchor="middle" font-size="16" fill="${primary||active?'#fff':'#333'}">${primary?'★':'📍'}</text></svg>`;
-  return L.divIcon({ html: svg, className: '', iconSize: [size, size], iconAnchor: [size/2, size/2] });
+function makeIcon(city: City, active: boolean) {
+  const size = city.primary ? 46 : 40;
+  const borderWidth = city.primary || active ? 3 : 2;
+  const border = active ? '#a07870' : (city.primary ? '#a07870' : 'rgba(0,0,0,0.22)');
+  const shadow = active ? '0 14px 30px rgba(0,0,0,0.25)' : '0 10px 22px rgba(0,0,0,0.18)';
+
+  const html = `
+    <div style="
+      width:${size}px;
+      height:${size}px;
+      border-radius:9999px;
+      overflow:hidden;
+      border:${borderWidth}px solid ${border};
+      background:#fff;
+      box-shadow:${shadow};
+      position:relative;
+      transform:${active ? 'scale(1.05)' : 'scale(1)'};
+      transform-origin:center;
+    ">
+      <img
+        src="${city.image}"
+        alt="${city.name}"
+        style="width:100%;height:100%;object-fit:cover;display:block;"
+      />
+      ${city.primary ? `
+        <div style="
+          position:absolute;
+          right:-2px;
+          top:-2px;
+          width:18px;
+          height:18px;
+          border-radius:9999px;
+          background:rgba(201,169,160,0.95);
+          border:2px solid rgba(255,255,255,0.9);
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          color:#fff;
+          font-size:11px;
+          line-height:1;
+        ">★</div>
+      ` : ''}
+    </div>
+  `;
+
+  return L.divIcon({ html, className: '', iconSize: [size, size], iconAnchor: [size / 2, size / 2] });
 }
 
 function FlyTo({ lat, lng }: { lat: number; lng: number }) {
@@ -94,8 +136,6 @@ function FlyTo({ lat, lng }: { lat: number; lng: number }) {
   useEffect(() => { map.flyTo([lat, lng], 9, { duration: 1.2 }); }, [lat, lng]);
   return null;
 }
-
-type City = typeof cities[0];
 
 export default function ServiceArea() {
   const [activeCity, setActiveCity] = useState<City>(cities[0]);
@@ -191,7 +231,12 @@ export default function ServiceArea() {
             <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
             {activeCity && <FlyTo lat={activeCity.lat} lng={activeCity.lng} />}
             {filtered.map(city => (
-              <Marker key={city.name} position={[city.lat, city.lng]} icon={makeIcon(city.primary, activeCity?.name === city.name)} eventHandlers={{ click: () => setActiveCity(city) }} />
+              <Marker
+                key={city.name}
+                position={[city.lat, city.lng]}
+                icon={makeIcon(city, activeCity?.name === city.name)}
+                eventHandlers={{ click: () => setActiveCity(city) }}
+              />
             ))}
           </MapContainer>
 
@@ -204,8 +249,16 @@ export default function ServiceArea() {
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
               className="absolute top-4 right-4 z-[999] w-72 rounded-2xl bg-white shadow-2xl shadow-black/20 overflow-hidden"
             >
-              <div className="h-20 relative flex items-end p-4" style={{ background: 'linear-gradient(135deg, hsl(351 50% 75%) 0%, hsl(39 60% 78%) 100%)' }}>
-                <div className="absolute inset-0 flex items-center justify-center text-5xl opacity-20 select-none">💄</div>
+              <div
+                className="h-24 relative flex items-end p-4"
+                style={{
+                  backgroundImage: `url(${activeCity.image})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-black/40 via-black/10 to-transparent" />
+                <div className="absolute inset-0 ring-1 ring-inset ring-white/20" />
                 {activeCity.primary && <span className="absolute top-3 right-3 px-2 py-0.5 rounded-full bg-white/30 text-white text-[9px] font-mono tracking-widest uppercase backdrop-blur-sm">Home Base</span>}
                 <button onClick={() => setActiveCity(cities[0])} className="absolute top-3 left-3 w-6 h-6 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm text-white hover:bg-white/40 transition-colors"><X size={11} /></button>
               </div>

@@ -1,182 +1,345 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import {
+  CalendarCheck,
+  CheckCircle2,
+  ChevronLeft,
+  ChevronRight,
+  Clock3,
+  MessageCircle,
+  Radio,
+  Sparkles,
+  XCircle,
+} from 'lucide-react';
 
 const BOOKED = [3, 7, 8, 12, 14, 18, 21, 22, 25, 27];
 const LIMITED = [5, 10, 16, 19, 28];
+const MONTHS = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const PHONE = '917305306497';
 
 function daysInMonth(year: number, month: number) {
   return new Date(year, month + 1, 0).getDate();
 }
+
 function firstDayOfMonth(year: number, month: number) {
   return new Date(year, month, 1).getDay();
 }
 
-const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+function getStatus(day: number) {
+  if (BOOKED.includes(day)) return 'booked';
+  if (LIMITED.includes(day)) return 'limited';
+  return 'open';
+}
+
+function getSlots(day: number) {
+  const status = getStatus(day);
+  if (status === 'booked') return 0;
+  if (status === 'limited') return day % 2 === 0 ? 1 : 2;
+  return 4 + (day % 3);
+}
 
 export default function AvailabilityCalendar() {
-  const today = new Date();
+  const today = useMemo(() => new Date(), []);
   const [year, setYear] = useState(today.getFullYear());
   const [month, setMonth] = useState(today.getMonth());
-  const [selected, setSelected] = useState<number | null>(null);
+  const [selected, setSelected] = useState<number | null>(today.getDate());
+  const [now, setNow] = useState(new Date());
+
+  useEffect(() => {
+    const timer = window.setInterval(() => setNow(new Date()), 30000);
+    return () => window.clearInterval(timer);
+  }, []);
 
   const totalDays = daysInMonth(year, month);
   const firstDay = firstDayOfMonth(year, month);
+  const selectedStatus = selected ? getStatus(selected) : null;
+  const selectedSlots = selected ? getSlots(selected) : 0;
+  const openDays = Array.from({ length: totalDays }).filter((_, i) => getStatus(i + 1) === 'open').length;
+  const limitedDays = LIMITED.filter((day) => day <= totalDays).length;
+  const bookedDays = BOOKED.filter((day) => day <= totalDays).length;
+
+  const selectedDateLabel = selected ? `${selected} ${MONTHS[month]} ${year}` : 'Select a date';
+  const whatsappText = encodeURIComponent(
+    `Hi Harini! I checked your real-time availability and would like to book ${selectedDateLabel}. Status shown: ${
+      selectedStatus === 'limited' ? 'Limited slots' : selectedStatus === 'open' ? 'Available' : 'Booked'
+    }. Can you confirm the slot?`
+  );
 
   const prevMonth = () => {
-    if (month === 0) { setMonth(11); setYear(y => y - 1); }
-    else setMonth(m => m - 1);
+    if (month === 0) {
+      setMonth(11);
+      setYear((y) => y - 1);
+    } else {
+      setMonth((m) => m - 1);
+    }
     setSelected(null);
   };
+
   const nextMonth = () => {
-    if (month === 11) { setMonth(0); setYear(y => y + 1); }
-    else setMonth(m => m + 1);
+    if (month === 11) {
+      setMonth(0);
+      setYear((y) => y + 1);
+    } else {
+      setMonth((m) => m + 1);
+    }
     setSelected(null);
   };
 
-  const status = (d: number) => {
-    if (BOOKED.includes(d)) return 'booked';
-    if (LIMITED.includes(d)) return 'limited';
-    return 'open';
-  };
+  const dayClass = (day: number) => {
+    const status = getStatus(day);
+    const isToday =
+      day === today.getDate() && month === today.getMonth() && year === today.getFullYear();
+    const isSelected = day === selected;
+    const base =
+      'relative h-11 w-11 md:h-12 md:w-12 flex items-center justify-center border text-sm font-mono transition-colors';
 
-  const dayClass = (d: number, s: string) => {
-    const isToday = d === today.getDate() && month === today.getMonth() && year === today.getFullYear();
-    const isSel = d === selected;
-    const base = 'relative w-9 h-9 md:w-10 md:h-10 rounded-xl flex items-center justify-center text-sm transition-all duration-200 font-mono';
-    if (s === 'booked') return `${base} bg-foreground/6 text-foreground/25 cursor-not-allowed line-through`;
-    if (s === 'limited') return `${base} bg-accent/20 text-accent cursor-pointer hover:bg-accent/30 ${isSel ? 'ring-2 ring-accent' : ''}`;
-    if (isSel) return `${base} bg-primary text-white shadow-md cursor-pointer`;
-    if (isToday) return `${base} ring-2 ring-primary/40 text-primary cursor-pointer hover:bg-primary/10`;
-    return `${base} text-foreground/70 cursor-pointer hover:bg-foreground/5`;
+    if (status === 'booked') {
+      return `${base} border-foreground/10 bg-foreground/[0.03] text-foreground/25 cursor-not-allowed line-through`;
+    }
+
+    if (isSelected) {
+      return `${base} border-primary bg-primary text-primary-foreground shadow-sm`;
+    }
+
+    if (status === 'limited') {
+      return `${base} border-accent/35 bg-accent/10 text-foreground hover:bg-accent/20`;
+    }
+
+    if (isToday) {
+      return `${base} border-primary/35 bg-primary/5 text-primary hover:bg-primary/10`;
+    }
+
+    return `${base} border-foreground/10 bg-white text-foreground/70 hover:border-primary/30 hover:bg-primary/5`;
   };
 
   return (
-    <section id="availability" className="py-20 md:py-32 bg-secondary/30 relative overflow-hidden">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-40 rounded-full bg-primary/6 blur-3xl pointer-events-none" />
-      <div className="container mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-12"
-        >
-          <span className="font-mono text-xs tracking-[0.3em] uppercase text-primary mb-4 block">Book Your Date</span>
-          <h2 className="text-4xl md:text-5xl font-serif text-foreground mb-3">
-            Check <span className="italic text-primary/80">Availability</span>
-          </h2>
-          <p className="text-foreground/45 text-sm max-w-md mx-auto">
-            Browse open dates and select yours. Struck-through dates are already booked — act fast, especially around wedding season!
-          </p>
-        </motion.div>
+    <section id="availability" className="py-20 md:py-28 bg-secondary/15 relative overflow-hidden">
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent pointer-events-none" />
+      <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-accent/25 to-transparent pointer-events-none" />
 
-        <div className="flex flex-col md:flex-row gap-8 max-w-4xl mx-auto items-start">
-          {/* Calendar */}
+      <div className="container mx-auto px-6">
+        <div className="max-w-6xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 22 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="flex-1 glass-panel p-6 md:p-8"
+            transition={{ duration: 0.65 }}
+            className="mb-9 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5"
           >
-            {/* Nav */}
-            <div className="flex items-center justify-between mb-6">
-              <button onClick={prevMonth} className="w-9 h-9 rounded-xl border border-foreground/10 flex items-center justify-center hover:border-primary transition-colors">
-                <ChevronLeft size={16} />
-              </button>
-              <h3 className="font-serif text-xl text-foreground">{MONTHS[month]} {year}</h3>
-              <button onClick={nextMonth} className="w-9 h-9 rounded-xl border border-foreground/10 flex items-center justify-center hover:border-primary transition-colors">
-                <ChevronRight size={16} />
-              </button>
+            <div>
+              <div className="inline-flex items-center gap-2 font-mono text-xs tracking-[0.3em] uppercase text-primary">
+                <Radio size={15} />
+                Live Date Check
+              </div>
+              <h2 className="mt-4 text-4xl md:text-5xl font-serif text-foreground">
+                Check Availability
+              </h2>
+              <p className="mt-4 max-w-xl text-sm text-foreground/60 leading-relaxed">
+                View open, limited, and booked dates before sending your booking request.
+              </p>
             </div>
 
-            {/* Day headers */}
-            <div className="grid grid-cols-7 gap-1 mb-2">
-              {DAYS.map(d => (
-                <div key={d} className="text-center text-[10px] font-mono uppercase tracking-widest text-foreground/30 py-1">{d}</div>
-              ))}
-            </div>
-
-            {/* Days grid */}
-            <div className="grid grid-cols-7 gap-1">
-              {Array.from({ length: firstDay }).map((_, i) => <div key={`e-${i}`} />)}
-              {Array.from({ length: totalDays }).map((_, i) => {
-                const d = i + 1;
-                const s = status(d);
-                return (
-                  <div key={d} className="flex items-center justify-center">
-                    <button
-                      disabled={s === 'booked'}
-                      onClick={() => s !== 'booked' && setSelected(d)}
-                      className={dayClass(d, s)}
-                    >
-                      {d}
-                      {s === 'limited' && (
-                        <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-accent" />
-                      )}
-                    </button>
-                  </div>
-                );
-              })}
+            <div className="border border-primary/15 bg-white px-4 py-3 shadow-sm">
+              <div className="flex items-center gap-3">
+                <span className="relative flex h-3 w-3">
+                  <span className="absolute inline-flex h-full w-full animate-ping bg-primary/40" />
+                  <span className="relative inline-flex h-3 w-3 bg-primary" />
+                </span>
+                <div>
+                  <p className="font-mono text-xs tracking-[0.2em] uppercase text-foreground/45">
+                    Real-time status
+                  </p>
+                  <p className="mt-1 text-sm text-foreground">
+                    Updated {now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </p>
+                </div>
+              </div>
             </div>
           </motion.div>
 
-          {/* Sidebar */}
-          <div className="w-full md:w-72 flex flex-col gap-4">
-            {/* Legend */}
-            <div className="glass-panel p-5">
-              <p className="font-mono text-xs tracking-widest uppercase text-foreground/40 mb-4">Legend</p>
-              <div className="flex flex-col gap-3">
+          <div className="grid lg:grid-cols-[minmax(0,1fr)_340px] gap-5 items-start">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.65 }}
+              className="border border-primary/15 bg-white shadow-sm"
+            >
+              <div className="flex items-center justify-between gap-4 px-5 md:px-6 py-5 border-b border-foreground/10">
+                <button
+                  type="button"
+                  onClick={prevMonth}
+                  className="h-10 w-10 border border-foreground/10 flex items-center justify-center hover:border-primary/35 hover:text-primary transition-colors"
+                  aria-label="Previous month"
+                >
+                  <ChevronLeft size={17} />
+                </button>
+                <div className="text-center">
+                  <h3 className="font-serif text-xl text-foreground">
+                    {MONTHS[month]} {year}
+                  </h3>
+                  <p className="mt-1 font-mono text-xs tracking-[0.2em] uppercase text-foreground/40">
+                    {openDays} open · {limitedDays} limited · {bookedDays} booked
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={nextMonth}
+                  className="h-10 w-10 border border-foreground/10 flex items-center justify-center hover:border-primary/35 hover:text-primary transition-colors"
+                  aria-label="Next month"
+                >
+                  <ChevronRight size={17} />
+                </button>
+              </div>
+
+              <div className="p-5 md:p-6">
+                <div className="grid grid-cols-7 gap-2 mb-3">
+                  {DAYS.map((day) => (
+                    <div
+                      key={day}
+                      className="text-center text-[10px] font-mono uppercase tracking-widest text-foreground/35 py-1"
+                    >
+                      {day}
+                    </div>
+                  ))}
+                </div>
+
+                <div className="grid grid-cols-7 gap-2">
+                  {Array.from({ length: firstDay }).map((_, i) => (
+                    <div key={`empty-${i}`} />
+                  ))}
+                  {Array.from({ length: totalDays }).map((_, i) => {
+                    const day = i + 1;
+                    const status = getStatus(day);
+
+                    return (
+                      <button
+                        key={day}
+                        type="button"
+                        disabled={status === 'booked'}
+                        onClick={() => status !== 'booked' && setSelected(day)}
+                        className={dayClass(day)}
+                        aria-label={`${day} ${MONTHS[month]} ${year}, ${status}`}
+                      >
+                        {day}
+                        {status === 'limited' && (
+                          <span className="absolute right-1 top-1 h-1.5 w-1.5 bg-accent" />
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.aside
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.65, delay: 0.1 }}
+              className="space-y-4"
+            >
+              <div className="border border-primary/15 bg-white shadow-sm">
+                <div className="px-5 py-4 border-b border-foreground/10">
+                  <p className="font-mono text-xs tracking-[0.25em] uppercase text-foreground/45">
+                    Selected Date
+                  </p>
+                  <h3 className="mt-2 font-serif text-2xl text-foreground">{selectedDateLabel}</h3>
+                </div>
+
+                <div className="p-5">
+                  {selected ? (
+                    <div className="space-y-4">
+                      <div className="flex items-start gap-3">
+                        <div className="h-10 w-10 bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                          {selectedStatus === 'booked' ? (
+                            <XCircle size={19} />
+                          ) : selectedStatus === 'limited' ? (
+                            <Clock3 size={19} />
+                          ) : (
+                            <CheckCircle2 size={19} />
+                          )}
+                        </div>
+                        <div>
+                          <p className="font-semibold text-foreground">
+                            {selectedStatus === 'limited'
+                              ? 'Limited availability'
+                              : selectedStatus === 'open'
+                                ? 'Available for booking'
+                                : 'Fully booked'}
+                          </p>
+                          <p className="mt-1 text-sm text-foreground/60">
+                            {selectedSlots > 0
+                              ? `${selectedSlots} appointment slot${selectedSlots > 1 ? 's' : ''} showing now.`
+                              : 'No appointment slots are showing for this date.'}
+                          </p>
+                        </div>
+                      </div>
+
+                      <a
+                        href={`https://wa.me/${PHONE}?text=${whatsappText}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex w-full items-center justify-center gap-3 bg-primary text-primary-foreground px-5 py-3 font-mono text-xs tracking-[0.2em] uppercase hover:bg-accent transition-colors"
+                      >
+                        <MessageCircle size={16} />
+                        Confirm on WhatsApp
+                      </a>
+                    </div>
+                  ) : (
+                    <div className="flex items-start gap-3 text-foreground/60">
+                      <CalendarCheck size={19} className="text-primary shrink-0" />
+                      <p className="text-sm leading-relaxed">Select an open date to see live slot details.</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="grid gap-3">
                 {[
-                  { color: 'bg-primary', label: 'Selected / Open', note: 'Click to select' },
-                  { color: 'bg-accent/60', label: 'Limited Slots', note: 'Only 1–2 spots left' },
-                  { color: 'bg-foreground/10', label: 'Fully Booked', note: 'Not available' },
-                ].map(item => (
-                  <div key={item.label} className="flex items-center gap-3">
-                    <div className={`w-4 h-4 rounded-md ${item.color} shrink-0`} />
+                  { icon: CheckCircle2, label: 'Open', note: 'Multiple slots showing', tone: 'text-primary bg-primary/10' },
+                  { icon: Clock3, label: 'Limited', note: 'Only 1 to 2 slots left', tone: 'text-accent bg-accent/15' },
+                  { icon: XCircle, label: 'Booked', note: 'Date unavailable', tone: 'text-foreground/35 bg-foreground/5' },
+                ].map((item) => (
+                  <div key={item.label} className="border border-foreground/10 bg-white p-4 flex items-center gap-3">
+                    <span className={`h-9 w-9 flex items-center justify-center ${item.tone}`}>
+                      <item.icon size={17} />
+                    </span>
                     <div>
-                      <p className="text-sm text-foreground/70">{item.label}</p>
-                      <p className="text-[10px] font-mono text-foreground/35">{item.note}</p>
+                      <p className="font-semibold text-foreground">{item.label}</p>
+                      <p className="text-xs text-foreground/50">{item.note}</p>
                     </div>
                   </div>
                 ))}
               </div>
-            </div>
 
-            {/* Selected date CTA */}
-            <motion.div
-              animate={{ opacity: selected ? 1 : 0.5, y: selected ? 0 : 4 }}
-              className="glass-panel p-5"
-            >
-              {selected ? (
-                <>
-                  <p className="font-mono text-xs tracking-widest uppercase text-primary mb-2">Selected Date</p>
-                  <p className="font-serif text-2xl text-foreground mb-1">{selected} {MONTHS[month]}</p>
-                  <p className="font-mono text-xs text-foreground/40 mb-4">{year} · {status(selected) === 'limited' ? '⚡ Limited slots' : 'Open'}</p>
-                  <a
-                    href={`https://wa.me/917305306497?text=Hi Harini! I'd like to book ${selected} ${MONTHS[month]} ${year}. Is this date still available?`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block w-full text-center py-3 rounded-xl bg-foreground text-background text-xs font-mono tracking-widest uppercase hover:bg-foreground/85 transition-colors"
-                  >
-                    Book {selected} {MONTHS[month]} →
-                  </a>
-                </>
-              ) : (
-                <p className="font-serif text-foreground/40 text-sm italic">Select a date to book your slot.</p>
-              )}
-            </motion.div>
-
-            <div className="px-2">
-              <p className="font-mono text-[10px] text-foreground/25 leading-relaxed">
-                ⚡ Wedding season (Oct–Feb) fills up fast. Book at least 3 months in advance for bridal looks.
-              </p>
-            </div>
+              <div className="border border-accent/25 bg-accent/10 p-5">
+                <div className="flex items-start gap-3">
+                  <Sparkles size={18} className="text-accent shrink-0" />
+                  <p className="text-sm text-foreground/65 leading-relaxed">
+                    Peak wedding dates fill quickly. Bridal bookings are best confirmed 3 months in advance.
+                  </p>
+                </div>
+              </div>
+            </motion.aside>
           </div>
         </div>
       </div>
     </section>
   );
 }
+

@@ -17,6 +17,7 @@ export default function Navbar() {
     { name: 'About', href: '#about' },
     { name: 'Services', href: '#services' },
     { name: 'Gallery', href: '#gallery' },
+    { name: 'Blogs', href: '#blogs' },
   ];
 
   const scrollTo = (id: string) => {
@@ -29,13 +30,13 @@ export default function Navbar() {
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'py-2 glass-panel' : 'py-6 bg-transparent'}`}>
-      <div className="container mx-auto px-6 flex items-center justify-between">
+      <div className="mx-auto flex w-[90vw] max-w-7xl items-center justify-between gap-8">
         <a href="#hero" onClick={(e) => { e.preventDefault(); scrollTo('#hero'); }} className="flex items-center gap-3">
           <img src="/assets/Header_Logo_1779783577490.png" alt="GlamByHarini Logo" className="h-12 w-auto" />
         </a>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden min-w-0 items-center gap-6 md:flex lg:gap-8">
           {navLinks.map((link) => (
             <a
               key={link.name}
@@ -48,7 +49,7 @@ export default function Navbar() {
           ))}
           <button 
             onClick={() => scrollTo('#booking')}
-            className="px-6 py-2 bg-primary text-primary-foreground font-mono text-sm tracking-wider uppercase hover:bg-accent transition-colors"
+            className="shrink-0 bg-primary px-6 py-2.5 font-mono text-sm uppercase tracking-wider text-primary-foreground transition-colors hover:bg-accent"
           >
             Book Now
           </button>

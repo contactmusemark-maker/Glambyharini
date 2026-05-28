@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, MapPin, Star } from 'lucide-react';
-
-const categories = ['All', 'Photography', 'Venues', 'Decor', 'Mehendi', 'Catering'];
+import { ChevronRight, Search, Camera, MapPin, Flower2, Hand, UtensilsCrossed, Sparkles } from 'lucide-react';
 
 const partners = [
   {
@@ -19,6 +17,7 @@ const partners = [
     accent: 'text-blue-600',
     bg: 'bg-blue-500',
     ig: 'https://www.instagram.com/',
+    image: '/assets/clients/000_client.jpg',
   },
   {
     name: 'Rasa Naadu Events',
@@ -34,6 +33,7 @@ const partners = [
     accent: 'text-amber-600',
     bg: 'bg-amber-500',
     ig: 'https://www.instagram.com/',
+    image: '/assets/clients/004_client.jpg',
   },
   {
     name: 'Petal & Bloom Decor',
@@ -49,6 +49,7 @@ const partners = [
     accent: 'text-rose-600',
     bg: 'bg-rose-500',
     ig: 'https://www.instagram.com/',
+    image: '/assets/clients/005_client.jpg',
   },
   {
     name: 'Mehendi by Preethi',
@@ -64,6 +65,7 @@ const partners = [
     accent: 'text-orange-600',
     bg: 'bg-orange-500',
     ig: 'https://www.instagram.com/',
+    image: '/assets/clients/006_client.jpg',
   },
   {
     name: 'Virundhu Catering Co.',
@@ -79,6 +81,7 @@ const partners = [
     accent: 'text-green-600',
     bg: 'bg-green-500',
     ig: 'https://www.instagram.com/',
+    image: '/assets/clients/007_client.jpg',
   },
   {
     name: 'Frame & Focus Visuals',
@@ -94,121 +97,194 @@ const partners = [
     accent: 'text-violet-600',
     bg: 'bg-violet-500',
     ig: 'https://www.instagram.com/',
+    image: '/assets/clients/008_client.jpg',
   },
 ];
 
-export default function CollabPartners() {
-  const [activeCategory, setActiveCategory] = useState('All');
-  const [hovered, setHovered] = useState<string | null>(null);
+const categoryIcon: Record<string, React.ReactNode> = {
+  Photography: <Camera size={14} />,
+  Venues: <MapPin size={14} />,
+  Decor: <Flower2 size={14} />,
+  Mehendi: <Hand size={14} />,
+  Catering: <UtensilsCrossed size={14} />,
+};
 
-  const filtered = activeCategory === 'All'
-    ? partners
-    : partners.filter(p => p.category === activeCategory);
+function PartnerChip({ label }: { label: string }) {
+  return (
+    <span className="inline-flex items-center gap-2 rounded-full bg-white/75 backdrop-blur px-3 py-1.5 border border-foreground/10 shadow-sm">
+      <span className="text-foreground/60">{categoryIcon[label] ?? <Sparkles size={14} />}</span>
+      <span className="font-mono text-[10px] tracking-widest uppercase text-foreground/55">{label}</span>
+    </span>
+  );
+}
+
+export default function CollabPartners() {
+  const [query, setQuery] = useState('');
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return partners;
+    return partners.filter(p =>
+      [p.name, p.category, p.location, p.specialty].some(v => v.toLowerCase().includes(q))
+    );
+  }, [query]);
+
+  const collage = filtered.slice(0, 6);
 
   return (
-    <section id="partners" className="py-20 md:py-32 bg-background relative overflow-hidden">
-      <div className="absolute top-0 left-0 w-80 h-80 rounded-full bg-accent/5 blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-      <div className="container mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-12"
-        >
-          <span className="font-mono text-xs tracking-[0.3em] uppercase text-primary mb-4 block">Trusted Network</span>
-          <h2 className="text-4xl md:text-5xl font-serif text-foreground mb-3">
-            Collaboration <span className="italic text-primary/80">Partners</span>
-          </h2>
-          <p className="text-foreground/45 text-sm max-w-md mx-auto">
-            Harini works with Chennai's finest wedding vendors. Together, we make your day unforgettable.
-          </p>
-        </motion.div>
+    <section id="partners" className="py-20 md:py-28 bg-[#fbf8f1] relative overflow-hidden">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -top-24 left-1/2 h-64 w-[48rem] -translate-x-1/2 rounded-full bg-primary/10 blur-3xl" />
+        <div className="absolute -bottom-32 right-0 h-80 w-80 rounded-full bg-accent/10 blur-3xl" />
+      </div>
 
-        {/* Category pills */}
-        <div className="flex flex-wrap justify-center gap-2 mb-10">
-          {categories.map(cat => (
-            <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-2 rounded-full text-xs font-mono tracking-widest uppercase transition-all duration-200 ${
-                activeCategory === cat
-                  ? 'bg-foreground text-background shadow-sm'
-                  : 'border border-foreground/10 text-foreground/50 hover:border-foreground/25'
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
+      <div className="container mx-auto px-6 relative">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-14 items-center">
+          {/* Left copy */}
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="max-w-xl"
+          >
+            <div className="inline-flex items-center gap-2 rounded-full bg-white/70 backdrop-blur px-4 py-1.5 border border-foreground/10 shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-primary" />
+              <span className="font-mono text-[11px] tracking-widest uppercase text-foreground/55">Trusted Network</span>
+            </div>
 
-        {/* Cards grid */}
-        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          <AnimatePresence>
-            {filtered.map((p, i) => (
-              <motion.div
-                key={p.name}
-                layout
-                initial={{ opacity: 0, scale: 0.96 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.94 }}
-                transition={{ duration: 0.35, delay: i * 0.05 }}
-                onMouseEnter={() => setHovered(p.name)}
-                onMouseLeave={() => setHovered(null)}
-                className={`relative rounded-2xl p-6 bg-gradient-to-br ${p.color} border border-foreground/6 overflow-hidden group transition-shadow duration-300 ${hovered === p.name ? 'shadow-xl shadow-foreground/8' : 'shadow-sm'}`}
+            <h2 className="mt-6 text-5xl md:text-6xl font-sans font-semibold tracking-tight text-foreground leading-[1.05]">
+              Meet
+              <span className="text-primary/80"> </span>
+              <span className="relative inline-block">
+                without a hitch
+                <span className="absolute left-0 -bottom-1 h-[7px] w-full bg-primary/25 rounded-full -z-10" />
+              </span>
+            </h2>
+
+            <p className="mt-5 text-foreground/55 text-sm md:text-base leading-relaxed max-w-md">
+              Distance doesn&apos;t matter — it&apos;s the team that matters most. Explore Harini&apos;s trusted wedding vendors across Tamil Nadu.
+            </p>
+
+            <div className="mt-8 flex flex-col sm:flex-row gap-3 items-stretch">
+              <div className="flex items-center gap-2 rounded-2xl bg-white/75 backdrop-blur border border-foreground/10 px-4 py-3 shadow-sm flex-1">
+                <Search size={14} className="text-foreground/35" />
+                <input
+                  value={query}
+                  onChange={e => setQuery(e.target.value)}
+                  placeholder="Search partners, city, category..."
+                  className="w-full bg-transparent outline-none text-sm text-foreground placeholder:text-foreground/30"
+                />
+              </div>
+              <a
+                href="https://wa.me/917305306497?text=Hi Harini! I’d like your recommended vendors for my wedding."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-primary text-white px-6 py-3 text-xs font-mono tracking-widest uppercase shadow-lg shadow-black/10 hover:opacity-90 transition-opacity"
               >
-                {/* Decorative blob */}
-                <div className={`absolute -top-8 -right-8 w-28 h-28 rounded-full ${p.bg} opacity-10 blur-2xl group-hover:opacity-20 transition-opacity`} />
+                Connect
+                <ChevronRight size={14} />
+              </a>
+            </div>
 
-                <div className="flex items-start justify-between mb-4">
-                  <div className="text-3xl">{p.emoji}</div>
-                  <span className={`text-[10px] font-mono tracking-widest uppercase px-2 py-1 rounded-full bg-white/60 ${p.accent}`}>
-                    {p.category}
-                  </span>
-                </div>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {['Photography', 'Venues', 'Decor', 'Mehendi', 'Catering'].map((c) => (
+                <PartnerChip key={c} label={c} />
+              ))}
+            </div>
+          </motion.div>
 
-                <h3 className="font-serif text-lg text-foreground mb-1">{p.name}</h3>
+          {/* Right collage */}
+          <div className="relative">
+            <div className="absolute -inset-6 pointer-events-none">
+              <svg viewBox="0 0 640 420" className="w-full h-full opacity-[0.35]">
+                <path d="M140 105C240 45 295 50 320 90C350 140 420 120 482 94C540 70 585 90 600 130" stroke="rgba(15,23,42,0.35)" strokeWidth="2.2" fill="none" strokeLinecap="round"/>
+                <path d="M120 220C195 200 240 215 270 250C300 286 360 286 416 256C470 228 520 240 560 280" stroke="rgba(15,23,42,0.35)" strokeWidth="2.2" fill="none" strokeLinecap="round"/>
+                <path d="M240 155C270 170 295 190 315 214C335 238 365 246 405 244" stroke="rgba(15,23,42,0.35)" strokeWidth="2.2" fill="none" strokeLinecap="round"/>
+              </svg>
+            </div>
 
-                <div className="flex items-center gap-1.5 mb-1">
-                  <MapPin size={10} className="text-foreground/30" />
-                  <span className="text-[11px] font-mono text-foreground/40">{p.location}</span>
-                </div>
+            <div className="relative grid grid-cols-2 gap-4 md:gap-5">
+              {collage.map((p, i) => (
+                <motion.a
+                  key={p.name}
+                  href={p.ig}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, y: 18 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.55, delay: i * 0.06 }}
+                  className={`relative rounded-3xl overflow-hidden border border-foreground/10 shadow-xl shadow-black/10 bg-gradient-to-br ${p.color}`}
+                  style={{
+                    transform:
+                      i === 0 ? 'translateY(4px)' :
+                      i === 1 ? 'translateY(-6px)' :
+                      i === 2 ? 'translateY(10px)' :
+                      i === 3 ? 'translateY(-2px)' :
+                      i === 4 ? 'translateY(14px)' :
+                      'translateY(6px)',
+                  }}
+                >
+                  <img src={p.image} alt={p.name} className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
 
-                <div className="flex items-center gap-1 mb-3">
-                  <Star size={10} className="fill-accent text-accent" />
-                  <span className="text-[11px] font-mono text-foreground/50">{p.rating} · {p.reviews} reviews</span>
-                </div>
+                  <div className="absolute top-3 left-3">
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-white/85 backdrop-blur px-3 py-1.5 text-[10px] font-mono tracking-widest uppercase text-foreground/60">
+                      <span className="text-foreground/60">{categoryIcon[p.category] ?? <Sparkles size={13} />}</span>
+                      {p.category}
+                    </span>
+                  </div>
 
-                <p className="text-sm text-foreground/55 leading-relaxed mb-3">{p.specialty}</p>
+                  <div className="absolute bottom-3 left-3 right-3">
+                    <div className="rounded-2xl bg-white/85 backdrop-blur px-3 py-2 flex items-center justify-between gap-3">
+                      <div className="min-w-0">
+                        <div className="font-serif text-sm text-foreground truncate">{p.name}</div>
+                        <div className="mt-0.5 flex items-center gap-1 text-[10px] font-mono tracking-widest uppercase text-foreground/45">
+                          <MapPin size={10} />
+                          <span className="truncate">{p.location}</span>
+                        </div>
+                      </div>
+                      <div className="shrink-0 w-8 h-8 rounded-full bg-foreground text-background flex items-center justify-center">
+                        <ChevronRight size={14} />
+                      </div>
+                    </div>
+                  </div>
+                </motion.a>
+              ))}
+            </div>
 
-                <div className="flex items-start gap-2 p-3 rounded-xl bg-white/50 border border-white/60 mb-4">
-                  <span className="text-primary text-xs mt-0.5">✦</span>
-                  <p className="text-xs text-foreground/60 leading-relaxed italic">{p.collab}</p>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono text-foreground/25">Partner since {p.since}</span>
-                  <a
-                    href={`https://wa.me/917305306497?text=Hi Harini! I'd love to know more about your partnership with ${p.name}.`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`text-[10px] font-mono tracking-widest uppercase ${p.accent} hover:underline flex items-center gap-1`}
-                  >
-                    Ask Harini <ExternalLink size={9} />
-                  </a>
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </motion.div>
+            {/* Floating icon nodes */}
+            <div className="pointer-events-none absolute -top-4 left-1/2 -translate-x-1/2">
+              <div className="w-10 h-10 rounded-2xl bg-foreground text-background flex items-center justify-center shadow-lg shadow-black/10">
+                <Sparkles size={16} />
+              </div>
+            </div>
+            <div className="pointer-events-none absolute top-20 -left-4">
+              <div className="w-10 h-10 rounded-2xl bg-foreground text-background flex items-center justify-center shadow-lg shadow-black/10">
+                <Camera size={16} />
+              </div>
+            </div>
+            <div className="pointer-events-none absolute top-44 right-0 translate-x-3">
+              <div className="w-10 h-10 rounded-2xl bg-foreground text-background flex items-center justify-center shadow-lg shadow-black/10">
+                <Flower2 size={16} />
+              </div>
+            </div>
+            <div className="pointer-events-none absolute bottom-10 left-0 -translate-x-2">
+              <div className="w-10 h-10 rounded-2xl bg-foreground text-background flex items-center justify-center shadow-lg shadow-black/10">
+                <UtensilsCrossed size={16} />
+              </div>
+            </div>
+          </div>
+        </div>
 
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="text-center font-mono text-xs text-foreground/25 mt-10"
+          transition={{ delay: 0.25 }}
+          className="text-center font-mono text-xs text-foreground/25 mt-12"
         >
-          All partner recommendations are based on Harini's personal experience and trust. No paid placements.
+          All partner recommendations are based on Harini&apos;s personal experience and trust. No paid placements.
         </motion.p>
       </div>
     </section>

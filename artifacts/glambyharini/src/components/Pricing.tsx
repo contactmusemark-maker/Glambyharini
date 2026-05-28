@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Check, Star } from 'lucide-react';
+import { Check } from 'lucide-react';
 
 const plans = [
   {
@@ -81,17 +81,21 @@ const containerVariants = {
 };
 const cardVariants = {
   hidden: { opacity: 0, y: 40 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] } },
 };
 
 export default function Pricing() {
   const [hovered, setHovered] = useState<number | null>(null);
 
   return (
-    <section id="pricing" className="py-24 md:py-40 bg-background relative overflow-hidden">
-      {/* bg texture */}
-      <div className="absolute inset-0 pointer-events-none"
-        style={{ backgroundImage: 'radial-gradient(circle at 80% 20%, hsl(351 35% 57% / 0.06) 0%, transparent 50%), radial-gradient(circle at 20% 80%, hsl(39 46% 61% / 0.05) 0%, transparent 50%)' }} />
+    <section id="pricing" className="py-24 md:py-36 bg-[#f5f6f7] relative overflow-hidden">
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage:
+            'radial-gradient(circle at 80% 15%, rgba(201,169,160,0.18) 0%, transparent 45%), radial-gradient(circle at 20% 85%, rgba(148,163,184,0.18) 0%, transparent 45%)',
+        }}
+      />
 
       <div className="container mx-auto px-6">
         {/* Header */}
@@ -100,13 +104,20 @@ export default function Pricing() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="text-center mb-16"
+          className="text-center mb-14"
         >
-          <span className="font-mono text-xs tracking-[0.3em] uppercase text-primary mb-4 block">Investment</span>
-          <h2 className="text-4xl md:text-5xl font-serif text-foreground mb-4">
-            Packages & <span className="italic text-primary/80">Pricing</span>
+          <div className="inline-flex items-center gap-2 rounded-full bg-white/70 backdrop-blur px-4 py-1.5 border border-foreground/10 shadow-sm">
+            <span className="w-2 h-2 rounded-full bg-primary" />
+            <span className="font-mono text-[11px] tracking-widest uppercase text-foreground/55">Packages</span>
+          </div>
+          <h2 className="mt-6 text-4xl md:text-5xl font-sans font-semibold tracking-tight text-foreground">
+            Packages &{' '}
+            <span className="relative inline-block">
+              Pricing
+              <span className="absolute left-0 -bottom-1 h-[7px] w-full bg-primary/25 rounded-full -z-10" />
+            </span>
           </h2>
-          <p className="text-foreground/50 max-w-lg mx-auto text-sm">
+          <p className="mt-3 text-foreground/55 max-w-xl mx-auto text-sm md:text-base">
             Transparent Chennai pricing — no hidden costs. Every look crafted with professional-grade products and care.
           </p>
         </motion.div>
@@ -117,7 +128,7 @@ export default function Pricing() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: '-80px' }}
-          className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 items-start"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 items-stretch"
         >
           {plans.map((plan, i) => (
             <motion.div
@@ -125,59 +136,57 @@ export default function Pricing() {
               variants={cardVariants}
               onMouseEnter={() => setHovered(i)}
               onMouseLeave={() => setHovered(null)}
-              className={`relative rounded-2xl p-7 flex flex-col transition-all duration-500 cursor-default ${
-                plan.highlight
-                  ? 'bg-foreground text-background shadow-2xl shadow-foreground/20 scale-[1.03]'
-                  : 'bg-white border border-foreground/8 shadow-sm'
-              } ${hovered === i && !plan.highlight ? 'shadow-xl -translate-y-1' : ''}`}
+              className={`relative rounded-[34px] bg-white border border-foreground/10 shadow-xl shadow-black/5 px-6 py-6 flex flex-col transition-all duration-500 ${
+                hovered === i ? '-translate-y-1 shadow-2xl shadow-black/10' : ''
+              }`}
             >
-              {plan.badge && (
-                <div className={`absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-[10px] font-mono tracking-widest uppercase ${
-                  plan.highlight ? 'bg-primary text-white' : 'bg-accent text-foreground'
-                }`}>
-                  {plan.badge}
+              {/* Header panel */}
+              <div
+                className={`rounded-[26px] p-6 border border-foreground/10 ${
+                  plan.highlight ? 'bg-[#dbe7ff]' : 'bg-foreground/[0.03]'
+                }`}
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <span className="inline-flex items-center rounded-full bg-white/80 border border-foreground/10 px-3 py-1 text-[10px] font-mono tracking-widest uppercase text-foreground/60">
+                    {plan.badge ?? plan.name}
+                  </span>
+                  <span className="text-[10px] font-mono tracking-widest uppercase text-foreground/35">
+                    {plan.duration}
+                  </span>
                 </div>
-              )}
 
-              <div className="mb-6">
-                <h3 className={`font-serif text-xl mb-1 ${plan.highlight ? 'text-background' : 'text-foreground'}`}>
-                  {plan.name}
-                </h3>
-                <p className={`text-xs font-mono tracking-wide ${plan.highlight ? 'text-background/50' : 'text-foreground/40'}`}>
-                  {plan.tagline}
-                </p>
+                <div className="mt-6">
+                  <div className="flex items-end gap-1">
+                    <span className="text-4xl font-semibold tracking-tight text-foreground">
+                      {plan.price}
+                    </span>
+                    <span className="text-sm text-foreground/45 font-mono mb-1">
+                      /session
+                    </span>
+                  </div>
+                  <p className="mt-3 text-sm text-foreground/55">
+                    {plan.tagline}
+                  </p>
+                </div>
               </div>
-
-              <div className="mb-6">
-                <span className={`text-4xl font-serif ${plan.highlight ? 'text-primary' : 'text-foreground'}`}>
-                  {plan.price}
-                </span>
-                <span className={`text-xs ml-2 font-mono ${plan.highlight ? 'text-background/40' : 'text-foreground/30'}`}>
-                  / {plan.duration}
-                </span>
-              </div>
-
-              <ul className="space-y-3 flex-1 mb-8">
-                {plan.includes.map((item) => (
-                  <li key={item} className="flex items-start gap-2.5 text-sm">
-                    <Check size={14} className={`mt-0.5 shrink-0 ${plan.highlight ? 'text-primary' : 'text-primary/70'}`} />
-                    <span className={plan.highlight ? 'text-background/70' : 'text-foreground/60'}>{item}</span>
-                  </li>
-                ))}
-              </ul>
 
               <a
                 href={`https://wa.me/917305306497?text=Hi Harini! I'm interested in the ${plan.name} package (${plan.price}). Can we discuss?`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`block text-center py-3 rounded-xl text-sm font-mono tracking-wider uppercase transition-all duration-300 ${
-                  plan.highlight
-                    ? 'bg-primary text-white hover:bg-primary/90'
-                    : 'border border-foreground/15 text-foreground hover:bg-foreground hover:text-background'
-                }`}
+                className="mt-6 block text-center py-3.5 rounded-full text-xs font-mono tracking-widest uppercase bg-gradient-to-b from-[#2b2b2b] to-[#0f0f0f] text-white shadow-lg shadow-black/15 hover:opacity-90 transition-opacity"
               >
                 {plan.cta}
               </a>
+
+              <ul className="mt-7 space-y-3 flex-1">
+                {plan.includes.map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-sm text-foreground/60">
+                    <Check size={14} className="mt-0.5 shrink-0 text-foreground/25" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
             </motion.div>
           ))}
         </motion.div>
