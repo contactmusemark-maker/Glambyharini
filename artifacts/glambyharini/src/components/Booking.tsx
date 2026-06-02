@@ -249,7 +249,7 @@ function Field({
 }
 
 const inputClass =
-  "w-full rounded-xl border border-foreground/10 bg-white px-4 py-3 text-sm text-foreground placeholder:text-foreground/35 focus:outline-none focus:ring-2 focus:ring-primary/25 focus:border-primary/30 transition";
+  "min-h-11 w-full rounded-xl border border-foreground/10 bg-white px-4 py-3 text-sm text-foreground placeholder:text-foreground/35 focus:outline-none focus:ring-2 focus:ring-primary/25 focus:border-primary/30 transition";
 
 export default function Booking() {
   const [step, setStep] = useState<Step>(1);
@@ -409,7 +409,7 @@ export default function Booking() {
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent pointer-events-none" />
       <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-accent/25 to-transparent pointer-events-none" />
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container relative z-10">
         <div className="text-center mb-8 md:mb-10">
           <motion.span
             initial={{ opacity: 0 }}
@@ -441,8 +441,8 @@ export default function Booking() {
 
         {/* Stepper */}
         <div className="max-w-6xl mx-auto">
-          <div className="rounded-xl border border-primary/15 bg-white/80 backdrop-blur px-5 py-4 shadow-sm">
-            <div className="grid grid-cols-4 gap-3 items-center">
+          <div className="rounded-xl border border-primary/15 bg-white/80 px-3 py-4 shadow-sm backdrop-blur sm:px-5">
+            <div className="grid grid-cols-2 items-center gap-3 md:grid-cols-4">
               {(
                 [
                   { n: 1 as const, label: "Service", desc: "Choose service" },
@@ -470,7 +470,7 @@ export default function Booking() {
                       <StepDot done={done} active={active} />
                       <div className="min-w-0">
                         <div className={cn("text-xs md:text-sm font-semibold", active ? "text-foreground" : "text-foreground/70")}>
-                          {s.n}. {s.label}
+                          <span className="hidden sm:inline">{s.n}. </span>{s.label}
                         </div>
                         <div className="hidden sm:block text-xs text-foreground/55">{s.desc}</div>
                       </div>
@@ -485,7 +485,7 @@ export default function Booking() {
           </div>
 
           {/* Layout */}
-          <div className="mt-5 grid min-w-0 lg:grid-cols-[minmax(0,1fr)_340px] gap-5 lg:items-stretch lg:h-[min(760px,calc(100vh-230px))] lg:min-h-[560px] lg:max-h-[760px]">
+          <div className="mt-5 grid min-w-0 gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(17rem,340px)] lg:items-stretch lg:min-h-[560px]">
             {/* Main */}
             <div className="min-w-0 space-y-5 lg:h-full lg:min-h-0">
               <AnimatePresence mode="wait">
@@ -495,7 +495,7 @@ export default function Booking() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.2 }}
-                  className="rounded-xl border border-primary/15 bg-white shadow-sm lg:h-full lg:min-h-0 flex flex-col overflow-hidden"
+                  className="flex flex-col overflow-hidden rounded-xl border border-primary/15 bg-white shadow-sm lg:h-full lg:min-h-0"
                 >
                   <div className="px-5 md:px-6 py-4 border-b border-foreground/10 bg-white">
                     <div className="text-2xl font-serif text-foreground">
@@ -521,12 +521,12 @@ export default function Booking() {
                   <div
                     data-lenis-prevent
                     tabIndex={0}
-                    className="p-5 md:p-6 flex-1 min-h-0 overflow-y-auto overscroll-contain [scrollbar-gutter:stable] focus:outline-none"
+                    className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-4 focus:outline-none sm:p-5 md:p-6 lg:[scrollbar-gutter:stable]"
                   >
                     {/* Step 1 */}
                     {step === 1 ? (
                       <div className="space-y-6">
-                        <div className="grid md:grid-cols-[1fr_220px] gap-4">
+                        <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_minmax(10rem,13.75rem)]">
                           <div className="relative">
                             <input
                               value={query}
@@ -535,7 +535,7 @@ export default function Booking() {
                               className={inputClass}
                               aria-label="Search services"
                             />
-                            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-foreground/35 text-sm">
+                            <span className="pointer-events-none absolute right-4 top-1/2 hidden -translate-y-1/2 text-sm text-foreground/35 sm:inline">
                               ⌘K
                             </span>
                           </div>
@@ -560,7 +560,7 @@ export default function Booking() {
                             <Sparkles size={14} className="text-primary" />
                             Popular Services
                           </div>
-                          <div className="mt-4 grid md:grid-cols-3 gap-4">
+                          <div className="mt-4 grid grid-cols-[repeat(auto-fit,minmax(min(100%,13rem),1fr))] gap-4">
                             {filteredServices.slice(0, 3).map((s, i) => {
                               const selected = s.id === serviceId;
                               return (
@@ -569,7 +569,7 @@ export default function Booking() {
                                   type="button"
                                   onClick={() => setServiceId(s.id)}
                                   className={cn(
-                                    "relative text-left overflow-hidden rounded-2xl border shadow-sm transition",
+                                    "relative min-h-11 overflow-hidden rounded-2xl border text-left shadow-sm transition",
                                     selected
                                       ? "border-primary/50 ring-2 ring-primary/15"
                                       : "border-foreground/10 hover:border-primary/30"
@@ -605,7 +605,7 @@ export default function Booking() {
                                     <div className="mt-1 text-sm text-foreground/60 line-clamp-2">
                                       {s.includes}
                                     </div>
-                                    <div className="mt-3 flex items-center justify-between">
+                                    <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
                                       <div className="text-xs text-foreground/55 font-mono tracking-widest uppercase">
                                         {s.durationHours} Hours
                                       </div>
@@ -630,7 +630,7 @@ export default function Booking() {
                                   type="button"
                                   onClick={() => setServiceId(s.id)}
                                   className={cn(
-                                    "w-full text-left rounded-2xl border p-4 flex items-center gap-4 transition",
+                                    "flex w-full min-w-0 flex-col gap-4 rounded-2xl border p-4 text-left transition sm:flex-row sm:items-center",
                                     selected
                                       ? "border-primary/40 bg-primary/5"
                                       : "border-foreground/10 hover:border-primary/25"
@@ -639,7 +639,7 @@ export default function Booking() {
                                   <img
                                     src={s.image}
                                     alt=""
-                                    className="h-14 w-14 rounded-xl object-cover"
+                                    className="h-16 w-full rounded-xl object-cover sm:h-14 sm:w-14"
                                     loading="lazy"
                                   />
                                   <div className="min-w-0 flex-1">
@@ -647,7 +647,7 @@ export default function Booking() {
                                     <div className="text-sm text-foreground/55 line-clamp-1">
                                       {s.includes}
                                     </div>
-                                    <div className="mt-1 flex items-center gap-4 text-xs text-foreground/55">
+                                    <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-foreground/55">
                                       <span className="inline-flex items-center gap-1">
                                         <CalendarClock size={14} /> {s.durationHours} Hours
                                       </span>
@@ -656,7 +656,7 @@ export default function Booking() {
                                       </span>
                                     </div>
                                   </div>
-                                  <div className="text-right">
+                                  <div className="flex w-full shrink-0 items-center justify-between gap-3 text-left sm:block sm:w-auto sm:text-right">
                                     <div className="text-primary font-semibold">{formatINR(s.price)}</div>
                                     <div
                                       className={cn(
@@ -735,7 +735,7 @@ export default function Booking() {
                               <div className="px-4 py-3 bg-secondary/20 border-b border-foreground/10 font-semibold text-foreground">
                                 Bridal Makeup Packages
                               </div>
-                              <div className="overflow-x-auto">
+                              <div className="responsive-scroll">
                                 <table className="min-w-[680px] w-full text-sm">
                                   <thead className="text-foreground/60">
                                     <tr className="border-b border-foreground/10">
@@ -773,7 +773,7 @@ export default function Booking() {
                               <div className="px-4 py-3 bg-secondary/20 border-b border-foreground/10 font-semibold text-foreground">
                                 Additional Services
                               </div>
-                              <div className="overflow-x-auto">
+                              <div className="responsive-scroll">
                                 <table className="min-w-[520px] w-full text-sm">
                                   <thead className="text-foreground/60">
                                     <tr className="border-b border-foreground/10">
@@ -839,13 +839,13 @@ export default function Booking() {
                           </div>
                         </div>
 
-                        <div className="flex items-center justify-end gap-3 pt-2">
+                        <div className="flex flex-col items-stretch justify-end gap-3 pt-2 sm:flex-row">
                           <button
                             type="button"
                             onClick={() => setStep(2)}
                             disabled={!canContinueFromStep1}
                             className={cn(
-                              "inline-flex items-center justify-center gap-3 rounded-xl px-6 py-4 font-mono text-sm tracking-[0.2em] uppercase transition",
+                              "inline-flex min-h-11 w-full items-center justify-center gap-3 rounded-xl px-5 py-4 text-center font-mono text-xs uppercase tracking-[0.14em] transition sm:w-auto sm:px-6 sm:text-sm sm:tracking-[0.2em]",
                               canContinueFromStep1
                                 ? "bg-primary text-primary-foreground hover:bg-accent"
                                 : "bg-foreground/10 text-foreground/40 cursor-not-allowed"
@@ -860,13 +860,13 @@ export default function Booking() {
                     {/* Step 2 */}
                     {step === 2 ? (
                       <div className="space-y-6">
-                        <div className="grid lg:grid-cols-[1fr_280px] gap-5">
+                        <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(14rem,17.5rem)]">
                           <div className="rounded-2xl border border-foreground/10 bg-white">
                             <Calendar
                               mode="single"
                               selected={selectedDate}
                               onSelect={(d) => setSelectedDate(d)}
-                              className="w-full p-4"
+                              className="booking-calendar w-full p-2 sm:p-4"
                             />
                           </div>
                           <div className="rounded-2xl border border-foreground/10 bg-primary/5 p-5">
@@ -887,7 +887,7 @@ export default function Booking() {
 
                         <div>
                           <div className="font-semibold text-foreground">Available Time Slots</div>
-                          <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+                          <div className="mt-4 grid grid-cols-[repeat(auto-fit,minmax(min(100%,7.25rem),1fr))] gap-3">
                             {TIME_SLOTS.map((t) => {
                               const selected = t === selectedTime;
                               return (
@@ -896,7 +896,7 @@ export default function Booking() {
                                   type="button"
                                   onClick={() => setSelectedTime(t)}
                                   className={cn(
-                                    "rounded-xl border px-3 py-3 text-sm font-semibold transition",
+                                    "min-h-11 rounded-xl border px-3 py-3 text-sm font-semibold transition",
                                     selected
                                       ? "bg-primary border-primary text-primary-foreground"
                                       : "bg-white border-foreground/10 text-foreground hover:border-primary/30"
@@ -909,8 +909,8 @@ export default function Booking() {
                           </div>
                         </div>
 
-                        <div className="rounded-2xl border border-foreground/10 bg-primary/5 p-5 flex items-center justify-between gap-4">
-                          <div className="flex items-center gap-3">
+                        <div className="flex flex-col gap-4 rounded-2xl border border-foreground/10 bg-primary/5 p-5 sm:flex-row sm:items-center sm:justify-between">
+                          <div className="flex min-w-0 items-center gap-3">
                             <div className="h-10 w-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
                               <CalendarClock size={18} />
                             </div>
@@ -923,16 +923,16 @@ export default function Booking() {
                               </div>
                             </div>
                           </div>
-                          <div className="text-sm text-foreground/55 font-mono tracking-widest uppercase">
+                          <div className="shrink-0 text-sm font-mono uppercase tracking-widest text-foreground/55">
                             Step 2 of 4
                           </div>
                         </div>
 
-                        <div className="flex items-center justify-between gap-3 pt-2">
+                        <div className="flex flex-col-reverse items-stretch justify-between gap-3 pt-2 sm:flex-row sm:items-center">
                           <button
                             type="button"
                             onClick={goBack}
-                            className="inline-flex items-center justify-center rounded-xl px-6 py-4 font-mono text-sm tracking-[0.2em] uppercase border border-foreground/15 bg-white hover:bg-secondary/20 transition"
+                            className="inline-flex min-h-11 items-center justify-center rounded-xl border border-foreground/15 bg-white px-5 py-4 font-mono text-xs uppercase tracking-[0.14em] transition hover:bg-secondary/20 sm:px-6 sm:text-sm sm:tracking-[0.2em]"
                           >
                             Back
                           </button>
@@ -941,7 +941,7 @@ export default function Booking() {
                             onClick={() => setStep(3)}
                             disabled={!canContinueFromStep2}
                             className={cn(
-                              "inline-flex items-center justify-center gap-3 rounded-xl px-6 py-4 font-mono text-sm tracking-[0.2em] uppercase transition",
+                              "inline-flex min-h-11 items-center justify-center gap-3 rounded-xl px-5 py-4 text-center font-mono text-xs uppercase tracking-[0.14em] transition sm:px-6 sm:text-sm sm:tracking-[0.2em]",
                               canContinueFromStep2
                                 ? "bg-primary text-primary-foreground hover:bg-accent"
                                 : "bg-foreground/10 text-foreground/40 cursor-not-allowed"
@@ -1054,11 +1054,11 @@ export default function Booking() {
                           </div>
                         </div>
 
-                        <div className="flex items-center justify-between gap-3 pt-2">
+                        <div className="flex flex-col-reverse items-stretch justify-between gap-3 pt-2 sm:flex-row sm:items-center">
                           <button
                             type="button"
                             onClick={goBack}
-                            className="inline-flex items-center justify-center rounded-xl px-6 py-4 font-mono text-sm tracking-[0.2em] uppercase border border-foreground/15 bg-white hover:bg-secondary/20 transition"
+                            className="inline-flex min-h-11 items-center justify-center rounded-xl border border-foreground/15 bg-white px-5 py-4 font-mono text-xs uppercase tracking-[0.14em] transition hover:bg-secondary/20 sm:px-6 sm:text-sm sm:tracking-[0.2em]"
                           >
                             Back
                           </button>
@@ -1067,7 +1067,7 @@ export default function Booking() {
                             onClick={() => setStep(4)}
                             disabled={!canContinueFromStep3}
                             className={cn(
-                              "inline-flex items-center justify-center gap-3 rounded-xl px-6 py-4 font-mono text-sm tracking-[0.2em] uppercase transition",
+                              "inline-flex min-h-11 items-center justify-center gap-3 rounded-xl px-5 py-4 text-center font-mono text-xs uppercase tracking-[0.14em] transition sm:px-6 sm:text-sm sm:tracking-[0.2em]",
                               canContinueFromStep3
                                 ? "bg-primary text-primary-foreground hover:bg-accent"
                                 : "bg-foreground/10 text-foreground/40 cursor-not-allowed"
@@ -1096,13 +1096,13 @@ export default function Booking() {
 
                         <div className="grid lg:grid-cols-2 gap-5">
                           <SectionCard title="Service" icon={<Sparkles size={18} />}>
-                            <div className="flex items-center gap-4">
+                            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                               {selectedService ? (
                                 <>
                                   <img
                                     src={selectedService.image}
                                     alt=""
-                                    className="h-14 w-14 rounded-xl object-cover"
+                                    className="h-16 w-full rounded-xl object-cover sm:h-14 sm:w-14"
                                   />
                                   <div className="min-w-0 flex-1">
                                     <div className="font-semibold text-foreground">{selectedService.name}</div>
@@ -1113,7 +1113,7 @@ export default function Booking() {
                                       {selectedService.durationHours} Hours
                                     </div>
                                   </div>
-                                  <div className="text-right">
+                                  <div className="shrink-0 text-left sm:text-right">
                                     <div className="text-primary font-semibold">
                                       {formatINR(selectedService.price)}
                                     </div>
@@ -1133,7 +1133,7 @@ export default function Booking() {
                           </SectionCard>
 
                           <SectionCard title="Date & Time" icon={<CalendarClock size={18} />}>
-                            <div className="flex items-center justify-between gap-4">
+                            <div className="flex min-w-0 items-start justify-between gap-4">
                               <div>
                                 <div className="text-sm text-foreground/55">Date</div>
                                 <div className="mt-1 font-semibold text-foreground">
@@ -1221,7 +1221,7 @@ export default function Booking() {
 
                           <div className="mt-6">
                             <div className="font-semibold text-foreground">Select Payment Method</div>
-                            <div className="mt-3 grid grid-cols-2 md:grid-cols-4 gap-3">
+                            <div className="mt-3 grid grid-cols-[repeat(auto-fit,minmax(min(100%,8rem),1fr))] gap-3">
                               {(
                                 [
                                   { id: "upi" as const, label: "UPI / QR", icon: <Wallet size={16} /> },
@@ -1237,7 +1237,7 @@ export default function Booking() {
                                     type="button"
                                     onClick={() => setPaymentMethod(m.id)}
                                     className={cn(
-                                      "rounded-xl border px-3 py-3 text-left flex items-center gap-2 transition",
+                                      "flex min-h-11 items-center gap-2 rounded-xl border px-3 py-3 text-left transition",
                                       selected
                                         ? "border-primary/40 bg-primary/5"
                                         : "border-foreground/10 bg-white hover:border-primary/25"
@@ -1253,7 +1253,7 @@ export default function Booking() {
                                     >
                                       {m.icon}
                                     </span>
-                                    <span className="font-mono text-[11px] tracking-widest uppercase text-foreground/70">
+                                    <span className="min-w-0 font-mono text-[11px] uppercase tracking-widest text-foreground/70">
                                       {m.label}
                                     </span>
                                   </button>
@@ -1275,11 +1275,11 @@ export default function Booking() {
                           </div>
                         </SectionCard>
 
-                        <div className="flex items-center justify-between gap-3 pt-2">
+                        <div className="flex flex-col-reverse items-stretch justify-between gap-3 pt-2 sm:flex-row sm:items-center">
                           <button
                             type="button"
                             onClick={goBack}
-                            className="inline-flex items-center justify-center rounded-xl px-6 py-4 font-mono text-sm tracking-[0.2em] uppercase border border-foreground/15 bg-white hover:bg-secondary/20 transition"
+                            className="inline-flex min-h-11 items-center justify-center rounded-xl border border-foreground/15 bg-white px-5 py-4 font-mono text-xs uppercase tracking-[0.14em] transition hover:bg-secondary/20 sm:px-6 sm:text-sm sm:tracking-[0.2em]"
                           >
                             Back
                           </button>
@@ -1288,7 +1288,7 @@ export default function Booking() {
                             onClick={onConfirm}
                             disabled={submitting}
                             className={cn(
-                              "inline-flex items-center justify-center gap-3 rounded-xl px-7 py-4 font-mono text-sm tracking-[0.2em] uppercase transition",
+                              "inline-flex min-h-11 items-center justify-center gap-3 rounded-xl px-5 py-4 text-center font-mono text-xs uppercase tracking-[0.14em] transition sm:px-7 sm:text-sm sm:tracking-[0.2em]",
                               submitting
                                 ? "bg-primary/60 text-primary-foreground cursor-wait"
                                 : "bg-primary text-primary-foreground hover:bg-accent"
@@ -1324,7 +1324,7 @@ export default function Booking() {
             <aside
               data-lenis-prevent
               tabIndex={0}
-              className="min-w-0 space-y-4 lg:h-full lg:min-h-0 overflow-y-auto overscroll-contain [scrollbar-gutter:stable] focus:outline-none lg:pr-1"
+              className="min-w-0 space-y-4 overflow-y-auto overscroll-contain focus:outline-none lg:h-full lg:min-h-0 lg:pr-1 lg:[scrollbar-gutter:stable]"
             >
               <div className="rounded-xl border border-primary/15 bg-white shadow-sm overflow-hidden">
                 <div className="px-5 py-4 border-b border-foreground/10 font-serif text-lg">
@@ -1336,16 +1336,16 @@ export default function Booking() {
                       Your Selection
                     </div>
                     {selectedService ? (
-                      <div className="mt-3 flex items-start gap-3">
+                      <div className="mt-3 flex min-w-0 flex-col gap-3 sm:flex-row sm:items-start">
                         <img
                           src={selectedService.image}
                           alt=""
-                          className="h-14 w-14 rounded-xl object-cover"
+                          className="h-16 w-full rounded-xl object-cover sm:h-14 sm:w-14"
                         />
                         <div className="min-w-0 flex-1">
                           <div className="font-semibold text-foreground">{selectedService.name}</div>
                           <div className="text-sm text-foreground/55">{selectedService.category} Package</div>
-                          <div className="mt-2 flex items-center gap-4 text-xs text-foreground/55">
+                          <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-foreground/55">
                             <span className="inline-flex items-center gap-1">
                               <CalendarClock size={14} /> {selectedService.durationHours} Hours
                             </span>
@@ -1354,7 +1354,7 @@ export default function Booking() {
                             </span>
                           </div>
                         </div>
-                        <div className="text-right">
+                        <div className="shrink-0 text-left sm:text-right">
                           <div className="text-primary font-semibold">
                             {formatINR(selectedService.price)}
                           </div>

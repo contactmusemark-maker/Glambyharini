@@ -53,7 +53,7 @@ export default function InstagramSection() {
         <Sparkles size={22} />
       </motion.div>
 
-      <div className="container relative z-10 mx-auto px-6">
+      <div className="container relative z-10">
         <div className="mx-auto mb-12 grid max-w-7xl gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:items-end">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -85,12 +85,12 @@ export default function InstagramSection() {
               href={INSTAGRAM_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex w-fit items-center gap-3 rounded-full border border-white/70 bg-white/65 px-5 py-3 text-foreground shadow-[0_15px_40px_rgba(70,35,35,0.08)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-primary/25 hover:text-primary hover:shadow-primary/15"
+              className="group inline-flex min-h-11 max-w-full items-center gap-3 rounded-full border border-white/70 bg-white/65 px-4 py-3 text-foreground shadow-[0_15px_40px_rgba(70,35,35,0.08)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-primary/25 hover:text-primary hover:shadow-primary/15 sm:px-5"
             >
               <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-primary via-[#d16b8a] to-[#d8b66d] text-white">
                 <Instagram size={17} />
               </span>
-              <span className="font-mono text-xs uppercase tracking-[0.22em]">@glam_byharini</span>
+              <span className="min-w-0 font-mono text-xs uppercase tracking-[0.16em] sm:tracking-[0.22em]">@glam_byharini</span>
               <ArrowUpRight size={15} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </a>
 
@@ -127,12 +127,12 @@ export default function InstagramSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.65 }}
-          className="-mx-6 flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 pb-4 lg:hidden"
+          className="responsive-scroll -mx-4 flex snap-x snap-mandatory gap-4 px-4 pb-4 lg:hidden"
         >
           {igPhotos.map((photo, index) => (
             <InstagramCard
               key={photo.src}
-              photo={{ ...photo, className: 'min-h-[470px]' }}
+              photo={{ ...photo, className: 'min-h-[min(124vw,470px)]' }}
               index={index}
               mobile
             />
@@ -162,7 +162,7 @@ export default function InstagramSection() {
             href={INSTAGRAM_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex w-full items-center justify-center gap-3 rounded-full bg-gradient-to-r from-foreground via-primary to-[#d8a24f] px-8 py-4 font-mono text-xs uppercase tracking-[0.22em] text-white shadow-2xl shadow-primary/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-primary/30 md:w-auto"
+            className="group inline-flex min-h-11 w-full items-center justify-center gap-3 rounded-full bg-gradient-to-r from-foreground via-primary to-[#d8a24f] px-6 py-4 text-center font-mono text-xs uppercase tracking-[0.16em] text-white shadow-2xl shadow-primary/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-primary/30 sm:px-8 sm:tracking-[0.22em] md:w-auto"
           >
             Follow on Instagram
             <ArrowUpRight size={16} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -192,7 +192,7 @@ function InstagramCard({
       viewport={{ once: true }}
       transition={{ delay: index * 0.07, duration: 0.55 }}
       whileHover={{ y: -8 }}
-      className={`group relative block overflow-hidden rounded-[2rem] border border-white/70 bg-white/50 shadow-[0_24px_70px_rgba(70,35,35,0.12)] backdrop-blur-md ${photo.className} ${
+      className={`group relative block overflow-hidden rounded-[1.5rem] border border-white/70 bg-white/50 shadow-[0_24px_70px_rgba(70,35,35,0.12)] backdrop-blur-md sm:rounded-[2rem] ${photo.className} ${
         mobile ? 'w-[82vw] max-w-[380px] shrink-0 snap-center' : ''
       }`}
     >
@@ -207,11 +207,11 @@ function InstagramCard({
       <div className="absolute inset-0 bg-gradient-to-t from-black/62 via-black/10 to-transparent opacity-85 transition-opacity duration-500 group-hover:opacity-95" />
       <div className="absolute inset-0 bg-primary/0 transition-colors duration-500 group-hover:bg-primary/10" />
 
-      <div className="absolute left-5 top-5 rounded-full border border-white/35 bg-white/20 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.24em] text-white backdrop-blur-md">
+      <div className="absolute left-4 top-4 rounded-full border border-white/35 bg-white/20 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.16em] text-white backdrop-blur-md sm:left-5 sm:top-5 sm:px-4 sm:tracking-[0.24em]">
         {photo.label}
       </div>
 
-      <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between gap-4">
+      <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4 sm:bottom-5 sm:left-5 sm:right-5">
         <div>
           <p className="font-serif text-2xl leading-none text-white">GlamByHarini</p>
           <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.22em] text-white/68">

@@ -35,8 +35,8 @@ export default function Footer() {
       <div className="absolute top-0 left-0 w-96 h-96 rounded-full bg-primary/8 blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-96 h-96 rounded-full bg-accent/8 blur-3xl translate-x-1/2 translate-y-1/2 pointer-events-none" />
 
-      <div className="container mx-auto px-6 pt-20 pb-10 relative z-10">
-        <div className="grid md:grid-cols-4 gap-12 mb-16">
+      <div className="container relative z-10 pb-10 pt-20">
+        <div className="mb-16 grid gap-10 md:grid-cols-4 md:gap-12">
 
           {/* Brand with logo image */}
           <div className="md:col-span-2">
@@ -53,12 +53,12 @@ export default function Footer() {
               <p className="text-white/50 leading-relaxed max-w-xs mb-6 text-sm">
                 Crafting Beauty, One Look at a Time. Certified makeup artistry rooted in passion, precision, and the belief that every person deserves to feel extraordinary.
               </p>
-              <div className="flex items-center gap-3">
+              <div className="flex flex-wrap items-center gap-3">
                 <a
                   href={INSTAGRAM_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/50 hover:text-primary hover:border-primary transition-colors"
+                  className="flex h-11 min-w-11 items-center justify-center rounded-full border border-white/10 text-white/50 transition-colors hover:border-primary hover:text-primary"
                   aria-label="Instagram"
                 >
                   <Instagram size={16} />
@@ -67,7 +67,7 @@ export default function Footer() {
                   href={WHATSAPP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:border-[#25D366] transition-colors"
+                  className="flex h-11 min-w-11 items-center justify-center rounded-full border border-white/10 transition-colors hover:border-[#25D366]"
                   aria-label="WhatsApp"
                 >
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="text-white/50 hover:text-[#25D366] transition-colors">
@@ -126,12 +126,12 @@ export default function Footer() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="your@email.com"
-                  className="bg-white/5 border border-white/10 px-4 py-2 text-white placeholder:text-white/20 text-sm focus:outline-none focus:border-primary transition-colors"
+                  className="min-h-11 w-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white transition-colors placeholder:text-white/20 focus:border-primary focus:outline-none"
                 />
                 {subscribed ? (
                   <span className="text-primary font-mono text-xs tracking-wider">Subscribed. Thank you.</span>
                 ) : (
-                  <button type="submit" className="px-4 py-2 bg-primary text-white font-mono text-xs tracking-widest uppercase hover:bg-accent transition-colors">
+                  <button type="submit" className="min-h-11 bg-primary px-4 py-2 font-mono text-xs uppercase tracking-widest text-white transition-colors hover:bg-accent">
                     Subscribe
                   </button>
                 )}
@@ -153,12 +153,12 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-center md:flex-row md:text-left">
           <p className="font-mono text-xs tracking-wider text-white/25">
             &copy; 2025 GlamByHarini. All rights reserved.
           </p>
           <p className="font-mono text-xs tracking-wider text-white/20">
-            Harini Suresh &mdash; Certified Makeup Artist, Tamil Nadu
+            Harini Suresh - Certified Makeup Artist, Tamil Nadu
           </p>
         </div>
       </div>

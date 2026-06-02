@@ -97,7 +97,7 @@ export default function Pricing() {
         }}
       />
 
-      <div className="container mx-auto px-6">
+      <div className="container">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -128,7 +128,7 @@ export default function Pricing() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: '-80px' }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 items-stretch"
+          className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,16rem),1fr))] items-stretch gap-6"
         >
           {plans.map((plan, i) => (
             <motion.div

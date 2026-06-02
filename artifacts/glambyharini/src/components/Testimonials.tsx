@@ -70,10 +70,10 @@ export default function Testimonials() {
 
   return (
     <section id="testimonials" className="py-24 md:py-40 bg-background relative overflow-hidden">
-      <div className="absolute top-0 left-0 w-80 h-80 rounded-full bg-primary/6 blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-accent/6 blur-3xl translate-x-1/2 translate-y-1/2 pointer-events-none" />
+      <div className="pointer-events-none absolute left-0 top-0 h-80 w-80 max-w-[80vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/6 blur-3xl" />
+      <div className="pointer-events-none absolute bottom-0 right-0 h-80 w-80 max-w-[80vw] translate-x-1/2 translate-y-1/2 rounded-full bg-accent/6 blur-3xl" />
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container relative z-10">
 
         {/* Header */}
         <motion.div
@@ -90,7 +90,7 @@ export default function Testimonials() {
         </motion.div>
 
         {/* ── Desktop layout ── */}
-        <div className="hidden md:flex items-center gap-0 max-w-5xl mx-auto min-h-[420px]">
+        <div className="mx-auto hidden min-h-[420px] max-w-5xl items-center gap-0 md:flex">
 
           {/* Left — floating avatars */}
           <div className="relative w-[340px] shrink-0 h-[380px]">
@@ -107,7 +107,7 @@ export default function Testimonials() {
                     y: isActive ? -4 : 0,
                   }}
                   transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute rounded-full overflow-hidden cursor-pointer focus:outline-none"
+                  className="absolute cursor-pointer overflow-hidden rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                   style={{
                     top: pos.top,
                     left: pos.left,
@@ -187,7 +187,7 @@ export default function Testimonials() {
         </div>
 
         {/* ── Mobile layout ── */}
-        <div className="md:hidden max-w-sm mx-auto">
+        <div className="mx-auto max-w-sm md:hidden">
           {/* Active avatar */}
           <div className="flex justify-center mb-6">
             <AnimatePresence mode="wait">
@@ -209,7 +209,11 @@ export default function Testimonials() {
           <div className="flex justify-center mb-6">
             <div className="flex -space-x-3">
               {testimonials.map((tm, i) => (
-                <button key={i} onClick={() => goTo(i)}>
+                <button
+                  key={i}
+                  onClick={() => goTo(i)}
+                  className="flex h-11 w-11 items-center justify-center rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                >
                   <motion.img
                     src={tm.avatar}
                     alt={tm.name}
@@ -243,7 +247,11 @@ export default function Testimonials() {
           {/* Dot nav */}
           <div className="flex justify-center gap-2 mt-8">
             {testimonials.map((_, i) => (
-              <button key={i} onClick={() => goTo(i)}>
+              <button
+                key={i}
+                onClick={() => goTo(i)}
+                className="flex h-11 min-w-11 items-center justify-center rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              >
                 <motion.div
                   animate={{ width: i === safeCurrent ? 24 : 8, backgroundColor: i === safeCurrent ? 'hsl(351 35% 57%)' : 'rgba(0,0,0,0.12)' }}
                   className="h-2 rounded-full"

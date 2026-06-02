@@ -12,15 +12,15 @@ const reels = [
   { id: 8, src: '/assets/reels/reel-8.mp4' },
 ] as const;
 
-const offsets = [
-  { y: 12, r: -6 },
-  { y: 2, r: -2 },
-  { y: 16, r: 3 },
-  { y: 6, r: 0 },
-  { y: 18, r: -3 },
-  { y: 4, r: 2 },
-  { y: 14, r: 6 },
-  { y: 8, r: 1 },
+const rotations = [
+  -6,
+  -2,
+  3,
+  0,
+  -3,
+  2,
+  6,
+  1,
 ] as const;
 
 export default function VideoReel() {
@@ -63,10 +63,10 @@ export default function VideoReel() {
         </motion.div>
 
         <div className="mt-12 md:mt-14 relative">
-          <div className="-mx-6 px-6 overflow-x-auto">
-            <div className="flex gap-4 md:gap-6 items-end min-w-max py-2">
+          <div className="overflow-x-auto px-4 sm:px-6">
+            <div className="mx-auto flex w-max max-w-full flex-nowrap items-end justify-start gap-4 py-4 sm:justify-center sm:gap-5 md:gap-6">
               {reels.map((reel, i) => {
-                const o = offsets[i % offsets.length];
+                const rotation = rotations[i % rotations.length];
                 return (
                   <motion.div
                     key={reel.id}
@@ -74,11 +74,14 @@ export default function VideoReel() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.55, delay: i * 0.05 }}
-                    className="shrink-0"
+                    className="h-[min(88vw,300px)] w-[min(44vw,150px)] shrink-0 sm:h-[320px] sm:w-[160px] md:h-[360px] md:w-[180px]"
                   >
-                    <div style={{ transform: `translateY(${o.y}px) rotate(${o.r}deg)` }}>
-                      <div className="w-[140px] sm:w-[160px] md:w-[180px] lg:w-[200px] aspect-[9/16] rounded-[28px] overflow-hidden bg-black shadow-xl shadow-black/20 ring-1 ring-black/10">
-                      <video
+                    <motion.div
+                      className="h-full w-full overflow-hidden rounded-[28px] bg-black shadow-xl shadow-black/20 ring-1 ring-black/10"
+                      whileHover={{ scale: 1.035 }}
+                      transition={{ duration: 0.28, ease: 'easeOut' }}
+                    >
+                      <motion.video
                         src={reel.src}
                         muted
                         loop
@@ -86,9 +89,9 @@ export default function VideoReel() {
                         autoPlay
                         preload="metadata"
                         className="h-full w-full object-cover"
+                        style={{ rotate: `${rotation}deg`, scale: 1.12 }}
                       />
-                      </div>
-                    </div>
+                    </motion.div>
                   </motion.div>
                 );
               })}

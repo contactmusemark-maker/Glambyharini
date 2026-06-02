@@ -96,15 +96,15 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
         >
           {/* Ambient glow */}
           <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-primary/10 blur-[100px]" />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full bg-accent/8 blur-[80px]" />
+            <div className="absolute left-1/2 top-1/2 h-[min(130vw,500px)] w-[min(130vw,500px)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-[100px]" />
+            <div className="absolute left-1/2 top-1/2 h-[min(82vw,300px)] w-[min(82vw,300px)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/8 blur-[80px]" />
           </div>
 
           {/* Sparkles */}
           {sparkles.map((s, i) => <Sparkle key={i} {...s} />)}
 
           {/* Main content */}
-          <div className="relative flex flex-col items-center gap-6 z-10">
+          <div className="relative z-10 flex w-full max-w-full flex-col items-center gap-6 px-4">
             {/* Logo with spin + glow */}
             <motion.div
               initial={{ scale: 0.4, opacity: 0, rotate: -20 }}
@@ -134,13 +134,13 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
               <img
                 src="/assets/main_logo.png"
                 alt="GlamByHarini"
-                className="w-28 h-28 md:w-36 md:h-36 object-contain relative z-10 drop-shadow-2xl"
+                className="relative z-10 h-28 w-28 object-contain drop-shadow-2xl md:h-36 md:w-36"
               />
             </motion.div>
 
             {/* Brand name letter by letter */}
             <motion.div
-              className="flex items-center gap-0 overflow-hidden"
+              className="flex max-w-full items-center justify-center gap-0 overflow-hidden"
               initial="hidden"
               animate="show"
               variants={{ show: { transition: { staggerChildren: 0.05, delayChildren: 0.6 } } }}
@@ -152,7 +152,7 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
                     hidden: { opacity: 0, y: 20 },
                     show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
                   }}
-                  className={`font-serif text-3xl md:text-4xl ${
+                  className={`font-serif text-[clamp(1rem,5vw,2.25rem)] md:text-4xl ${
                     char === char.toUpperCase() && char !== ' ' ? 'text-white' : 'text-primary'
                   }`}
                 >
@@ -166,7 +166,7 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.2, duration: 0.8 }}
-              className="font-mono text-[10px] tracking-[0.4em] uppercase text-white/30"
+              className="max-w-full text-center font-mono text-[10px] uppercase tracking-[0.22em] text-white/30 sm:tracking-[0.4em]"
             >
               {TAGLINE}
             </motion.p>
@@ -176,7 +176,7 @@ export default function SplashScreen({ onDone }: { onDone: () => void }) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8 }}
-              className="w-48 h-px bg-white/10 relative overflow-hidden mt-4"
+              className="relative mt-4 h-px w-48 max-w-[70vw] overflow-hidden bg-white/10"
             >
               <motion.div
                 className="absolute inset-y-0 left-0 bg-gradient-to-r from-primary to-accent"

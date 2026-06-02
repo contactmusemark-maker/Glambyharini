@@ -37,8 +37,8 @@ export default function Hero() {
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent" />
 
       <div className="relative z-10">
-        <div className="mx-auto w-[90vw] max-w-7xl">
-          <div className="grid items-center gap-7 py-5 md:gap-8 md:py-8 lg:min-h-[calc(100dvh-7rem)] lg:grid-cols-[minmax(0,1fr)_minmax(360px,0.9fr)] lg:gap-10 xl:gap-12">
+        <div className="container">
+          <div className="grid min-w-0 items-center gap-7 py-5 md:gap-8 md:py-8 lg:min-h-[calc(100dvh-7rem)] lg:grid-cols-[minmax(0,1fr)_minmax(18rem,0.9fr)] lg:gap-10 xl:gap-12">
             <div className="relative z-20 text-center lg:text-left">
               <motion.div
                 initial={{ opacity: 0, y: 18 }}
@@ -51,7 +51,7 @@ export default function Hero() {
                   <br />
                   welcome to GlamByHarini
                 </div>
-                <div className="grid grid-cols-[8.5rem_1fr] items-center gap-3 text-left sm:flex sm:justify-start sm:gap-4">
+                <div className="grid min-w-0 grid-cols-[minmax(5.5rem,8.5rem)_minmax(0,1fr)] items-center gap-3 text-left sm:flex sm:justify-start sm:gap-4">
                   <div className="h-14 w-full overflow-hidden rounded-full border border-primary/20 bg-secondary/25 p-1 sm:w-24">
                     <img
                       src="/assets/Header_Logo_1779783577490.png"
@@ -89,13 +89,13 @@ export default function Hero() {
                 <div className="flex items-center gap-3">
                   <button
                     onClick={() => scrollTo('#booking')}
-                    className="rounded-full bg-foreground px-6 py-3.5 font-mono text-xs uppercase tracking-[0.18em] text-background transition-colors hover:bg-primary hover:text-primary-foreground md:px-7 md:py-4"
+                    className="min-h-11 rounded-full bg-foreground px-5 py-3.5 font-mono text-xs uppercase tracking-[0.14em] text-background transition-colors hover:bg-primary hover:text-primary-foreground sm:px-6 md:px-7 md:py-4 md:tracking-[0.18em]"
                   >
                     Book Your Look
                   </button>
                   <button
                     onClick={() => scrollTo('#gallery')}
-                    className="flex h-[3.25rem] w-[3.25rem] items-center justify-center rounded-full bg-foreground text-background transition-colors hover:bg-primary hover:text-primary-foreground md:h-14 md:w-14"
+                    className="flex h-[3.25rem] w-[3.25rem] shrink-0 items-center justify-center rounded-full bg-foreground text-background transition-colors hover:bg-primary hover:text-primary-foreground md:h-14 md:w-14"
                     aria-label="Open gallery"
                   >
                     <ArrowUpRight size={21} />
@@ -159,14 +159,14 @@ export default function Hero() {
           transition={{ delay: 0.55, duration: 0.65 }}
           className="relative z-30 pb-8 md:pb-14"
         >
-          <div className="mx-auto w-[90vw] max-w-7xl">
+          <div className="container">
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {collections.map((item) => (
                 <button
                   key={item.title}
                   type="button"
                   onClick={() => scrollTo(item.target)}
-                  className="group grid min-h-[150px] grid-cols-[112px_1fr] items-center gap-4 rounded-[1.5rem] border border-foreground/8 bg-white p-4 text-left shadow-sm shadow-black/5 transition duration-300 hover:-translate-y-1 hover:border-primary/25 hover:shadow-xl hover:shadow-black/10 sm:min-h-[168px] md:grid-cols-[128px_1fr] md:gap-5 md:rounded-[1.75rem]"
+                  className="group grid min-h-[150px] grid-cols-[minmax(5.5rem,7rem)_minmax(0,1fr)] items-center gap-4 rounded-[1.5rem] border border-foreground/8 bg-white p-4 text-left shadow-sm shadow-black/5 transition duration-300 hover:-translate-y-1 hover:border-primary/25 hover:shadow-xl hover:shadow-black/10 sm:min-h-[168px] md:grid-cols-[8rem_minmax(0,1fr)] md:gap-5 md:rounded-[1.75rem]"
                 >
                   <div className="aspect-square overflow-hidden rounded-[1.15rem] bg-secondary/20 md:rounded-[1.35rem]">
                     <img

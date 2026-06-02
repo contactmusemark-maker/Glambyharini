@@ -105,7 +105,7 @@ export default function AvailabilityCalendar() {
       day === today.getDate() && month === today.getMonth() && year === today.getFullYear();
     const isSelected = day === selected;
     const base =
-      'relative h-11 w-11 md:h-12 md:w-12 flex items-center justify-center border text-sm font-mono transition-colors';
+      'relative flex aspect-square min-h-9 w-full min-w-0 items-center justify-center border text-xs font-mono transition-colors sm:text-sm';
 
     if (status === 'booked') {
       return `${base} border-foreground/10 bg-foreground/[0.03] text-foreground/25 cursor-not-allowed line-through`;
@@ -131,7 +131,7 @@ export default function AvailabilityCalendar() {
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent pointer-events-none" />
       <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-accent/25 to-transparent pointer-events-none" />
 
-      <div className="container mx-auto px-6">
+      <div className="container">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 22 }}
@@ -171,7 +171,7 @@ export default function AvailabilityCalendar() {
             </div>
           </motion.div>
 
-          <div className="grid lg:grid-cols-[minmax(0,1fr)_340px] gap-5 items-start">
+          <div className="grid min-w-0 items-start gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(17rem,340px)]">
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -179,11 +179,11 @@ export default function AvailabilityCalendar() {
               transition={{ duration: 0.65 }}
               className="border border-primary/15 bg-white shadow-sm"
             >
-              <div className="flex items-center justify-between gap-4 px-5 md:px-6 py-5 border-b border-foreground/10">
+              <div className="flex items-center justify-between gap-3 border-b border-foreground/10 px-4 py-5 md:px-6">
                 <button
                   type="button"
                   onClick={prevMonth}
-                  className="h-10 w-10 border border-foreground/10 flex items-center justify-center hover:border-primary/35 hover:text-primary transition-colors"
+                  className="flex h-11 w-11 shrink-0 items-center justify-center border border-foreground/10 transition-colors hover:border-primary/35 hover:text-primary"
                   aria-label="Previous month"
                 >
                   <ChevronLeft size={17} />
@@ -199,15 +199,15 @@ export default function AvailabilityCalendar() {
                 <button
                   type="button"
                   onClick={nextMonth}
-                  className="h-10 w-10 border border-foreground/10 flex items-center justify-center hover:border-primary/35 hover:text-primary transition-colors"
+                  className="flex h-11 w-11 shrink-0 items-center justify-center border border-foreground/10 transition-colors hover:border-primary/35 hover:text-primary"
                   aria-label="Next month"
                 >
                   <ChevronRight size={17} />
                 </button>
               </div>
 
-              <div className="p-5 md:p-6">
-                <div className="grid grid-cols-7 gap-2 mb-3">
+              <div className="p-3 sm:p-5 md:p-6">
+                <div className="mb-3 grid grid-cols-7 gap-1 sm:gap-2">
                   {DAYS.map((day) => (
                     <div
                       key={day}
@@ -218,7 +218,7 @@ export default function AvailabilityCalendar() {
                   ))}
                 </div>
 
-                <div className="grid grid-cols-7 gap-2">
+                <div className="grid grid-cols-7 gap-1 sm:gap-2">
                   {Array.from({ length: firstDay }).map((_, i) => (
                     <div key={`empty-${i}`} />
                   ))}
@@ -342,4 +342,3 @@ export default function AvailabilityCalendar() {
     </section>
   );
 }
-

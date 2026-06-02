@@ -5,8 +5,8 @@ export default function About() {
   return (
     <section id="about" className="pt-24 md:pt-40 pb-0 relative overflow-hidden" style={{ backgroundColor: '#0d0d0d' }}>
 
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="grid md:grid-cols-2 gap-16 items-end">
+      <div className="container relative z-10">
+        <div className="grid min-w-0 gap-10 md:grid-cols-2 md:items-end lg:gap-16">
 
           {/* Photo column */}
           <motion.div
@@ -42,18 +42,18 @@ export default function About() {
             <span className="font-mono text-xs tracking-[0.3em] uppercase text-primary mb-4 block">
               The Artist
             </span>
-            <h2 className="text-4xl md:text-5xl font-serif text-white mb-6 leading-tight">
+            <h2 className="mb-6 font-serif text-[clamp(2rem,7vw,3rem)] leading-tight text-white">
               The Artist Behind<br /><span className="italic text-primary/80">the Brush</span>
             </h2>
             <div className="w-16 h-px bg-primary mb-8" />
-            <p className="text-lg text-white/60 leading-relaxed mb-6">
+            <p className="mb-6 text-[clamp(0.95rem,2.5vw,1.125rem)] leading-relaxed text-white/60">
               Harini Suresh is a certified makeup artist and beauty entrepreneur based in Tamil Nadu. With a passion for transforming looks and empowering confidence, she has crafted over 500 stunning looks for brides, models, and everyday glam lovers.
             </p>
-            <p className="text-lg text-white/60 leading-relaxed mb-10">
+            <p className="mb-10 text-[clamp(0.95rem,2.5vw,1.125rem)] leading-relaxed text-white/60">
               Featured at the Tamil Nadu Beauty Industry Entrepreneur Association (TBIEA), she continues to elevate the art of beauty — bringing a personalized, cinematic approach to every client she serves.
             </p>
 
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <div className="border-l-2 border-primary pl-4">
                 <div className="text-2xl font-serif text-white mb-1">5+ Years</div>
                 <div className="text-xs font-mono uppercase tracking-widest text-white/30">Of Excellence</div>

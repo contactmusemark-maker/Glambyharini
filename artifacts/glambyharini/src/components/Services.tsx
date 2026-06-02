@@ -201,9 +201,9 @@ function ServiceCard({ service, index }: { service: (typeof services)[0]; index:
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.06 }}
-      className="group rounded-[34px] bg-white p-4 shadow-xl shadow-black/10 transition duration-500 hover:-translate-y-1 hover:shadow-2xl hover:shadow-black/15"
+      className="group flex h-full min-w-0 flex-col rounded-[1.5rem] bg-white p-3 shadow-xl shadow-black/10 transition duration-500 hover:-translate-y-1 hover:shadow-2xl hover:shadow-black/15 sm:rounded-[34px] sm:p-4"
     >
-      <div className="relative overflow-hidden rounded-[28px] bg-secondary">
+      <div className="relative overflow-hidden rounded-[1.25rem] bg-secondary sm:rounded-[28px]">
         <img
           src={imageSrc}
           alt={service.title}
@@ -218,10 +218,10 @@ function ServiceCard({ service, index }: { service: (typeof services)[0]; index:
           }
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/15 via-transparent to-black/20" />
-        <div className="absolute left-4 top-4 rounded-full bg-white/35 px-4 py-2 text-sm font-semibold text-white shadow-sm backdrop-blur-md">
+        <div className="absolute left-3 top-3 rounded-full bg-white/35 px-3 py-2 text-xs font-semibold text-white shadow-sm backdrop-blur-md sm:left-4 sm:top-4 sm:px-4 sm:text-sm">
           {index === 0 ? 'Best Seller' : service.tag}
         </div>
-        <div className="absolute right-4 top-4 flex h-12 w-12 items-center justify-center rounded-full bg-white text-foreground shadow-lg">
+        <div className="absolute right-3 top-3 flex h-11 w-11 items-center justify-center rounded-full bg-white text-foreground shadow-lg sm:right-4 sm:top-4 sm:h-12 sm:w-12">
           <Sparkles size={22} />
         </div>
         <div className="absolute inset-x-0 bottom-5 flex justify-center gap-1.5">
@@ -239,24 +239,24 @@ function ServiceCard({ service, index }: { service: (typeof services)[0]; index:
         </div>
       </div>
 
-      <div className="px-2 pb-1 pt-7">
-        <h3 className="text-2xl font-sans font-semibold tracking-tight text-foreground">
+      <div className="flex flex-1 flex-col px-1 pb-1 pt-6 sm:px-2 sm:pt-7">
+        <h3 className="text-xl font-sans font-semibold tracking-tight text-foreground sm:text-2xl">
           {service.title}
         </h3>
-        <p className="mt-1 text-xl font-semibold text-foreground/35">{service.tag}</p>
-        <p className="mt-3 min-h-[3.25rem] text-base leading-snug text-foreground/45">
+        <p className="mt-1 text-lg font-semibold text-foreground/35 sm:text-xl">{service.tag}</p>
+        <p className="mt-3 flex-1 text-sm leading-6 text-foreground/45 sm:text-base sm:leading-snug">
           {service.short}
         </p>
 
-        <div className="mt-8 flex flex-wrap items-center justify-between gap-3">
-          <div className="rounded-full bg-foreground/5 px-5 py-3 text-xl font-semibold text-foreground">
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-3 sm:mt-8">
+          <div className="rounded-full bg-foreground/5 px-4 py-3 text-lg font-semibold text-foreground sm:px-5 sm:text-xl">
             {service.price}
           </div>
           <a
             href={`https://wa.me/917305306497?text=${encodeURIComponent(`Hi Harini! I'm interested in ${service.title} (${service.price}). Can we discuss availability?`)}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex min-w-fit flex-1 items-center justify-center gap-2 rounded-full bg-foreground px-5 py-3 text-base font-semibold text-background transition hover:bg-primary sm:flex-none"
+            className="inline-flex min-h-11 min-w-fit flex-1 items-center justify-center gap-2 rounded-full bg-foreground px-5 py-3 text-base font-semibold text-background transition hover:bg-primary sm:flex-none"
           >
             Book Now
             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-foreground">
@@ -271,8 +271,8 @@ function ServiceCard({ service, index }: { service: (typeof services)[0]; index:
 
 export default function Services() {
   return (
-    <section id="services" className="py-24 md:py-32 bg-[#f3f3f3] relative">
-      <div className="container mx-auto px-6 relative z-10">
+    <section id="services" className="relative bg-[#f3f3f3] py-20 md:py-32">
+      <div className="container relative z-10">
         <div className="text-center mb-14">
           <motion.span
             initial={{ opacity: 0 }}
@@ -302,7 +302,7 @@ export default function Services() {
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,17rem),1fr))] items-stretch gap-5 sm:gap-7">
           {services.map((service, i) => (
             <ServiceCard key={service.title} service={service} index={i} />
           ))}

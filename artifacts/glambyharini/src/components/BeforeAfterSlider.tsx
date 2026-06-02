@@ -45,8 +45,8 @@ function ComparisonSlider({ transformation }: { transformation: Transformation }
   const [position, setPosition] = useState(54);
 
   return (
-    <div className="relative rounded-[2rem] border border-white/60 bg-white/72 p-3 shadow-2xl shadow-primary/15 backdrop-blur-xl md:rounded-[2.5rem] md:p-4">
-      <div className="relative h-[440px] overflow-hidden rounded-[1.5rem] bg-secondary/30 md:h-[560px] lg:h-[640px] md:rounded-[2rem]">
+    <div className="relative rounded-[1.5rem] border border-white/60 bg-white/72 p-2 shadow-2xl shadow-primary/15 backdrop-blur-xl sm:p-3 md:rounded-[2.5rem] md:p-4">
+      <div className="relative h-[min(118vw,440px)] overflow-hidden rounded-[1.25rem] bg-secondary/30 md:h-[560px] md:rounded-[2rem] lg:h-[640px]">
         <img
           src={transformation.after}
           alt={`${transformation.client} after makeup`}
@@ -69,11 +69,11 @@ function ComparisonSlider({ transformation }: { transformation: Transformation }
 
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/15" />
 
-        <div className="absolute inset-x-0 top-0 flex items-center justify-between p-5 md:p-6">
-          <span className="rounded-full bg-black/45 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.28em] text-white backdrop-blur-md">
+        <div className="absolute inset-x-0 top-0 flex items-center justify-between p-3 sm:p-5 md:p-6">
+          <span className="rounded-full bg-black/45 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.16em] text-white backdrop-blur-md sm:px-4 sm:text-[11px] sm:tracking-[0.28em]">
             Before
           </span>
-          <span className="rounded-full bg-white/90 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.28em] text-foreground shadow-sm backdrop-blur-md">
+          <span className="rounded-full bg-white/90 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground shadow-sm backdrop-blur-md sm:px-4 sm:text-[11px] sm:tracking-[0.28em]">
             After
           </span>
         </div>
@@ -82,16 +82,16 @@ function ComparisonSlider({ transformation }: { transformation: Transformation }
           className="pointer-events-none absolute inset-y-0 z-10 w-px bg-white shadow-[0_0_34px_rgba(0,0,0,0.38)]"
           style={{ left: `${position}%` }}
         >
-          <div className="absolute left-1/2 top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/75 bg-white text-primary shadow-2xl md:h-16 md:w-16">
+          <div className="absolute left-1/2 top-1/2 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/75 bg-white text-primary shadow-2xl md:h-16 md:w-16">
             <MoveHorizontal size={22} />
           </div>
         </div>
 
-        <div className="absolute inset-x-0 bottom-0 p-5 text-white md:p-7">
-          <div className="font-mono text-xs uppercase tracking-[0.28em] text-white/65">
+        <div className="absolute inset-x-0 bottom-0 p-4 text-white md:p-7">
+          <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/65 sm:text-xs sm:tracking-[0.28em]">
             {transformation.occasion}
           </div>
-          <div className="mt-2 font-serif text-3xl leading-tight md:text-5xl">
+          <div className="mt-2 font-serif text-2xl leading-tight sm:text-3xl md:text-5xl">
             {transformation.label}
           </div>
         </div>
@@ -127,19 +127,19 @@ export default function BeforeAfterSlider() {
       <div className="pointer-events-none absolute left-1/2 top-16 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-primary/10 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-28 right-0 h-80 w-80 rounded-full bg-accent/12 blur-3xl" />
 
-      <div className="relative mx-auto w-[90vw] max-w-7xl">
-        <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-center xl:gap-16">
+      <div className="container relative">
+        <div className="grid min-w-0 gap-10 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] lg:items-center xl:gap-16">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="text-center lg:text-left"
+            className="order-2 text-center lg:order-1 lg:text-left"
           >
             <span className="font-mono text-xs uppercase tracking-[0.35em] text-primary">
               Transformation Showcase
             </span>
-            <h2 className="mt-5 font-serif text-[clamp(3rem,6vw,6rem)] leading-[0.95] text-foreground">
+            <h2 className="mt-5 font-serif text-[clamp(2.5rem,10vw,6rem)] leading-[0.95] text-foreground">
               Real Transformations
               <span className="mt-2 block text-foreground/38">Before → After</span>
             </h2>
@@ -170,12 +170,12 @@ export default function BeforeAfterSlider() {
               <button
                 type="button"
                 onClick={() => scrollTo("#booking")}
-                className="inline-flex items-center gap-3 rounded-full bg-foreground px-7 py-4 font-mono text-xs uppercase tracking-[0.18em] text-background transition hover:bg-primary"
+                className="inline-flex min-h-11 max-w-full items-center justify-center gap-3 rounded-full bg-foreground px-5 py-3.5 text-center font-mono text-xs uppercase tracking-[0.14em] text-background transition hover:bg-primary sm:px-7 sm:py-4 sm:tracking-[0.18em]"
               >
                 Book a Transformation
                 <ArrowUpRight size={17} />
               </button>
-              <div className="flex items-center gap-3 rounded-full border border-primary/15 bg-white/60 px-5 py-3 text-left shadow-sm backdrop-blur">
+              <div className="flex min-h-11 items-center gap-3 rounded-full border border-primary/15 bg-white/60 px-5 py-3 text-left shadow-sm backdrop-blur">
                 <Sparkles size={18} className="text-primary" />
                 <span className="font-mono text-[10px] uppercase tracking-widest text-foreground/55">
                   Skin-first finish
@@ -189,6 +189,7 @@ export default function BeforeAfterSlider() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.75, delay: 0.08 }}
+            className="order-1 lg:order-2"
           >
             <ComparisonSlider key={active} transformation={transformation} />
           </motion.div>
@@ -214,7 +215,7 @@ export default function BeforeAfterSlider() {
                   <span className="font-mono text-[10px] uppercase tracking-[0.22em]">
                     {item.client}
                   </span>
-                  <span className="ml-3 text-sm font-semibold">{item.finish}</span>
+                  <span className="mt-1 block text-sm font-semibold sm:ml-3 sm:mt-0 sm:inline">{item.finish}</span>
                 </button>
               );
             })}
